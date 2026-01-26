@@ -13,6 +13,11 @@ def install_python_313_silent():
     """Python 3.13'ü sessiz/katılımsız yükler."""
     import urllib.request
     import tempfile
+    import hashlib
+    
+    # SHA-256 Checksum for Python 3.13.11 amd64
+    # Güncelleme durumunda bu hash'in de güncellenmesi GEREKLİDİR.
+    EXPECTED_HASH = "30d4654b3eac7ddfdf2682db4c8dcb490f3055f4f33c6906d6b828f680152101"
     
     print("\n📥 Python 3.13 indiriliyor...")
     print("   Bu işlem internet hızınıza bağlı olarak birkaç dakika sürebilir.\n")
@@ -38,6 +43,34 @@ def install_python_313_silent():
         urllib.request.urlretrieve(url, installer_path, report_progress)
         print()  # Yeni satır
         
+        # ---------------------------------------------------------
+        # GÜVENLİK KONTROLÜ (SHA-256 Checksum)
+        # ---------------------------------------------------------
+        print("🔒 Dosya doğrulanıyor...")
+        sha256_hash = hashlib.sha256()
+        with open(installer_path, "rb") as f:
+            # 4K chunk'lar halinde oku
+            for byte_block in iter(lambda: f.read(4096), b""):
+                sha256_hash.update(byte_block)
+        
+        calculated_hash = sha256_hash.hexdigest()
+        
+        if calculated_hash != EXPECTED_HASH:
+            print("\n❌ GÜVENLİK HATASI: İndirilen dosya doğrulanamadı!")
+            print(f"   Beklenen Hash: {EXPECTED_HASH}")
+            print(f"   Hesaplanan Hash: {calculated_hash}")
+            print("   Dosya güvenliği için siliniyor.")
+            
+            try:
+                os.remove(installer_path)
+            except OSError:
+                pass
+                
+            return False
+        
+        print("✅ Dosya doğrulandı.")
+        # ---------------------------------------------------------
+
         print("\n🔧 Python 3.13 yükleniyor...")
         print("   Bu işlem birkaç dakika sürebilir, lütfen bekleyin.\n")
         
@@ -62,7 +95,8 @@ def install_python_313_silent():
             
     except urllib.error.URLError as e:
         print(f"\n❌ İndirme başarısız: {e}")
-        print("   İnternet bağlantınızı kontrol edin.")
+        print("   İnternet bağlantınızı kontrol edin veya aşağıdaki adresten manuel indirin:")
+        print(f"   {url}")
         return False
     except Exception as e:
         print(f"\n❌ Beklenmeyen hata: {e}")
