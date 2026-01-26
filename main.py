@@ -106,6 +106,22 @@ def install_python_313_silent():
 def handle_python_version_fallback():
     """Python 3.14+ için 3.13'e otomatik geçiş yapar."""
     
+    # Recursion Guard: Prevent infinite restart loops
+    restart_attempt = int(os.environ.get("APP_RESTART_ATTEMPT", "0"))
+    if restart_attempt >= 2:
+        print("\n" + "!"*60)
+        print("❌ KRİTİK HATA: Maksimum yeniden başlatma denemesine ulaşıldı.")
+        print("!"*60)
+        print("\nUygulama Python sürümleri arasında geçiş yaparken döngüye girdi.")
+        print("Olası nedenler:")
+        print("1. 'windows-curses' yüklemesi sessizce başarısız oluyor.")
+        print("2. Algılanan Python 3.13 kurulumu hatalı.")
+        print("\nLütfen uygulamayı doğrudan Python 3.13 ile başlatmayı deneyin:")
+        print("   py -3.13 main.py")
+        print("-" * 60)
+        input("\nÇıkmak için Enter'a basın...")
+        sys.exit(1)
+    
     print("\n" + "="*60)
     print("⚠️  PYTHON SÜRÜM UYUMSUZLUĞU TESPİT EDİLDİ")
     print("="*60)
@@ -140,9 +156,14 @@ def handle_python_version_fallback():
         # 3.13 zaten yüklü - SESSIZCE GECIS YAP (mesaj yok, Enter yok)
         script_path = get_script_path()
         try:
+            # Recursion Guard: Increment attempt counter
+            env = os.environ.copy()
+            env["APP_RESTART_ATTEMPT"] = str(restart_attempt + 1)
+
             result = subprocess.run(
                 ['py', '-3.13', script_path],
-                cwd=os.path.dirname(script_path)
+                cwd=os.path.dirname(script_path),
+                env=env
             )
             sys.exit(result.returncode)
         except KeyboardInterrupt:
@@ -188,9 +209,14 @@ def handle_python_version_fallback():
     # Windows'ta os.execvp çalışmayabilir, subprocess kullan
     try:
         # Mevcut process'i sonlandır ve yeni process başlat
+        # Recursion Guard: Increment attempt counter
+        env = os.environ.copy()
+        env["APP_RESTART_ATTEMPT"] = str(restart_attempt + 1)
+        
         result = subprocess.run(
             ['py', '-3.13', script_path],
-            cwd=os.path.dirname(script_path)
+            cwd=os.path.dirname(script_path),
+            env=env
         )
         sys.exit(result.returncode)
     except KeyboardInterrupt:

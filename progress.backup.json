@@ -1,16 +1,12 @@
 {
-  "current_step_id": 1,
-  "highest_reached_id": 38,
-  "user_codes": {
-    "2": "yil=2025\n",
-    "3": "pi_sayisi=3.14\n"
-  },
-  "completed_tasks": [
-    2,
-    3
-  ],
+  "current_step_id": 14,
+  "highest_reached_id": 25,
+  "user_codes": {},
+  "completed_tasks": [],
   "skipped_tasks": [
     1,
+    2,
+    3,
     4,
     5,
     6,
@@ -31,19 +27,6 @@
     21,
     22,
     23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    29,
-    30,
-    31,
-    32,
-    33,
-    34,
-    35,
-    36,
-    37
+    24
   ]
 }
