@@ -109,12 +109,26 @@ def save_progress_data(progress_data):
         except (IOError, OSError):
             pass  # Yedekleme başarısız olursa devam et
     
-    # Yeni veriyi kaydet
+    # Yeni veriyi kaydet (Atomic Write-Replace Pattern)
+    temp_file = PROGRESS_FILE + ".tmp"
     try:
-        with open(PROGRESS_FILE, 'w', encoding='utf-8') as f:
+        with open(temp_file, 'w', encoding='utf-8') as f:
             json.dump(progress_data, f, ensure_ascii=False, indent=2)
+            f.flush()
+            os.fsync(f.fileno())
+        
+        # Atomik değiştirme
+        os.replace(temp_file, PROGRESS_FILE)
+        
     except (IOError, OSError) as e:
-        # Kaydetme başarısız olursa kullanıcıya bildir (ama çökme)
+        # Kaydetme başarısız olursa varsa temp dosyasını temizle
+        if os.path.exists(temp_file):
+            try:
+                os.remove(temp_file)
+            except OSError:
+                pass
+                
+        # Kullanıcıya bildir (ama çökme)
         print(f"\n⚠️  İlerleme kaydedilemedi: {e}")
 
 def save_progress(current_step_id):
