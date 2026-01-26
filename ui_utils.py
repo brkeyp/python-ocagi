@@ -5,6 +5,16 @@ Terminal ve OS işlemleri için utility class.
 """
 import sys
 import os
+import contextlib
+import curses
+
+
+@contextlib.contextmanager
+def suspend_curses(stdscr):
+    """Curses modunu geçici olarak askıya alır (print/input için)."""
+    curses.endwin()
+    yield
+    stdscr.refresh()
 
 
 class OSUtils:

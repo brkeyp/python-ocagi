@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
+
+# Curses escape delay fix (Must be set before any curses import/init)
+os.environ.setdefault('ESCDELAY', '25')
+
 import subprocess
 
 
@@ -309,14 +313,13 @@ def main():
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
     try:
-        # engine'i burada import et (curses yüklendikten sonra)
-        import engine
-        
         # Pencereni genişlet (110x30)
         from ui_utils import OSUtils
         OSUtils.resize_terminal(30, 110)
-        
-        engine.run_simulation()
+
+        # controller'ı burada import et (curses yüklendikten sonra)
+        import controller
+        controller.run_controller()
     except KeyboardInterrupt:
         # Çıkış Temizliği
         # Simsiyah ekran/artık sorununu çözmek için ekranı temizle
