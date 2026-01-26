@@ -1,0 +1,13 @@
+Merhaba! 👋
+
+Bu mesaj, Python Kurs Simulatörü'nün geliştiricisinden geliyor.
+
+Bu uygulama, Python öğrenme yolculuğunda sana yardımcı olmak için tasarlandı.
+Her gün biraz pratik yaparak, yazarak öğrenmenin gücünü keşfedeceksin.
+
+Unutma: Hata yapmak öğrenmenin bir parçası!
+Her yanlış cevap, doğruya bir adım daha yaklaşmak demek.
+
+Başarılar dilerim! 🚀
+
+- Geliştirici

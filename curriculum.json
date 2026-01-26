@@ -1,0 +1,261 @@
+[
+  {
+    "id": 1,
+    "cat": "Temel",
+    "task": "1. Merhaba Python:\n'mesaj' adında bir değişken oluştur ve içeriğine 'Merhaba Dünya' stringini ata.",
+    "sol": "mesaj = 'Merhaba Dünya'",
+    "hint": "Stringleri tanımlamak için tırnak işareti kullanmalısın. Örn: x = 'y'"
+  },
+  {
+    "id": 2,
+    "cat": "Temel",
+    "task": "2. Tamsayılar (Integers):\n'yil' değişkeni oluştur ve değerini 2025 yap.",
+    "sol": "yil = 2025",
+    "hint": "Tamsayılar tırnak işareti olmadan yazılır."
+  },
+  {
+    "id": 3,
+    "cat": "Temel",
+    "task": "3. Ondalıklı Sayılar (Floats):\n'pi_sayisi' değişkeni oluştur ve 3.14 değerini ata.",
+    "sol": "pi_sayisi = 3.14",
+    "hint": "Ondalık ayracı olarak nokta (.) kullanmalısın."
+  },
+  {
+    "id": 4,
+    "cat": "Temel",
+    "task": "4. Boolean (Mantıksal):\n'hazir_mi' değişkeni oluştur ve True değerini ata.",
+    "sol": "hazir_mi = True",
+    "hint": "True ve False kelimelerinin baş harfi büyük olmalıdır."
+  },
+  {
+    "id": 5,
+    "cat": "Matematik",
+    "task": "5. Toplama:\n'toplam' değişkeni oluştur, 10 ve 25 sayılarını toplayarak bu değişkene ata.",
+    "sol": "toplam = 10 + 25",
+    "hint": "Toplama operatörü (+) kullan."
+  },
+  {
+    "id": 6,
+    "cat": "Matematik",
+    "task": "6. Mod Alma (Kalan Bulma):\n'kalan' değişkeni oluştur, 10'un 3'e bölümünden kalanı hesapla.",
+    "sol": "kalan = 10 % 3",
+    "hint": "Mod almak için yüzde (%) işaretini kullan."
+  },
+  {
+    "id": 7,
+    "cat": "Matematik",
+    "task": "7. Üs Alma:\n'kup' değişkeni oluştur ve 5'in 3. kuvvetini (küpünü) hesapla.",
+    "sol": "kup = 5 ** 3",
+    "hint": "Üs alma işlemi için çift yıldız (**) kullanılır."
+  },
+  {
+    "id": 8,
+    "cat": "Matematik",
+    "task": "8. İşlem Önceliği:\n'sonuc' değişkeni oluştur. 5 ile 2'yi toplayıp, sonucu 3 ile çarp. ((5+2)*3)",
+    "sol": "sonuc = (5 + 2) * 3",
+    "hint": "Parantez kullanarak işlem önceliğini belirle."
+  },
+  {
+    "id": 9,
+    "cat": "Stringler",
+    "task": "9. String Birleştirme:\n'ad' = 'Python', 'soyad' = 'Kursu' değişkenlerini oluştur. Sonra 'tam_isim' değişkeninde bunları aralarında boşluk olacak şekilde birleştir.",
+    "sol": "ad = 'Python'\nsoyad = 'Kursu'\ntam_isim = ad + ' ' + soyad",
+    "hint": "Değişkenleri alt alta tanımla. Bitince boş satırda Enter'a bas."
+  },
+  {
+    "id": 10,
+    "cat": "Stringler",
+    "task": "10. f-String Kullanımı:\n'yas' = 25 olsun. f-string kullanarak 'kisi_bilgisi' değişkenine 'Yaşım: 25' yazısını ata.",
+    "sol": "yas = 25\nkisi_bilgisi = f'Yaşım: {yas}'",
+    "hint": "f'...{degisken}...' yapısını kullan."
+  },
+  {
+    "id": 11,
+    "cat": "Stringler",
+    "task": "11. Büyük Harfe Çevirme:\n'sehir' = 'istanbul' değişkenini oluştur. 'sehir_buyuk' değişkenine bu stringin tamamen büyük harfli halini ata.",
+    "sol": "sehir = 'istanbul'\nsehir_buyuk = sehir.upper()",
+    "hint": ".upper() metodunu kullan."
+  },
+  {
+    "id": 12,
+    "cat": "Stringler",
+    "task": "12. String Dilimleme (Slicing):\n'alfabe' = 'ABCDEF' olsun. 'ilk_uc' değişkenine sadece 'ABC' kısmını alarak ata.",
+    "sol": "alfabe = 'ABCDEF'\nilk_uc = alfabe[:3]",
+    "hint": "Köşeli parantez kullan: degisken[baslangic:bitis]. Baştan başlamak için ilk kısmı boş bırak."
+  },
+  {
+    "id": 13,
+    "cat": "Stringler",
+    "task": "13. Tersten Yazdırma:\n'metin' = 'elma' olsun. 'ters_metin' değişkenine 'amle' değerini (tersini) ata.",
+    "sol": "metin = 'elma'\nters_metin = metin[::-1]",
+    "hint": "[::-1] dilimleme yöntemi listeyi veya stringi ters çevirir."
+  },
+  {
+    "id": 14,
+    "cat": "Listeler",
+    "task": "14. Liste Oluşturma:\n'sayilar' adında bir liste oluştur ve içine 10, 20, 30 değerlerini koy.",
+    "sol": "sayilar = [10, 20, 30]",
+    "hint": "Listeler köşeli parantez [] ile tanımlanır."
+  },
+  {
+    "id": 15,
+    "cat": "Listeler",
+    "task": "15. Eleman Ekleme (Append):\n'renkler' boş bir liste olsun ([]). İçine sırasıyla 'Mavi' ve 'Yesil' ekle.",
+    "sol": "renkler = []\nrenkler.append('Mavi')\nrenkler.append('Yesil')",
+    "hint": ".append() metodunu iki kez kullan."
+  },
+  {
+    "id": 16,
+    "cat": "Listeler",
+    "task": "16. Eleman Erişimi:\n'meyveler' = ['Elma', 'Armut', 'Muz'] olsun. 'ortadaki' değişkenine 'Armut' değerini listeden çekerek ata.",
+    "sol": "meyveler = ['Elma', 'Armut', 'Muz']\nortadaki = meyveler[1]",
+    "hint": "Python'da indeksler 0'dan başlar. İkinci eleman 1. indekstir."
+  },
+  {
+    "id": 17,
+    "cat": "Listeler",
+    "task": "17. Eleman Silme (Pop):\nliste = [1, 2, 3, 4, 99]. Listenin son elemanını sil (pop kullan).",
+    "sol": "liste = [1, 2, 3, 4, 99]\nliste.pop()",
+    "hint": ".pop() metodu parametre verilmezse son elemanı siler."
+  },
+  {
+    "id": 18,
+    "cat": "Sözlükler",
+    "task": "18. Sözlük Oluşturma:\n'kimlik' adında bir sözlük oluştur. 'ad': 'Ali', 'yas': 30 anahtar-değer çiftlerini içersin.",
+    "sol": "kimlik = {'ad': 'Ali', 'yas': 30}",
+    "hint": "Sözlükler süslü parantez {} ve key:value yapısı kullanır."
+  },
+  {
+    "id": 19,
+    "cat": "Sözlükler",
+    "task": "19. Değer Okuma:\n'kimlik' sözlüğünden 'ad' anahtarının değerini alıp 'isim_degeri' değişkenine ata.",
+    "sol": "isim_degeri = kimlik['ad']",
+    "hint": "sozluk['anahtar'] yapısını kullan."
+  },
+  {
+    "id": 20,
+    "cat": "Sözlükler",
+    "task": "20. Yeni Kayıt Ekleme:\n'kimlik' sözlüğüne 'meslek': 'Mühendis' çiftini ekle.",
+    "sol": "kimlik['meslek'] = 'Mühendis'",
+    "hint": "sozluk['yeni_anahtar'] = 'deger' şeklinde atama yap."
+  },
+  {
+    "id": 21,
+    "cat": "Koşullar",
+    "task": "21. If Bloğu:\n'puan' = 85 olsun. Eğer puan 50'den büyükse 'durum' değişkenine 'Geçti' ata.",
+    "sol": "puan = 85\nif puan > 50:\n    durum = 'Geçti'",
+    "hint": "if bloğundan sonra girintiye (indentation) dikkat et. Alt satıra geçmek için Enter'a bas."
+  },
+  {
+    "id": 22,
+    "cat": "Koşullar",
+    "task": "22. If-Else:\n'sayi' = 7 olsun. Sayı çift ise 'sonuc' = 'Çift', tek ise 'sonuc' = 'Tek' olsun. Mod (%) kullan.",
+    "sol": "sayi = 7\nif sayi % 2 == 0:\n    sonuc = 'Çift'\nelse:\n    sonuc = 'Tek'",
+    "hint": "Bir sayının 2'ye bölümünden kalan 0 ise çifttir."
+  },
+  {
+    "id": 23,
+    "cat": "Koşullar",
+    "task": "23. Elif Kullanımı:\n'notu' = 75. 85+ ise 'derece'='A', 70-84 arası 'B', altı 'C' olsun. (If-Elif-Else)",
+    "sol": "notu = 75\nif notu >= 85:\n    derece = 'A'\nelif notu >= 70:\n    derece = 'B'\nelse:\n    derece = 'C'",
+    "hint": "elif, 'else if'in kısaltmasıdır."
+  },
+  {
+    "id": 24,
+    "cat": "Döngüler",
+    "task": "24. For Döngüsü ve Range:\n'toplam' = 0 değişkeni oluştur. for döngüsü ile 1'den 5'e kadar (5 dahil) sayıları 'toplam'a ekle.",
+    "sol": "toplam = 0\nfor i in range(1, 6):\n    toplam += i",
+    "hint": "range(start, stop) fonksiyonunda stop değeri dahil edilmez. 5'i dahil etmek için 6 yazmalısın."
+  },
+  {
+    "id": 25,
+    "cat": "Döngüler",
+    "task": "25. While Döngüsü:\n'sayac' = 5 olsun. While döngüsü ile sayac 0'dan büyük olduğu sürece sayacı her adımda 1 azalt.",
+    "sol": "sayac = 5\nwhile sayac > 0:\n    sayac -= 1",
+    "hint": "Döngü koşulu: while sayac > 0:"
+  },
+  {
+    "id": 26,
+    "cat": "Döngüler",
+    "task": "26. Listeyi Gezme (Iteration):\n'sayilar' = [10, 20, 30]. For döngüsü ile her elemanı 2 ile çarpıp ekrana yazdır (print).",
+    "sol": "sayilar = [10, 20, 30]\nfor x in sayilar:\n    print(x * 2)",
+    "hint": "print fonksiyonu her adımda çalışmalıdır."
+  },
+  {
+    "id": 27,
+    "cat": "Fonksiyonlar",
+    "task": "27. Fonksiyon Tanımlama:\n'kare_al' isminde bir fonksiyon tanımla. Bir sayı alsın ve karesini return etsin.",
+    "sol": "def kare_al(x):\n    return x * x",
+    "hint": "def anahtar kelimesini ve return ifadesini kullan."
+  },
+  {
+    "id": 28,
+    "cat": "Fonksiyonlar",
+    "task": "28. Çok Parametreli Fonksiyon:\n'carp' isminde fonksiyon tanımla. a ve b parametrelerini alıp çarpımlarını döndürsün.",
+    "sol": "def carp(a, b):\n    return a * b",
+    "hint": "def carp(a, b): şeklinde başla."
+  },
+  {
+    "id": 29,
+    "cat": "Fonksiyonlar",
+    "task": "29. Varsayılan Parametre (Default Args):\n'selamla' fonksiyonu tanımla. 'isim' alsın, varsayılanı 'Misafir' olsun. 'Merhaba {isim}' döndürsün.",
+    "sol": "def selamla(isim='Misafir'):\n    return f'Merhaba {isim}'",
+    "hint": "def selamla(isim='Misafir'):"
+  },
+  {
+    "id": 30,
+    "cat": "Fonksiyonlar",
+    "task": "30. Lambda Fonksiyonu:\n'ikiye_bol' değişkenine bir lambda fonksiyonu ata. Verilen sayıyı 2'ye bölsün.",
+    "sol": "ikiye_bol = lambda x: x / 2",
+    "hint": "lambda x: islem..."
+  },
+  {
+    "id": 31,
+    "cat": "Modüller",
+    "task": "31. Modül İçe Aktarma (Import):\n'math' modülünü import et ve 'karekok' değişkenine 16'nın karekökünü (sqrt) ata.",
+    "sol": "import math\nkarekok = math.sqrt(16)",
+    "hint": "math.sqrt() fonksiyonunu kullan."
+  },
+  {
+    "id": 32,
+    "cat": "Modüller",
+    "task": "32. Random Modülü:\n'random' modülünü import et. 'sansli_sayi' değişkenine 1 ile 100 arasında rastgele bir tam sayı ata.",
+    "sol": "import random\nsansli_sayi = random.randint(1, 100)",
+    "hint": "random.randint(min, max) kullan."
+  },
+  {
+    "id": 33,
+    "cat": "Hata Yönetimi",
+    "task": "33. Try-Except Blokları:\nBir try-except bloğu yaz. '10 / 0' işlemini yapmaya çalış. ZeroDivisionError hatası olursa 'sonuc' değişkenine 'Hata' ata.",
+    "sol": "try:\n    x = 10 / 0\nexcept ZeroDivisionError:\n    sonuc = 'Hata'",
+    "hint": "Sıfıra bölme hatası ZeroDivisionError olarak yakalanır."
+  },
+  {
+    "id": 34,
+    "cat": "OOP",
+    "task": "34. Class Tanımlama:\n'Araba' adında bir sınıf (class) oluştur. Henüz içi boş olabilir (pass kullan).",
+    "sol": "class Araba:\n    pass",
+    "hint": "class Araba: yazıp altına pass ekle."
+  },
+  {
+    "id": 35,
+    "cat": "OOP",
+    "task": "35. Constructor (__init__):\n'Kedi' sınıfı oluştur. __init__ metodunda self.isim parametresini alıp nesne değişkenine kaydetsin.",
+    "sol": "class Kedi:\n    def __init__(self, isim):\n        self.isim = isim",
+    "hint": "def __init__(self, isim): altında self.isim = isim yapmalısın."
+  },
+  {
+    "id": 36,
+    "cat": "OOP",
+    "task": "36. Metot Ekleme:\n'Kopek' sınıfı oluştur. 'havla' metodu 'Hav!' stringini return etsin. Bir örnek oluşturup metodu çağır, sonucu 'ses' değişkenine ata.",
+    "sol": "class Kopek:\n    def havla(self):\n        return 'Hav!'\n\nk = Kopek()\nses = k.havla()",
+    "hint": "Metotların ilk parametresi her zaman self olmalıdır."
+  },
+  {
+    "id": 37,
+    "cat": "Final",
+    "task": "37. Final Görevi:\n1'den 10'a kadar olan sayıların karelerini içeren bir liste oluştur (List Comprehension kullan) ve 'kareler' değişkenine ata.",
+    "sol": "kareler = [x**2 for x in range(1, 11)]",
+    "hint": "[islem for eleman in liste] yapısını hatırla."
+  }
+]
