@@ -413,8 +413,59 @@ def _run_simulation_loop(stdscr):
                 print("\nTekrar denemek için Enter'a bas...")
                 input()
 
+def validate_terminal_size():
+    """Terminal boyutunun en az 20x10 olduğunu kontrol eder."""
+    try:
+        # shutil daha güvenilir (piping/redirection durumlarında)
+        import shutil
+        cols, lines = shutil.get_terminal_size(fallback=(80, 24))
+        
+        if cols < 20 or lines < 10:
+            print(f"\n❌ TERMINAL BOYUTU ÇOK KÜÇÜK ({cols}x{lines})")
+            print("Lütfen pencereyi genişletin ve uygulamayı yeniden başlatın.")
+            print("Minimum gerekli boyut: 20x10")
+            input("\nÇıkmak için Enter'a basın...")
+            return False
+        return True
+    except Exception:
+        # Boyut alınamazsa güvenli varsay
+        return True
+
 def run_simulation():
+    # Terminal boyutu kontrolü
+    if not validate_terminal_size():
+        return
+
     # macOS üzerinde spawn methodu kullanılması önerilir (fork sorun çıkarabilir)
     import multiprocessing
-    multiprocessing.set_start_method('spawn', force=True)
-    curses.wrapper(_run_simulation_loop)
+    try:
+        multiprocessing.set_start_method('spawn', force=True)
+    except RuntimeError:
+        pass # Zaten set edilmişse yoksay
+
+    try:
+        curses.wrapper(_run_simulation_loop)
+    except curses.error as e:
+        # curses.error genellikle TERM ortam değişkeni veya driver sorunlarında olur
+        OSUtils.clear_screen()
+        print("\n❌ TERMİNAL BAŞLATMA HATASI (curses.error)")
+        print("-" * 40)
+        print(f"Hata Detayı: {e}")
+        print("\nOlası Çözümler:")
+        print("1. 'TERM' ortam değişkenini kontrol edin (örn: xterm-256color).")
+        print("2. Windows kullanıyorsanız 'windows-curses' düzgün yüklenmemiş olabilir.")
+        print("3. Terminal emülatörünüz curses desteklemiyor olabilir.")
+        print("-" * 40)
+        input("\nÇıkmak için Enter'a basın...")
+        sys.exit(1)
+    except Exception as e:
+        # Diğer beklenmedik hatalar
+        OSUtils.clear_screen()
+        print("\n❌ BEKLENMEYEN UYGULAMA HATASI")
+        print("-" * 40)
+        print(f"Hata: {e}")
+        import traceback
+        traceback.print_exc()
+        print("-" * 40)
+        input("\nÇıkmak için Enter'a basın...")
+        sys.exit(1)
