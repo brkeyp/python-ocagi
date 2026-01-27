@@ -5,7 +5,8 @@ import os
 import os
 import config
 import platform # For architecture detection
-
+import logging
+import logging_config
 
 # Curses escape delay fix (Must be set before any curses import/init)
 os.environ.setdefault('ESCDELAY', config.Timing.ESCDELAY_ENV)
@@ -33,7 +34,9 @@ def install_python_313_silent():
     EXPECTED_HASH = config.DependencyManifest.get_expected_hash(arch)
     if not EXPECTED_HASH:
         # Fallback or warning if hash not found for arch (e.g. arm64 unsupported yet)
-        print(f"⚠️  UYARI: {arch} mimarisi için güvenlik hash'i bulunamadı. Kurulum devam edebilir ancak güvenlik doğrulaması yapılamayacak.")
+        msg = f"⚠️  UYARI: {arch} mimarisi için güvenlik hash'i bulunamadı. Kurulum devam edebilir ancak güvenlik doğrulaması yapılamayacak."
+        print(msg)
+        logging.warning(msg)
         # Optional: return False if we want to be strict
         
     print(f"\n📥 Python {config.System.PYTHON_VERSION_SHORT} ({arch}) indiriliyor...")
@@ -110,6 +113,7 @@ def install_python_313_silent():
         
         if result.returncode == 0:
             print(f"✅ Python {config.System.PYTHON_VERSION_SHORT} başarıyla yüklendi!\n")
+            logging.info(f"Python {config.System.PYTHON_VERSION_SHORT} installed successfully.")
             return True
         else:
             print(f"❌ Yükleme başarısız oldu. Hata kodu: {result.returncode}")
@@ -190,6 +194,7 @@ def handle_python_version_fallback():
         print("\n" + "!"*60)
         print("❌ KRİTİK HATA: Maksimum yeniden başlatma denemesine ulaşıldı.")
         print("!"*60)
+        logging.critical("Maximum restart attempts reached. Preventing loop.")
         print("\nUygulama Python sürümleri arasında geçiş yaparken döngüye girdi.")
         print("Olası nedenler:")
         print("1. 'windows-curses' yüklemesi sessizce başarısız oluyor.")
@@ -208,6 +213,8 @@ def handle_python_version_fallback():
     print(f"\nÇözüm: Python {config.System.PYTHON_VERSION_SHORT} ile çalıştırmak.")
     print("-"*60)
     
+    logging.info("Python version mismatch detected. Attempting fallback.")
+    
     # py launcher var mı kontrol et
     try:
         py_check = subprocess.run(
@@ -220,6 +227,7 @@ def handle_python_version_fallback():
     except FileNotFoundError:
         print("\n❌ 'py' launcher bulunamadı.")
         print("   Python'u python.org'dan yeniden yüklemeniz gerekebilir.")
+        logging.error("py launcher not found.")
         input("\nÇıkmak için Enter...")
         return False
     
@@ -239,6 +247,7 @@ def handle_python_version_fallback():
                 cwd=os.path.dirname(script_path),
                 env=env
             )
+            logging.info(f"Switched to Python {config.System.PYTHON_VERSION_SHORT} successfully.")
             sys.exit(result.returncode)
         except KeyboardInterrupt:
             # Parent process Ctrl+C yakalarsa sessizce ve temiz çık (Check 1)
@@ -365,8 +374,14 @@ def ensure_curses():
 
 
 def main():
+    # Setup logging first
+    logging_config.setup_logging()
+    logging.info("Application starting...")
+    logging.info(f"Running on Python {sys.version}")
+
     # Windows'ta curses modülünü kontrol et ve gerekirse yükle
     if not ensure_curses():
+        logging.critical("Ensure curses failed. Exiting.")
         return
     
     # 0. Başlangıç Temizliği
