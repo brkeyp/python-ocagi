@@ -1,6 +1,59 @@
 # -*- coding: utf-8 -*-
 import curses
 
+class DependencyManifest:
+    """Manages external tool dependencies and versioning."""
+    
+    # Target Platform
+    TARGET_MAJOR = 3
+    TARGET_MINOR = 13
+    
+    # Minimum Viable Version (SemVer)
+    # We accept any 3.13.x where x >= MIN_PATCH.
+    # This ensures we can enforce security updates (e.g. 3.13.11+) without breaking
+    # the bootstrapper for every single minor release, while still allowing the
+    # code to be "aware" of the minimum requirement.
+    MIN_PATCH = 11
+
+    # The version we *provide* if the user needs an install
+    # This is the "Latest Known Good" version.
+    LATEST_KNOWN_VERSION = "3.13.11"
+    
+    # Checksums for the LATEST_KNOWN_VERSION (Deterministic Security)
+    # Key = Architecture (amd64, arm64)
+    # Value = SHA-256 Hash
+    INSTALLER_HASHES = {
+        "amd64": "30d4654b3eac7ddfdf2682db4c8dcb490f3055f4f33c6906d6b828f680152101",
+        # "arm64": "..." # Placeholder for future ARM64 support
+    }
+    
+    @classmethod
+    def get_version_str(cls):
+        """Returns '3.13' style string."""
+        return f"{cls.TARGET_MAJOR}.{cls.TARGET_MINOR}"
+        
+    @classmethod
+    def get_installer_url(cls, arch="amd64"):
+        """Dynamically generates the official Python FTP URL."""
+        # Main Python FTP pattern: https://www.python.org/ftp/python/{version}/python-{version}-{arch}.exe
+        # Note: 
+        # - amd64 -> python-3.13.11-amd64.exe
+        # - arm64 -> python-3.13.11-arm64.exe
+        # - win32 -> python-3.13.11.exe (We treat 'win32' special if needed, but modern defaults are 64bit)
+        
+        version = cls.LATEST_KNOWN_VERSION
+        base_url = "https://www.python.org/ftp/python"
+        
+        # Suffix handling based on standard Python installer naming
+        suffix = f"-{arch}" if arch in ["amd64", "arm64"] else ""
+        
+        return f"{base_url}/{version}/python-{version}{suffix}.exe"
+
+    @classmethod
+    def get_expected_hash(cls, arch="amd64"):
+        """Returns the expected SHA-256 hash for the given architecture."""
+        return cls.INSTALLER_HASHES.get(arch)
+
 class System:
     """System configuration and file paths."""
     WINDOW_TITLE_WIN = "PYTHON - YAZARAK ÖĞRENME/ÇALIŞMA SİMULATÖRÜ ☾☆"
@@ -13,11 +66,14 @@ class System:
     FILENAME_DEV_MESSAGE = 'developer_message.txt'
     
     # Python Installer Configuration
-    PYTHON_VERSION_SHORT = "3.13"
-    PYTHON_VERSION_FULL = "3.13.11"
-    PYTHON_INSTALLER_HASH = "30d4654b3eac7ddfdf2682db4c8dcb490f3055f4f33c6906d6b828f680152101"
-    PYTHON_INSTALLER_URL = "https://www.python.org/ftp/python/3.13.11/python-3.13.11-amd64.exe"
-    PYTHON_INSTALLER_FILE = "python-3.13.11-amd64.exe"
+    # Refactored to use DependencyManifest
+    PYTHON_VERSION_SHORT = DependencyManifest.get_version_str()
+    # PYTHON_VERSION_FULL removed; use DependencyManifest.LATEST_KNOWN_VERSION
+    # PYTHON_INSTALLER_HASH removed; use DependencyManifest.get_expected_hash()
+    # PYTHON_INSTALLER_URL removed; use DependencyManifest.get_installer_url()
+    
+    # Legacy constant kept for filename if needed, or derived dynamically
+    PYTHON_INSTALLER_FILE = f"python-{DependencyManifest.LATEST_KNOWN_VERSION}-amd64.exe" # Default for temp file renaming
     
     PKG_WINDOWS_CURSES = "windows-curses"
 

@@ -4,6 +4,8 @@ import os
 
 import os
 import config
+import platform # For architecture detection
+
 
 # Curses escape delay fix (Must be set before any curses import/init)
 os.environ.setdefault('ESCDELAY', config.Timing.ESCDELAY_ENV)
@@ -24,14 +26,27 @@ def install_python_313_silent():
     
     # SHA-256 Checksum for Python 3.13.11 amd64
     # Güncelleme durumunda bu hash'in de güncellenmesi GEREKLİDİR.
-    EXPECTED_HASH = config.System.PYTHON_INSTALLER_HASH
+    # SHA-256 Checksum Check
+    # Dynamic architecture detection
+    arch = get_system_arch()
     
-    print(f"\n📥 Python {config.System.PYTHON_VERSION_SHORT} indiriliyor...")
+    EXPECTED_HASH = config.DependencyManifest.get_expected_hash(arch)
+    if not EXPECTED_HASH:
+        # Fallback or warning if hash not found for arch (e.g. arm64 unsupported yet)
+        print(f"⚠️  UYARI: {arch} mimarisi için güvenlik hash'i bulunamadı. Kurulum devam edebilir ancak güvenlik doğrulaması yapılamayacak.")
+        # Optional: return False if we want to be strict
+        
+    print(f"\n📥 Python {config.System.PYTHON_VERSION_SHORT} ({arch}) indiriliyor...")
     print("   Bu işlem internet hızınıza bağlı olarak birkaç dakika sürebilir.\n")
     
-    # Python 3.13 installer URL (64-bit)
-    # En güncel 3.13 sürümü
-    url = config.System.PYTHON_INSTALLER_URL
+    # Python 3.13 installer URL
+    url = config.DependencyManifest.get_installer_url(arch)
+    
+    # Installer file name from URL or config
+    installer_filename = f"python-{config.DependencyManifest.LATEST_KNOWN_VERSION}-{arch}.exe"
+    
+    # Update global config for filename consistency just in case
+    config.System.PYTHON_INSTALLER_FILE = installer_filename
     
     try:
         # Geçici dosyaya indir
@@ -62,20 +77,22 @@ def install_python_313_silent():
         
         calculated_hash = sha256_hash.hexdigest()
         
-        if calculated_hash != EXPECTED_HASH:
-            print("\n❌ GÜVENLİK HATASI: İndirilen dosya doğrulanamadı!")
-            print(f"   Beklenen Hash: {EXPECTED_HASH}")
-            print(f"   Hesaplanan Hash: {calculated_hash}")
-            print("   Dosya güvenliği için siliniyor.")
-            
-            try:
-                os.remove(installer_path)
-            except OSError:
-                pass
+        if EXPECTED_HASH:
+             if calculated_hash != EXPECTED_HASH:
+                print("\n❌ GÜVENLİK HATASI: İndirilen dosya doğrulanamadı!")
+                print(f"   Beklenen Hash: {EXPECTED_HASH}")
+                print(f"   Hesaplanan Hash: {calculated_hash}")
+                print("   Dosya güvenliği için siliniyor.")
                 
-            return False
-        
-        print("✅ Dosya doğrulandı.")
+                try:
+                    os.remove(installer_path)
+                except OSError:
+                    pass
+                    
+                return False
+             print("✅ Dosya doğrulandı.")
+        else:
+             print("⚠️  Güvenlik hash'i olmadığı için doğrulama atlandı.")
         # ---------------------------------------------------------
 
         print(f"\n🔧 Python {config.System.PYTHON_VERSION_SHORT} yükleniyor...")
@@ -107,6 +124,60 @@ def install_python_313_silent():
         return False
     except Exception as e:
         print(f"\n❌ Beklenmeyen hata: {e}")
+        return False
+
+
+def get_system_arch():
+    """Detects system architecture -> 'amd64' or 'arm64'."""
+    machine = platform.machine().lower()
+    if machine in ['amd64', 'x86_64']:
+        return 'amd64'
+    elif machine in ['aarch64', 'arm64']:
+        return 'arm64'
+    return 'amd64' # Default to amd64 if unknown (most likely scenario)
+
+
+def check_python_version_satisfies_mvv(target_minor_version_str):
+    """
+    Checks if the installed Python version satisfies the Minimum Viable Version (MVV).
+    Args:
+        target_minor_version_str: e.g. "3.13"
+    Returns:
+        bool: True if satisfied (>= MIN_PATCH), False if too old.
+    """
+    import re
+    
+    # Check if this specific version exists at all
+    check_cmd = ['py', f'-{target_minor_version_str}', '--version']
+    try:
+        result = subprocess.run(check_cmd, capture_output=True, text=True)
+        if result.returncode != 0:
+            return False # Not installed
+        
+        # Output format: "Python 3.13.11"
+        output = result.stdout.strip()
+        match = re.search(r"Python (\d+)\.(\d+)\.(\d+)", output)
+        if match:
+            major, minor, patch = map(int, match.groups())
+            
+            expected_major = config.DependencyManifest.TARGET_MAJOR
+            expected_minor = config.DependencyManifest.TARGET_MINOR
+            min_patch = config.DependencyManifest.MIN_PATCH
+            
+            if major != expected_major or minor != expected_minor:
+                 # Should technically be caught by 'py -3.13', but safety first
+                 return False
+                 
+            if patch < min_patch:
+                print(f"⚠️  Mevcut sürüm ({major}.{minor}.{patch}) eski.")
+                print(f"   Gerekli minimum sürüm: {expected_major}.{expected_minor}.{min_patch}+")
+                return False
+                
+            return True
+            
+        return False # Parse error
+        
+    except FileNotFoundError:
         return False
 
 
@@ -152,14 +223,10 @@ def handle_python_version_fallback():
         input("\nÇıkmak için Enter...")
         return False
     
-    # Python 3.13 yüklü mü kontrol et
-    py313_check = subprocess.run(
-        ['py', f'-{config.System.PYTHON_VERSION_SHORT}', '--version'],
-        capture_output=True,
-        text=True
-    )
+    # Python 3.13 yüklü mü VE gerekli minimum sürümü karşılıyor mu kontrol et
+    is_version_ok = check_python_version_satisfies_mvv(config.System.PYTHON_VERSION_SHORT)
     
-    if py313_check.returncode == 0:
+    if is_version_ok:
         # 3.13 zaten yüklü - SESSIZCE GECIS YAP (mesaj yok, Enter yok)
         script_path = get_script_path()
         try:
