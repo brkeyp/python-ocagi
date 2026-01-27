@@ -81,6 +81,10 @@ class CursesInputDriver(InputDriver):
             return self._handle_esc_sequence()
             
         # 6. Standard Key Mapping
+        # Window Resize
+        if char_code == curses.KEY_RESIZE:
+            return InputEvent(EventType.RESIZE)
+            
         # Navigation
         if char_code == curses.KEY_UP:
             return InputEvent(EventType.UP)

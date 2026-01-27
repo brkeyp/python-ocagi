@@ -383,9 +383,14 @@ def main():
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
     try:
-        # Pencereni genişlet (110x30)
+        # 1. Terminal Boyutlandırma (Opsiyonel / Başlangıç için öneri)
+        # Artık responsiv yapıdayız, sadece "en iyi" başlangıç boyutunu deniyoruz.
         from ui_utils import OSUtils
-        OSUtils.resize_terminal(config.Layout.TARGET_HEIGHT, config.Layout.TARGET_WIDTH)
+        try:
+             # Try to set a comfortable size, but don't force it if user resizes later
+             OSUtils.resize_terminal(config.Layout.TARGET_HEIGHT, config.Layout.TARGET_WIDTH)
+        except:
+             pass
 
         # controller'ı burada import et (curses yüklendikten sonra)
         import controller

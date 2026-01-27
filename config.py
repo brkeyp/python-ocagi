@@ -79,8 +79,11 @@ class System:
 
 class Layout:
     """Screen dimensions and layout constants."""
-    MIN_WIDTH = 20
-    MIN_HEIGHT = 10
+    MIN_WIDTH = 60
+    MIN_HEIGHT = 15
+    
+    # Switch to compact mode if height is below this
+    COMPACT_HEIGHT_THRESHOLD = 25
     
     TARGET_WIDTH = 110
     TARGET_HEIGHT = 30

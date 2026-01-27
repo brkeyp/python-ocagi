@@ -181,6 +181,11 @@ class Editor:
                  self.footer_state.reset_vao()
                  return "NEXT_TASK"
 
+            elif event.type == EventType.RESIZE:
+                 # Curses should have updated lines/cols by now if handled in driver
+                 should_redraw = True
+                 continue
+
             elif event.type == EventType.SHOW_HINT:
                  self.footer_state.show_hint = not self.footer_state.show_hint
                  continue

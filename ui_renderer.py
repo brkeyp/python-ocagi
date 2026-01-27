@@ -62,56 +62,89 @@ class EditorRenderer:
         self.stdscr.erase()  # clear() yerine erase() - daha az flicker
         height, width = self.stdscr.getmaxyx()
         
+        # 0. Min Viewport Check
+        if height < config.Layout.MIN_HEIGHT or width < config.Layout.MIN_WIDTH:
+            self._draw_too_small_warning(height, width)
+            self.stdscr.noutrefresh()
+            curses.doupdate()
+            return
+        
         row = 0
         
-        # Başlık
-        header_line = "-" * (width - 1)
-        self.stdscr.addstr(row, 0, header_line[:width-1])
-        row += 1
+        is_compact = height < config.Layout.COMPACT_HEIGHT_THRESHOLD
         
         if os.name == 'nt':
             title = config.System.WINDOW_TITLE_WIN
         else:
             title = config.System.WINDOW_TITLE_UNIX
-        
-        # 1. Adım: Satırı TAMAMEN temizle (Windows ghosting/artifact sorunu için en kesin çözüm)
-        # erase() bazen yetersiz kalabilir, manuel boşluk basıyoruz.
-        try:
-            self.stdscr.addstr(row, 0, " " * (width - 1))
-        except:
-            pass
             
-        # 2. Adım: Başlığı yaz
-        try:
-            self.stdscr.addstr(row, 0, title[:width-1])
-        except:
-            self.stdscr.addstr(row, 0, config.System.WINDOW_TITLE_FALLBACK[:width-1])
-        
-        # Sayaç gösterimi (sağ üst köşe)
-        # Her zaman 3 haneli ve BOŞLUKLU göster (  1,  10, 100) - Sıfırlı (001) istenmiyor.
-        if editor.completed_count > 0 or editor.skipped_count > 0:
+        header_line = "-" * (width - 1)
+
+        if is_compact:
+            # Compact Header: Tek satır, inverted
+            # Title'ı ortala/kes
+            display_title = f" {title.strip()} "
+            if len(display_title) > width - 1:
+                display_title = display_title[:width-4] + "..."
+            
+            # Center title
+            start_x = max(0, (width - len(display_title)) // 2)
             try:
-                # Sayaç parçalarını ayrı ayrı renklendir ve 3 hane formatla (Space padding)
-                completed_text = f"{editor.completed_count:>3} Başarıldı"
-                separator = " | "
-                skipped_text = f"{editor.skipped_count:>3} Atlandı"
-                
-                total_len = len(completed_text) + len(separator) + len(skipped_text)
-                counter_col = width - total_len - 2
-                
-                if counter_col > len(title) + 5:
-                    # Başarıldı (yeşil)
-                    self.stdscr.addstr(row, counter_col, completed_text, curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
-                    # Ayırıcı (normal)
-                    self.stdscr.addstr(row, counter_col + len(completed_text), separator)
-                    # Atlandı (kırmızı)
-                    self.stdscr.addstr(row, counter_col + len(completed_text) + len(separator), skipped_text, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
+                self.stdscr.addstr(row, 0, " " * (width - 1), curses.A_REVERSE) # Arkaplan şeridi
+                self.stdscr.addstr(row, start_x, display_title, curses.A_REVERSE | curses.A_BOLD)
             except:
                 pass
-        row += 1
-        
-        self.stdscr.addstr(row, 0, header_line[:width-1])
-        row += 1
+            
+            # Compact mode'da sayaçları başlık satırına göm (Sağ köşe)
+            if editor.completed_count > 0 or editor.skipped_count > 0:
+                try:
+                    # Basit sayaç: "✓10 ✗5"
+                    counter_text = f"✓{editor.completed_count} ✗{editor.skipped_count}"
+                    if len(counter_text) + start_x + len(display_title) < width - 2:
+                        self.stdscr.addstr(row, width - len(counter_text) - 2, counter_text, curses.A_REVERSE)
+                except:
+                    pass
+            
+            row += 1
+            
+        else:
+            # Normal Header (3 Satır)
+            # 1. Üst Çizgi
+            self.stdscr.addstr(row, 0, header_line[:width-1])
+            row += 1
+            
+            # 2. Başlık Satırı (Temizle + Yaz)
+            try:
+                self.stdscr.addstr(row, 0, " " * (width - 1))
+            except:
+                pass
+                
+            try:
+                self.stdscr.addstr(row, 0, title[:width-1])
+            except:
+                self.stdscr.addstr(row, 0, config.System.WINDOW_TITLE_FALLBACK[:width-1])
+            
+            # Sayaç gösterimi (Normal)
+            if editor.completed_count > 0 or editor.skipped_count > 0:
+                try:
+                    completed_text = f"{editor.completed_count:>3} Başarıldı"
+                    separator = " | "
+                    skipped_text = f"{editor.skipped_count:>3} Atlandı"
+                    
+                    total_len = len(completed_text) + len(separator) + len(skipped_text)
+                    counter_col = width - total_len - 2
+                    
+                    if counter_col > len(title) + 5:
+                        self.stdscr.addstr(row, counter_col, completed_text, curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
+                        self.stdscr.addstr(row, counter_col + len(completed_text), separator)
+                        self.stdscr.addstr(row, counter_col + len(completed_text) + len(separator), skipped_text, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
+                except:
+                    pass
+            row += 1
+            
+            # 3. Alt Çizgi
+            self.stdscr.addstr(row, 0, header_line[:width-1])
+            row += 1
         
         # Görev Bilgisi
         row = self._draw_task_info(row, width, height, header_line)
@@ -348,3 +381,31 @@ class EditorRenderer:
         row += 1
         
         return row
+    
+    def _draw_too_small_warning(self, height, width):
+        """Ekran çok küçükse uyarı gösterir."""
+        msg1 = "⚠️  PENCERE ÇOK KÜÇÜK"
+        msg2 = f"Min Boyut: {config.Layout.MIN_WIDTH}x{config.Layout.MIN_HEIGHT}"
+        msg3 = f"Mevcut: {width}x{height}"
+        msg4 = "Lütfen pencereyi büyütün."
+        
+        cy = height // 2 - 2
+        
+        try:
+            if cy >= 0:
+                cx1 = max(0, (width - len(msg1)) // 2)
+                self.stdscr.addstr(cy, cx1, msg1, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
+                
+            if cy + 1 < height:
+                cx2 = max(0, (width - len(msg2)) // 2)
+                self.stdscr.addstr(cy + 1, cx2, msg2, curses.color_pair(config.Colors.YELLOW))
+
+            if cy + 2 < height:
+                cx3 = max(0, (width - len(msg3)) // 2)
+                self.stdscr.addstr(cy + 2, cx3, msg3, curses.color_pair(config.Colors.YELLOW))
+                
+            if cy + 4 < height:
+                cx4 = max(0, (width - len(msg4)) // 2)
+                self.stdscr.addstr(cy + 4, cx4, msg4, curses.color_pair(config.Colors.WHITE))
+        except:
+            pass
