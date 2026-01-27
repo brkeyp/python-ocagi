@@ -24,6 +24,8 @@ os.environ.setdefault('ESCDELAY', config.Timing.ESCDELAY_ENV)
 from ui_utils import OSUtils
 from ui_footer import FooterState
 from ui_renderer import EditorRenderer
+from input_api import EventType, InputEvent
+from input_curses import CursesInputDriver
 
 
 class Editor:
@@ -88,132 +90,117 @@ class Editor:
             curses.init_pair(config.Colors.SUCCESS, curses.COLOR_GREEN, -1)    # Başarıldı damgası
             curses.init_pair(config.Colors.MAGENTA, curses.COLOR_MAGENTA, -1)  # Keyword
             curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)    # String
+            curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)    # String
             curses.init_pair(config.Colors.BLUE, curses.COLOR_BLUE, -1)     # Number
 
-    # Windows Key Codes
-    KEY_ALT_LEFT_WIN = config.Keys.WIN_ALT_LEFT
-    KEY_ALT_RIGHT_WIN = config.Keys.WIN_ALT_RIGHT
-    
-    # Windows Numpad Codes
-    KEY_WIN_PAD_SLASH = config.Keys.WIN_PAD_SLASH
-    KEY_WIN_PAD_ENTER = config.Keys.WIN_PAD_ENTER
-    KEY_WIN_PAD_STAR = config.Keys.WIN_PAD_STAR
-    KEY_WIN_PAD_MINUS = config.Keys.WIN_PAD_MINUS
-    KEY_WIN_PAD_PLUS = config.Keys.WIN_PAD_PLUS
+        # Input Driver
+        self.driver = CursesInputDriver(stdscr)
+        self.vao_step = 0
+
 
     def run(self):
         """Editörü başlatır ve kodu döndürür."""
-        
-        # İlk çizim için flag
         should_redraw = True
         
         while True:
-            # 1. Mesaj süresi doldu mu kontrol et
+            # 1. Timer Logic (Message & VAO)
+            current_time = time.time()
+            
+            # Message Autoclear
             if self.message and self.message_timestamp:
-                if time.time() - self.message_timestamp > config.Timing.MSG_AUTOCLEAR_SEC:
+                if current_time - self.message_timestamp > config.Timing.MSG_AUTOCLEAR_SEC:
                     self.message = ""
                     self.message_timestamp = None
                     should_redraw = True
-            
-            # 2. Highlight expire kontrolü (Footer için)
+
+            # VAO Expiration
             if self.footer_state.vao_expire > 0:
-                self.footer_state.check_expired()
-                # Expire olduysa redraw gerekir, henüz olmadıysa beklemeye devam
-                if self.footer_state.vao_progress == 0:
+                 self.footer_state.check_expired()
+                 if self.footer_state.vao_progress == 0:
+                     self.vao_step = 0
                      should_redraw = True
             
-            # 3. Ekranı yenile (Sadece gerekirse)
+            # 2. Draw
             if should_redraw:
                 self.renderer.refresh_screen()
                 should_redraw = False
-            
-            # 4. Timeout Belirle
-            # Eğer ekranda süreli bir mesaj veya highlight varsa kısa timeout (100ms)
-            # Yoksa CPU'yu yormamak için blocking veya uzun timeout (-1 veya 1000ms)
-            # Ancak animasyon akıcılığı için 100ms güvenli bir varsayılandır, 
-            # asıl optimizasyon refresh_screen'i gereksiz çağırmamaktır.
-            # Yine de mesaj yoksa blocking yapmak en iyisi (sifir CPU kullanımı)
+                
+            # 3. Input Timeout
             has_active_timer = (self.message is not None and self.message != "") or \
-                               (self.footer_state.vao_expire > 0)
+                               (self.footer_state.vao_progress > 0)
             
-            if has_active_timer:
-                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
-            else:
-                self.stdscr.timeout(config.Timing.TIMEOUT_BLOCKING)  # Blocking mode (tuş bekle)
+            timeout = config.Timing.TIMEOUT_NORMAL if has_active_timer else config.Timing.TIMEOUT_BLOCKING
             
-            try:
-                # get_wch() kullanarak Unicode desteği sağla
-                try:
-                    char = self.stdscr.get_wch()
-                except AttributeError:
-                    char = self.stdscr.getch()
-                except curses.error:
-                    # Timeout -> Loop başına dön
-                    continue
-            except KeyboardInterrupt:
-                raise KeyboardInterrupt
+            # 4. Get Event
+            event = self.driver.get_event(timeout)
             
-            # Tuş algılandı -> Bir sonraki döngüde çizim yapmalı
-            should_redraw = True
+            if event.type == EventType.TIMEOUT:
+                continue
+                
+            should_redraw = True # Input received
             
-            # char string ise Unicode karakter, int ise özel tuş
-            is_char_str = isinstance(char, str)
-            char_code = ord(char) if is_char_str else char
+            # --- VAO LOGIC ---
+            if self.vao_step > 0:
+                expected = None
+                if self.vao_step == 1: expected = 'v'
+                elif self.vao_step == 2: expected = 'a'
+                elif self.vao_step == 3: expected = 'o'
+                
+                if event.type == EventType.CHAR and event.value and event.value.lower() == expected:
+                     if expected == 'o':
+                         self.footer_state.reset_vao()
+                         self.vao_step = 0
+                         return "DEV_MESSAGE"
+                     else:
+                         self.vao_step += 1
+                         self.footer_state.set_vao_progress(self.vao_step)
+                         continue
+                elif event.type != EventType.TIMEOUT:
+                    # Broken sequence
+                    self.footer_state.reset_vao()
+                    self.vao_step = 0
+                    # Fallthrough
             
-            # --- WINDOWS NUMPAD NORMALİZASYONU ---
-            # Windows'ta Numpad tuşları karakter yerine özel integer kodlar gönderir.
-            # Bunları standart karakterlere dönüştürerek editörün bunları normal yazı gibi algılamasını sağlıyoruz.
-            if not is_char_str:
-                if char_code == self.KEY_WIN_PAD_ENTER:
-                    char = '\n'
-                    is_char_str = True
-                    char_code = config.Keys.ENTER
-                elif char_code == self.KEY_WIN_PAD_PLUS:
-                    char = '+'
-                    is_char_str = True
-                    char_code = 43
-                elif char_code == self.KEY_WIN_PAD_MINUS:
-                    char = '-'
-                    is_char_str = True
-                    char_code = 45
-                elif char_code == self.KEY_WIN_PAD_STAR:
-                    char = '*'
-                    is_char_str = True
-                    char_code = 42
-                elif char_code == self.KEY_WIN_PAD_SLASH:
-                    char = '/'
-                    is_char_str = True
-                    char_code = 47
-            
-            # --- ÇIKIŞ (Ctrl+C) ---
-            if char_code == config.Keys.CTRL_C:  # Ctrl+C
+            # Start VAO on ESCAPE
+            if event.type == EventType.ESCAPE:
+                self.message = ""
+                self.footer_state.set_vao_progress(1) # Highlight 1
+                self.vao_step = 1
+                should_redraw = True
+                continue
+                
+            # --- EVENT HANDLING ---
+            if event.type == EventType.EXIT:
                 raise KeyboardInterrupt
                 
-            # --- WINDOWS ALT+ARROW FIX ---
-            if char_code == self.KEY_ALT_LEFT_WIN:
+            elif event.type == EventType.PREV_TASK:
                 self.footer_state.reset_vao()
                 return "PREV_TASK"
-            
-            elif char_code == self.KEY_ALT_RIGHT_WIN:
-                self.footer_state.reset_vao()
-                return "NEXT_TASK"
+                
+            elif event.type == EventType.NEXT_TASK:
+                 self.footer_state.reset_vao()
+                 return "NEXT_TASK"
 
-            # --- NAVİGASYON ---
-            if char_code == curses.KEY_UP:
+            elif event.type == EventType.SHOW_HINT:
+                 self.footer_state.show_hint = not self.footer_state.show_hint
+                 continue
+
+            # --- NAVIGATION ---
+            elif event.type == EventType.UP:
                 if self.cy > 0:
                     self.cy -= 1
                     self.cx = min(self.cx, len(self.buffer[self.cy]))
                 self.waiting_for_submit = False
                 self.message = ""
 
-            elif char_code == curses.KEY_DOWN:
+            elif event.type == EventType.DOWN:
                 if self.cy < len(self.buffer) - 1:
                     self.cy += 1
                     self.cx = min(self.cx, len(self.buffer[self.cy]))
                 self.waiting_for_submit = False
                 self.message = ""
 
-            elif char_code == curses.KEY_LEFT:
+            elif event.type == EventType.LEFT:
                 if self.cx > 0:
                     self.cx -= 1
                 elif self.cy > 0:
@@ -222,7 +209,7 @@ class Editor:
                 self.waiting_for_submit = False
                 self.message = ""
 
-            elif char_code == curses.KEY_RIGHT:
+            elif event.type == EventType.RIGHT:
                 if self.cx < len(self.buffer[self.cy]):
                     self.cx += 1
                 elif self.cy < len(self.buffer) - 1:
@@ -231,278 +218,74 @@ class Editor:
                 self.waiting_for_submit = False
                 self.message = ""
 
-            # --- DÜZENLEME ---
-            elif char_code in (curses.KEY_BACKSPACE, config.Keys.BACKSPACE_2, config.Keys.BACKSPACE_1):  # Backspace
+            # --- EDITING ---
+            elif event.type == EventType.BACKSPACE:
                 if self.is_locked:
                     self.message = config.UI.MSG_TASK_COMPLETED
                     self.message_timestamp = time.time()
                 else:
                     self._handle_backspace()
-                
-            elif char_code in (curses.KEY_DC, config.Keys.DELETE):  # Delete tuşu
-                # RESET TRIGGER (Buffer boşsa VEYA kilitli görevde)
+
+            elif event.type == EventType.DELETE:
                 is_buffer_empty = all(line.strip() == "" for line in self.buffer)
                 if is_buffer_empty or self.is_locked:
                     self.message = config.UI.MSG_RESET_CONFIRM
                     self.renderer.refresh_screen()
                     while True:
-                        confirm = self.stdscr.getch()
-                        if confirm in (ord('e'), ord('E')):
+                        conf_event = self.driver.get_event(config.Timing.TIMEOUT_BLOCKING)
+                        if conf_event.type == EventType.CHAR and conf_event.value and conf_event.value.lower() == 'e':
                             return "RESET_ALL"
-                        elif confirm in (ord('h'), ord('H')) or (confirm >= 32 and confirm < 127):
+                        elif conf_event.type in (EventType.CHAR, EventType.ESCAPE, EventType.ENTER, EventType.UP, EventType.DOWN, EventType.LEFT, EventType.RIGHT):
                             self.message = ""
+                            should_redraw = True
                             break
+                        # Otherwise ignore (modifier keys etc)
                 else:
                     self._handle_delete()
 
-            # --- ENTER MANTIĞI ---
-            elif char_code in (curses.KEY_ENTER, config.Keys.ENTER, config.Keys.RETURN) or (is_char_str and char in ('\n', '\r')):
-                # Celebration modunda - atlanmış görev varsa yönlendir
+            # --- ENTER ---
+            elif event.type == EventType.ENTER:
                 if self.task_status == "celebration":
                     if self.has_skipped:
                         return "GOTO_FIRST_SKIPPED"
-                    # has_skipped=False ise Enter'a basınca hiçbir şey olmasın
                     continue
-                # Kilitli görevde (completed) - sadece mesaj göster
                 elif self.is_locked:
                     self.message = config.UI.MSG_TASK_COMPLETED
                     self.message_timestamp = time.time()
-                # Atlanmış görevde
                 elif self.task_status == "skipped":
                     if self.waiting_for_submit:
                         is_buffer_empty = all(line.strip() == "" for line in self.buffer)
                         if is_buffer_empty:
-                            return None  # Çözümü tekrar göster
-                        else:
-                            return "\n".join(self.buffer)  # Yeni cevabı gönder
-                    else:
-                        # İlk Enter -> Satır Böl veya Yeni Satır
-                        current_line = self.buffer[self.cy]
-                        left_part = current_line[:self.cx]
-                        right_part = current_line[self.cx:]
-                        
-                        indent = ""
-                        if left_part.strip().endswith(':'):
-                            indent = "    "
-                        
-                        self.buffer[self.cy] = left_part
-                        self.buffer.insert(self.cy + 1, indent + right_part)
-                        self.cy += 1
-                        self.cx = len(indent)
-                        self.waiting_for_submit = True
-                        
-                        is_buffer_empty = all(line.strip() == "" for line in self.buffer)
-                        if is_buffer_empty:
-                            self.message = config.UI.MSG_PRESS_ENTER_AGAIN
-                        else:
-                            self.message = config.UI.MSG_SUBMIT_OR_TYPE
-                # Normal (pending) görev
-                else:
-                    if self.waiting_for_submit:
-                        # İkinci Enter geldi
-                        is_buffer_empty = all(line.strip() == "" for line in self.buffer)
-                        
-                        if is_buffer_empty:
-                            return None  # Skip sinyali
+                            return None 
                         else:
                             return "\n".join(self.buffer)
                     else:
-                        # İlk Enter -> Satır Böl veya Yeni Satır
-                        current_line = self.buffer[self.cy]
-                        left_part = current_line[:self.cx]
-                        right_part = current_line[self.cx:]
-                        
-                        # Auto-Indent Mantığı
-                        indent = ""
-                        if left_part.strip().endswith(':'):
-                            indent = "    "
-                        
-                        self.buffer[self.cy] = left_part
-                        self.buffer.insert(self.cy + 1, indent + right_part)
-                        
-                        self.cy += 1
-                        self.cx = len(indent)
-                        
-                        self.waiting_for_submit = True
-                        
+                        self._handle_newline()
+                else: # pending
+                    if self.waiting_for_submit:
                         is_buffer_empty = all(line.strip() == "" for line in self.buffer)
-                        
                         if is_buffer_empty:
-                            self.message = config.UI.MSG_SKIP_OR_TYPE
+                            return None 
                         else:
-                            self.message = config.UI.MSG_SUBMIT_OR_TYPE
+                            return "\n".join(self.buffer)
+                    else:
+                        self._handle_newline()
 
-            # --- KARAKTER GİRİŞİ (Unicode dahil) ---
-            elif is_char_str and len(char) == 1 and ord(char) >= 32:
-                # İpucu Kontrolü (?) - kilitli görevde de çalışır
-                if char == '?':
-                    self.footer_state.show_hint = not self.footer_state.show_hint
-                    continue
-                
-                # Kilitli görevde karakter girişini engelle
+            # --- CHAR INPUT ---
+            elif event.type == EventType.CHAR:
                 if self.is_locked:
                     self.message = "🔒 Bu görev tamamlandı."
                     self.message_timestamp = time.time()
                     continue
                 
-                # Unicode karakter (Türkçe karakterler dahil)
                 self.waiting_for_submit = False
                 self.message = ""
                 
                 line = self.buffer[self.cy]
-                self.buffer[self.cy] = line[:self.cx] + char + line[self.cx:]
+                self.buffer[self.cy] = line[:self.cx] + event.value + line[self.cx:]
                 self.cx += 1
-            
-            elif not is_char_str and char_code >= 32 and char_code < 127:
-                ch = chr(char_code)
-                
-                # İpucu Kontrolü (?) - kilitli görevde de çalışır
-                if ch == '?':
-                    self.footer_state.show_hint = not self.footer_state.show_hint
-                    continue
-                
-                # Kilitli görevde karakter girişini engelle
-                if self.is_locked:
-                    self.message = "🔒 Bu görev tamamlandı."
-                    self.message_timestamp = time.time()
-                    continue
-                
-                # Eski getch() davranışı için ASCII karakter (fallback)
-                self.waiting_for_submit = False
-                self.message = ""
-                
-                line = self.buffer[self.cy]
-                self.buffer[self.cy] = line[:self.cx] + ch + line[self.cx:]
-                self.cx += 1
-            
-            # --- ESC tuşu ve Alt kombinasyonları ---
-            elif char_code == config.Keys.ESC:  # ESC
-                result = self._handle_esc_sequence()
-                if result:
-                    return result
-                should_redraw = True  # ESC basıldıysa footer değişmiştir
 
-    def _handle_esc_sequence(self):
-        """ESC tuşu ve kombinasyonlarını işler. Return değeri varsa ana döngüden çık."""
-        # Mesajı temizle ki footer çizilebilsin ve highlight görünsün
-        self.message = ""
-        # ESC basıldı - footer'da highlight göster (ANINDA)
-        self.footer_state.set_vao_progress(1)
-        self.renderer.refresh_screen()
-        
-        # Non-blocking ile 1 saniye içinde sonraki tuşu bekle
-        next_char = self._wait_for_key_with_refresh(config.Timing.VAO_EXPIRE_SEC)
-        
-        # Timeout oldu (-1) - highlight 1 sn sonra sönecek (check_expired ile)
-        if next_char == -1:
-            return None
-        
-        # --- VAO SEQUENCE: ESC + v + a + o ---
-        if next_char in (ord('v'), ord('V')):
-            self.footer_state.set_vao_progress(2)
-            self.renderer.refresh_screen()
-            
-            second = self._wait_for_key_with_refresh(config.Timing.VAO_EXPIRE_SEC)
-            
-            if second == -1:
-                return None
-            
-            if second in (ord('a'), ord('A')):
-                self.footer_state.set_vao_progress(3)
-                self.renderer.refresh_screen()
-                
-                third = self._wait_for_key_with_refresh(config.Timing.VAO_EXPIRE_SEC)
-                
-                if third == -1:
-                    return None
-                
-                if third in (ord('o'), ord('O')):
-                    # VAO tamamlandı!
-                    self.footer_state.reset_vao()
-                    return "DEV_MESSAGE"
-            
-            # Sequence tamamlanmadı - sıfırla
-            self.footer_state.reset_vao()
-            return None
-        
-        # --- Alt+Arrow ve diğer ESC kombinasyonları ---
-        elif next_char == 91:  # '[' - ANSI escape sequence başlangıcı
-            self.footer_state.reset_vao()
-            self.stdscr.timeout(config.Timing.TIMEOUT_QUICK)  # Kısa timeout
-            try:
-                seq_char = self.stdscr.getch()
-            except:
-                return None
 
-            if seq_char == 49:  # '1' - modifier sequence
-                try:
-                    self.stdscr.getch()  # ';'
-                    mod = self.stdscr.getch()  # modifier (3 = Alt)
-                    direction = self.stdscr.getch()  # D=left, C=right
-                except:
-                    pass
-                else:
-                    self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
-                    if mod == 51:  # Alt modifier
-                        if direction == 68:  # 'D' - Left
-                            return "PREV_TASK"
-                        elif direction == 67:  # 'C' - Right
-                            return "NEXT_TASK"
-            
-            elif seq_char == 68:  # Direct Left arrow after ESC[
-                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
-                return "PREV_TASK"
-            elif seq_char == 67:  # Direct Right arrow after ESC[
-                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
-                return "NEXT_TASK"
-            
-            self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
-            return None
-        
-        elif next_char in (curses.KEY_LEFT, 260):
-            # Alt+Left (bazı sistemlerde)
-            self.footer_state.reset_vao()
-            return "PREV_TASK"
-        
-        elif next_char in (curses.KEY_RIGHT, 261):
-            # Alt+Right (bazı sistemlerde)
-            self.footer_state.reset_vao()
-            return "NEXT_TASK"
-        
-        elif next_char == 98:  # 'b' - Mac Option+Left
-            self.footer_state.reset_vao()
-            return "PREV_TASK"
-        
-        elif next_char == 102:  # 'f' - Mac Option+Right
-            self.footer_state.reset_vao()
-            return "NEXT_TASK"
-        
-        else:
-            # Bilinmeyen sequence veya başka tuş - sıfırla
-            self.footer_state.reset_vao()
-            return None
-    
-    def _wait_for_key_with_refresh(self, timeout_seconds):
-        """Belirtilen süre boyunca tuş bekle, bu sırada ekranı güncellemeye devam et."""
-        # Burada redraw optimization gerekmez çünkü ESC sequence çok kısa sürer
-        # ve highlight'ın görünmesi için sürekli redraw iyidir.
-        self.stdscr.timeout(config.Timing.TIMEOUT_QUICK)  # 50ms non-blocking
-        end_time = time.time() + timeout_seconds
-        
-        while time.time() < end_time:
-            try:
-                char = self.stdscr.getch()
-            except:
-                char = -1
-                
-            if char != -1:
-                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)  # Normal timeout'a dön
-                return char
-            # Ekranı güncelle (highlight görünsün)
-            self.renderer.refresh_screen()
-        
-        self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)  # Normal timeout'a dön
-        return -1  # Timeout
 
     def _handle_backspace(self):
         self.waiting_for_submit = False
@@ -529,6 +312,34 @@ class Editor:
         elif self.cy < len(self.buffer) - 1:
             next_line = self.buffer.pop(self.cy + 1)
             self.buffer[self.cy] += next_line
+
+    def _handle_newline(self):
+        current_line = self.buffer[self.cy]
+        left_part = current_line[:self.cx]
+        right_part = current_line[self.cx:]
+        
+        # Auto-Indent Mantığı
+        indent = ""
+        if left_part.strip().endswith(':'):
+            indent = "    "
+        
+        self.buffer[self.cy] = left_part
+        self.buffer.insert(self.cy + 1, indent + right_part)
+        
+        self.cy += 1
+        self.cx = len(indent)
+        
+        self.waiting_for_submit = True
+        
+        is_buffer_empty = all(line.strip() == "" for line in self.buffer)
+        
+        if is_buffer_empty:
+            if self.task_status == "skipped":
+                 self.message = config.UI.MSG_PRESS_ENTER_AGAIN # Corrected for Skipped
+            else:
+                 self.message = config.UI.MSG_SKIP_OR_TYPE
+        else:
+            self.message = config.UI.MSG_SUBMIT_OR_TYPE
 
 
 def run_editor_session(stdscr, task_info="", hint_text="", initial_code="", 
