@@ -1,9 +1,10 @@
 {
-  "current_step_id": 2,
-  "highest_reached_id": 2,
+  "current_step_id": 3,
+  "highest_reached_id": 3,
   "user_codes": {
     "1": "mesaj=\"Merhaba Dünya\"\n",
-    "2": "\n#asaauh\nyil=2025\n"
+    "2": "\n#asaauh\nyil=2025\n",
+    "3": "kasbba"
   },
   "completed_tasks": [
     1,

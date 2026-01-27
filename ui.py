@@ -129,7 +129,9 @@ class Editor:
             has_active_timer = (self.message is not None and self.message != "") or \
                                (self.footer_state.vao_progress > 0)
             
-            timeout = config.Timing.TIMEOUT_NORMAL if has_active_timer else config.Timing.TIMEOUT_BLOCKING
+            # 3. Input Timeout
+            # Fixed 30 FPS update rate (approx 33ms) to allow background tasks/animations
+            timeout = 33
             
             # 4. Get Event
             event = self.driver.get_event(timeout)
@@ -354,7 +356,10 @@ def run_editor_session(stdscr, task_info="", hint_text="", initial_code="",
                    initial_code=initial_code, task_status=task_status,
                    completed_count=completed_count, skipped_count=skipped_count,
                    has_skipped=has_skipped)
-    return editor.run()
+    try:
+        return editor.run()
+    finally:
+        editor.driver.close()
 
 def run_editor(task_info="", hint_text="", initial_code="", 
                task_status="pending", completed_count=0, skipped_count=0, has_skipped=False):
