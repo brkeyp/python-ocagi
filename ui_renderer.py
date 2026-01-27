@@ -5,7 +5,7 @@ Ekran çizimi ve syntax highlighting işlemleri.
 """
 import textwrap
 import curses
-import re
+
 import time
 import os
 import config
@@ -31,6 +31,7 @@ class EditorRenderer:
     # Syntax highlighting pattern
     SYNTAX_PATTERN = r"(#[^\n]*|\"[^\"]*\"|'[^']*'|\b\d+\b|\b\w+\b|[^\w\s])"
     
+    
     def __init__(self, stdscr, editor):
         """
         Args:
@@ -40,6 +41,11 @@ class EditorRenderer:
         self.stdscr = stdscr
         self.editor = editor
         self.footer_renderer = FooterRenderer(stdscr, editor.footer_state)
+        
+        # New Tokenizer
+        from tokenizer import Tokenizer, TokenType, TokenizerState
+        self.tokenizer = Tokenizer()
+        self.TokenType = TokenType # Shortcut
     
     def refresh_screen(self):
         """Curses ile ekranı yeniden çizer."""
@@ -193,6 +199,7 @@ class EditorRenderer:
             curses.curs_set(1)
         except:
             pass
+
     
     def _draw_task_info(self, row, width, height, header_line):
         """Özel içerik mod kontrolü. Celebration modunda özel ekran gösterir."""
@@ -306,34 +313,41 @@ class EditorRenderer:
         row += 1
         
         return row
-    
+
     def _draw_colorized_line(self, row, col_start, line, max_width):
-        """Syntax highlighting ile satırı çizer."""
-        parts = re.split(self.SYNTAX_PATTERN, line)
+        """Syntax highlighting ile satırı çizer (Tokenizer kullanarak)."""
+        # Tokenize line
+        tokens, _ = self.tokenizer.tokenize(line)
         
         col = col_start
-        for part in parts:
-            if not part:
-                continue
+        for token_type, value in tokens:
             if col >= max_width - 1:
                 break
             
             remaining = max_width - 1 - col
-            display_part = part[:remaining]
+            display_part = value[:remaining]
+            
+            if not display_part:
+                continue
+
+            attr = curses.A_NORMAL
             
             try:
-                if part.startswith("#"):
-                    self.stdscr.addstr(row, col, display_part, curses.A_DIM)
-                elif part.startswith("'") or part.startswith('"'):
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.GREEN))
-                elif part.isdigit():
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.BLUE))
-                elif part in self.KEYWORDS:
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.MAGENTA) | curses.A_BOLD)
-                elif part in self.BUILTINS:
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.CYAN))
-                else:
-                    self.stdscr.addstr(row, col, display_part)
+                if token_type == self.TokenType.KEYWORD:
+                    attr = curses.color_pair(config.Colors.MAGENTA) | curses.A_BOLD
+                elif token_type == self.TokenType.BUILTIN:
+                    attr = curses.color_pair(config.Colors.CYAN)
+                elif token_type == self.TokenType.STRING:
+                    attr = curses.color_pair(config.Colors.GREEN)
+                elif token_type == self.TokenType.NUMBER:
+                    attr = curses.color_pair(config.Colors.BLUE)
+                elif token_type == self.TokenType.COMMENT:
+                    attr = curses.A_DIM
+                elif token_type == self.TokenType.FUNCTION_DEF or token_type == self.TokenType.CLASS_DEF:
+                     # Make function definitions distinct (e.g. Cyan + Bold or White + Bold)
+                     attr = curses.color_pair(config.Colors.CYAN) | curses.A_BOLD
+                
+                self.stdscr.addstr(row, col, display_part, attr)
             except:
                 pass
             
