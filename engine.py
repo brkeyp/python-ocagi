@@ -3,6 +3,7 @@ import os
 import time
 import dataclasses
 from typing import Optional, List, Dict, Any, Union
+import config
 
 # --- EVENTS / ACTIONS ---
 
@@ -45,9 +46,10 @@ class ActionExit:
 # --- DATA & HELPERS ---
 
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
-CURRICULUM_FILE = os.path.join(DATA_DIR, 'curriculum.json')
-PROGRESS_FILE = os.path.join(DATA_DIR, 'progress.json')
-PROGRESS_BACKUP_FILE = os.path.join(DATA_DIR, 'progress.backup.json')
+DATA_DIR = os.path.dirname(os.path.abspath(__file__))
+CURRICULUM_FILE = os.path.join(DATA_DIR, config.System.FILENAME_CURRICULUM)
+PROGRESS_FILE = os.path.join(DATA_DIR, config.System.FILENAME_PROGRESS)
+PROGRESS_BACKUP_FILE = os.path.join(DATA_DIR, config.System.FILENAME_PROGRESS_BACKUP)
 
 def load_curriculum():
     with open(CURRICULUM_FILE, 'r', encoding='utf-8') as f:
@@ -190,9 +192,9 @@ class SimulationEngine:
         task_status = "completed" if is_completed else ("skipped" if is_skipped else "pending")
         
         # Prepare Task Output
-        status_badge = " - BAŞARILDI" if is_completed else (" - ATLANDI" if is_skipped else "")
+        status_badge = config.UI.BADGE_SUCCESS if is_completed else (config.UI.BADGE_SKIPPED if is_skipped else "")
         
-        task_info = f"BÖLÜM: {step['cat']}\n"
+        task_info = f"{config.UI.LABEL_SECTION} {step['cat']}\n"
         raw_task = step['task']
         if '\n' in raw_task:
             title_line, desc_part = raw_task.split('\n', 1)
@@ -200,14 +202,14 @@ class SimulationEngine:
             if title_line.strip().startswith(str(step['id']) + "."):
                 try:
                      clean_title = title_line.split('.', 1)[1].strip().strip(':')
-                     task_info += f"GÖREV {step['id']}: {clean_title}{status_badge}\n"
+                     task_info += f"{config.UI.LABEL_TASK} {step['id']}: {clean_title}{status_badge}\n"
                 except IndexError:
-                     task_info += f"GÖREV {step['id']}: {title_line}{status_badge}\n"
+                     task_info += f"{config.UI.LABEL_TASK} {step['id']}: {title_line}{status_badge}\n"
             else:
-                task_info += f"GÖREV {step['id']}: {title_line}{status_badge}\n"
-            task_info += f"\nSORU: {desc_part}"
+                task_info += f"{config.UI.LABEL_TASK} {step['id']}: {title_line}{status_badge}\n"
+            task_info += f"\n{config.UI.LABEL_QUESTION} {desc_part}"
         else:
-            task_info += f"GÖREV {step['id']}:{status_badge}\n\nSORU: {raw_task}"
+            task_info += f"{config.UI.LABEL_TASK} {step['id']}:{status_badge}\n\n{config.UI.LABEL_QUESTION} {raw_task}"
             
         previous_code = get_user_code(current_step_id)
         

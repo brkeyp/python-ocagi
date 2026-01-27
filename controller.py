@@ -2,6 +2,7 @@ import time
 import sys
 import curses
 import engine
+import config
 from ui import run_editor_session
 from ui_utils import OSUtils, suspend_curses
 
@@ -44,7 +45,7 @@ def handle_action(stdscr, action):
                 else:
                     input("\nDevam etmek için Enter'a bas...")
             else:
-                time.sleep(1.5 if action.type == 'success' else 2.0)
+                time.sleep(config.Timing.ACTION_WAIT_SUCCESS if action.type == 'success' else config.Timing.ACTION_WAIT_DEFAULT)
                 
     elif isinstance(action, engine.ActionCustomView):
         if action.view_name == "dev_message":
@@ -64,10 +65,10 @@ def validate_terminal_size():
         import shutil
         cols, lines = shutil.get_terminal_size(fallback=(80, 24))
         
-        if cols < 20 or lines < 10:
+        if cols < config.Layout.MIN_WIDTH or lines < config.Layout.MIN_HEIGHT:
             print(f"\n❌ TERMINAL BOYUTU ÇOK KÜÇÜK ({cols}x{lines})")
             print("Lütfen pencereyi genişletin ve uygulamayı yeniden başlatın.")
-            print("Minimum gerekli boyut: 20x10")
+            print(f"Minimum gerekli boyut: {config.Layout.MIN_WIDTH}x{config.Layout.MIN_HEIGHT}")
             input("\nÇıkmak için Enter'a basın...")
             return False
         return True
@@ -143,7 +144,7 @@ def run_controller():
     except KeyboardInterrupt:
         # Ctrl+C Clean exit
         OSUtils.clear_screen()
-        print("\nProgramdan çıkıldı. İyi günler dilerim. ❄︎\n\n")
+        print(f"\n{config.UI.MSG_EXIT}\n\n")
         sys.exit(0)
     except Exception as e:
         OSUtils.clear_screen()

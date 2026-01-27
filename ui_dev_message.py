@@ -6,16 +6,17 @@ Animasyon efektleri ve geliştirici mesajı gösterimi.
 """
 import os
 import curses
+import config
 
 
 def load_developer_message():
     """developer_message.txt dosyasından mesajı yükler."""
-    message_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'developer_message.txt')
+    message_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), config.System.FILENAME_DEV_MESSAGE)
     try:
         with open(message_file, 'r', encoding='utf-8') as f:
             return f.read()
     except FileNotFoundError:
-        return "Geliştirici mesajı bulunamadı.\n\ndeveloper_message.txt dosyası oluşturulmalı."
+        return f"Geliştirici mesajı bulunamadı.\n\n{config.System.FILENAME_DEV_MESSAGE} dosyası oluşturulmalı."
     except Exception as e:
         return f"Mesaj yüklenirken hata: {e}"
 
@@ -35,14 +36,15 @@ class DeveloperMessageScreen:
         if curses.has_colors():
             curses.start_color()
             curses.use_default_colors()
-            curses.init_pair(1, curses.COLOR_RED, -1)
-            curses.init_pair(2, curses.COLOR_CYAN, -1)
-            curses.init_pair(3, curses.COLOR_YELLOW, -1)
-            curses.init_pair(4, curses.COLOR_WHITE, -1)
-            curses.init_pair(5, curses.COLOR_MAGENTA, -1)
-            curses.init_pair(6, curses.COLOR_GREEN, -1)
-            curses.init_pair(7, curses.COLOR_BLUE, -1)
-            curses.init_pair(8, curses.COLOR_GREEN, -1)
+            curses.use_default_colors()
+            curses.init_pair(config.Colors.RED, curses.COLOR_RED, -1)
+            curses.init_pair(config.Colors.CYAN, curses.COLOR_CYAN, -1)
+            curses.init_pair(config.Colors.YELLOW, curses.COLOR_YELLOW, -1)
+            curses.init_pair(config.Colors.WHITE, curses.COLOR_WHITE, -1)
+            curses.init_pair(config.Colors.MAGENTA, curses.COLOR_MAGENTA, -1)
+            curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)
+            curses.init_pair(config.Colors.BLUE, curses.COLOR_BLUE, -1)
+            curses.init_pair(config.Colors.SUCCESS, curses.COLOR_GREEN, -1)
     
     def draw_box(self, y, x, height, width, title=""):
         """Unicode çerçeve çizer."""
@@ -55,13 +57,13 @@ class DeveloperMessageScreen:
         bottom = bl + h_line * (width - 2) + br
         
         try:
-            self.stdscr.addstr(y, x, top[:width], curses.color_pair(2))
+            self.stdscr.addstr(y, x, top[:width], curses.color_pair(config.Colors.CYAN))
             
             # Başlık (varsa)
             if title:
                 title_text = f" {title} "
                 title_x = x + (width - len(title_text)) // 2
-                self.stdscr.addstr(y, title_x, title_text, curses.color_pair(3) | curses.A_BOLD)
+                self.stdscr.addstr(y, title_x, title_text, curses.color_pair(config.Colors.YELLOW) | curses.A_BOLD)
             
             # Yan kenarlar
             for i in range(1, height - 1):
@@ -71,11 +73,11 @@ class DeveloperMessageScreen:
             
             # Alt kenar
             if y + height - 1 < curses.LINES:
-                self.stdscr.addstr(y + height - 1, x, bottom[:width], curses.color_pair(2))
+                self.stdscr.addstr(y + height - 1, x, bottom[:width], curses.color_pair(config.Colors.CYAN))
         except curses.error:
             pass
     
-    def typewriter_effect(self, y, x, text, delay_ms=30, color=0):
+    def typewriter_effect(self, y, x, text, delay_ms=config.Timing.TYPEWRITER_DELAY, color=0):
         """Typewriter (daktilo) efekti - harf harf yazar."""
         for i, char in enumerate(text):
             if x + i >= curses.COLS - 1:
@@ -87,7 +89,7 @@ class DeveloperMessageScreen:
             except curses.error:
                 pass
     
-    def fade_in_text(self, y, x, text, color_pair=4):
+    def fade_in_text(self, y, x, text, color_pair=config.Colors.WHITE):
         """Fade-in efekti simülasyonu (DIM -> NORMAL -> BOLD)."""
         stages = [curses.A_DIM, curses.A_NORMAL, curses.A_BOLD]
         for attr in stages:
@@ -106,12 +108,12 @@ class DeveloperMessageScreen:
                 for j in range(min(i, 5)):
                     prev_y = y + j
                     if prev_y < curses.LINES - 2:
-                        self.stdscr.addstr(prev_y, x, lines[i - 5 + j][:width], curses.color_pair(4))
+                        self.stdscr.addstr(prev_y, x, lines[i - 5 + j][:width], curses.color_pair(config.Colors.WHITE))
                 
                 # Yeni satırı ekle
                 display_y = y + min(i, 4)
                 if display_y < curses.LINES - 2:
-                    self.stdscr.addstr(display_y, x, line[:width], curses.color_pair(6) | curses.A_BOLD)
+                    self.stdscr.addstr(display_y, x, line[:width], curses.color_pair(config.Colors.GREEN) | curses.A_BOLD)
                 
                 self.stdscr.refresh()
                 curses.napms(delay_ms)
@@ -125,24 +127,24 @@ class DeveloperMessageScreen:
         
         try:
             # Çerçeve
-            self.stdscr.addstr(y, x, '[' + ' ' * steps + ']', curses.color_pair(4))
+            self.stdscr.addstr(y, x, '[' + ' ' * steps + ']', curses.color_pair(config.Colors.WHITE))
             self.stdscr.refresh()
             
             for i in range(steps):
                 bar = '█' * (i + 1) + '░' * (steps - i - 1)
                 percent = int((i + 1) / steps * 100)
-                self.stdscr.addstr(y, x, f'[{bar}] {percent:3d}%', curses.color_pair(6))
+                self.stdscr.addstr(y, x, f'[{bar}] {percent:3d}%', curses.color_pair(config.Colors.GREEN))
                 self.stdscr.refresh()
                 curses.napms(delay)
         except curses.error:
             pass
     
-    def blink_text(self, y, x, text, times=3, delay_ms=300):
+    def blink_text(self, y, x, text, times=3, delay_ms=config.Timing.BLINK_DELAY):
         """Yanıp sönen metin efekti."""
         for _ in range(times):
             try:
                 # Göster
-                self.stdscr.addstr(y, x, text[:curses.COLS - x - 1], curses.color_pair(3) | curses.A_BOLD)
+                self.stdscr.addstr(y, x, text[:curses.COLS - x - 1], curses.color_pair(config.Colors.YELLOW) | curses.A_BOLD)
                 self.stdscr.refresh()
                 curses.napms(delay_ms)
                 
@@ -155,13 +157,13 @@ class DeveloperMessageScreen:
         
         # Son olarak göster
         try:
-            self.stdscr.addstr(y, x, text[:curses.COLS - x - 1], curses.color_pair(3) | curses.A_BOLD)
+            self.stdscr.addstr(y, x, text[:curses.COLS - x - 1], curses.color_pair(config.Colors.YELLOW) | curses.A_BOLD)
         except curses.error:
             pass
     
     def rainbow_text(self, y, x, text):
         """Gökkuşağı renkli metin."""
-        colors = [1, 3, 6, 2, 7, 5]  # Kırmızı, Sarı, Yeşil, Cyan, Mavi, Magenta
+        colors = [config.Colors.RED, config.Colors.YELLOW, config.Colors.GREEN, config.Colors.CYAN, config.Colors.BLUE, config.Colors.MAGENTA]  # Kırmızı, Sarı, Yeşil, Cyan, Mavi, Magenta
         for i, char in enumerate(text):
             if x + i >= curses.COLS - 1:
                 break
@@ -192,23 +194,23 @@ class DeveloperMessageScreen:
         row = box_y + 2
         
         # 1. TYPEWRITER EFEKTİ
-        self.typewriter_effect(row, content_x, "1. TYPEWRITER EFEKTİ:", delay_ms=40, color=curses.color_pair(1) | curses.A_BOLD)
+        self.typewriter_effect(row, content_x, "1. TYPEWRITER EFEKTİ:", delay_ms=config.Timing.ANIMATION_DELAY_NORMAL, color=curses.color_pair(config.Colors.RED) | curses.A_BOLD)
         row += 1
-        self.typewriter_effect(row, content_x, "   Merhaba! Bu metin harf harf yazılıyor...", delay_ms=25, color=curses.color_pair(4))
+        self.typewriter_effect(row, content_x, "   Merhaba! Bu metin harf harf yazılıyor...", delay_ms=config.Timing.ANIMATION_DELAY_FAST, color=curses.color_pair(config.Colors.WHITE))
         row += 2
         
         # 2. FADE-IN EFEKTİ
         try:
-            self.stdscr.addstr(row, content_x, "2. FADE-IN EFEKTİ:", curses.color_pair(1) | curses.A_BOLD)
+            self.stdscr.addstr(row, content_x, "2. FADE-IN EFEKTİ:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
         except:
             pass
         row += 1
-        self.fade_in_text(row, content_x + 3, "Bu metin soluktan netleşiyor!", color_pair=6)
+        self.fade_in_text(row, content_x + 3, "Bu metin soluktan netleşiyor!", color_pair=config.Colors.GREEN)
         row += 2
         
         # 3. PROGRESS BAR
         try:
-            self.stdscr.addstr(row, content_x, "3. PROGRESS BAR:", curses.color_pair(1) | curses.A_BOLD)
+            self.stdscr.addstr(row, content_x, "3. PROGRESS BAR:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
         except:
             pass
         row += 1
@@ -217,7 +219,7 @@ class DeveloperMessageScreen:
         
         # 4. YANIP SÖNEN METİN
         try:
-            self.stdscr.addstr(row, content_x, "4. YANIP SÖNEN METİN:", curses.color_pair(1) | curses.A_BOLD)
+            self.stdscr.addstr(row, content_x, "4. YANIP SÖNEN METİN:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
         except:
             pass
         row += 1
@@ -226,7 +228,7 @@ class DeveloperMessageScreen:
         
         # 5. GÖKKUŞAĞI METİN
         try:
-            self.stdscr.addstr(row, content_x, "5. GÖKKUŞAĞI METİN:", curses.color_pair(1) | curses.A_BOLD)
+            self.stdscr.addstr(row, content_x, "5. GÖKKUŞAĞI METİN:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
         except:
             pass
         row += 1
@@ -236,7 +238,7 @@ class DeveloperMessageScreen:
         # 6. SCROLL TEXT DEMO
         if row + 7 < box_y + box_height - 2:
             try:
-                self.stdscr.addstr(row, content_x, "6. KAYAN METİN:", curses.color_pair(1) | curses.A_BOLD)
+                self.stdscr.addstr(row, content_x, "6. KAYAN METİN:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
             except:
                 pass
             row += 1
@@ -256,7 +258,7 @@ class DeveloperMessageScreen:
         row = box_y + box_height - 4
         try:
             separator = "─" * (content_width)
-            self.stdscr.addstr(row, content_x, separator[:content_width], curses.color_pair(2))
+            self.stdscr.addstr(row, content_x, separator[:content_width], curses.color_pair(config.Colors.CYAN))
         except:
             pass
         
@@ -265,7 +267,7 @@ class DeveloperMessageScreen:
         message = load_developer_message()
         first_line = message.split('\n')[0] if message else ""
         try:
-            self.stdscr.addstr(row, content_x, f"📝 {first_line[:content_width-4]}", curses.color_pair(3))
+            self.stdscr.addstr(row, content_x, f"📝 {first_line[:content_width-4]}", curses.color_pair(config.Colors.YELLOW))
         except:
             pass
         

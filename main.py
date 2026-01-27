@@ -2,8 +2,11 @@
 import sys
 import os
 
+import os
+import config
+
 # Curses escape delay fix (Must be set before any curses import/init)
-os.environ.setdefault('ESCDELAY', '25')
+os.environ.setdefault('ESCDELAY', config.Timing.ESCDELAY_ENV)
 
 import subprocess
 
@@ -21,19 +24,19 @@ def install_python_313_silent():
     
     # SHA-256 Checksum for Python 3.13.11 amd64
     # Güncelleme durumunda bu hash'in de güncellenmesi GEREKLİDİR.
-    EXPECTED_HASH = "30d4654b3eac7ddfdf2682db4c8dcb490f3055f4f33c6906d6b828f680152101"
+    EXPECTED_HASH = config.System.PYTHON_INSTALLER_HASH
     
-    print("\n📥 Python 3.13 indiriliyor...")
+    print(f"\n📥 Python {config.System.PYTHON_VERSION_SHORT} indiriliyor...")
     print("   Bu işlem internet hızınıza bağlı olarak birkaç dakika sürebilir.\n")
     
     # Python 3.13 installer URL (64-bit)
     # En güncel 3.13 sürümü
-    url = "https://www.python.org/ftp/python/3.13.11/python-3.13.11-amd64.exe"
+    url = config.System.PYTHON_INSTALLER_URL
     
     try:
         # Geçici dosyaya indir
         temp_dir = tempfile.gettempdir()
-        installer_path = os.path.join(temp_dir, "python-3.13.11-amd64.exe")
+        installer_path = os.path.join(temp_dir, config.System.PYTHON_INSTALLER_FILE)
         
         # İndirme progress göster
         def report_progress(block_num, block_size, total_size):
@@ -75,7 +78,7 @@ def install_python_313_silent():
         print("✅ Dosya doğrulandı.")
         # ---------------------------------------------------------
 
-        print("\n🔧 Python 3.13 yükleniyor...")
+        print(f"\n🔧 Python {config.System.PYTHON_VERSION_SHORT} yükleniyor...")
         print("   Bu işlem birkaç dakika sürebilir, lütfen bekleyin.\n")
         
         # Sessiz yükleme (PATH'e eklemeden, sadece py launcher ile kullanılacak)
@@ -89,7 +92,7 @@ def install_python_313_silent():
         ], capture_output=True, text=True)
         
         if result.returncode == 0:
-            print("✅ Python 3.13 başarıyla yüklendi!\n")
+            print(f"✅ Python {config.System.PYTHON_VERSION_SHORT} başarıyla yüklendi!\n")
             return True
         else:
             print(f"❌ Yükleme başarısız oldu. Hata kodu: {result.returncode}")
@@ -120,8 +123,8 @@ def handle_python_version_fallback():
         print("Olası nedenler:")
         print("1. 'windows-curses' yüklemesi sessizce başarısız oluyor.")
         print("2. Algılanan Python 3.13 kurulumu hatalı.")
-        print("\nLütfen uygulamayı doğrudan Python 3.13 ile başlatmayı deneyin:")
-        print("   py -3.13 main.py")
+        print(f"\nLütfen uygulamayı doğrudan Python {config.System.PYTHON_VERSION_SHORT} ile başlatmayı deneyin:")
+        print(f"   py -{config.System.PYTHON_VERSION_SHORT} main.py")
         print("-" * 60)
         input("\nÇıkmak için Enter'a basın...")
         sys.exit(1)
@@ -131,7 +134,7 @@ def handle_python_version_fallback():
     print("="*60)
     print("\nBu uygulama 'curses' kütüphanesini kullanmaktadır.")
     print("Ancak 'windows-curses' paketi henüz Python 3.14+ desteklemiyor.")
-    print("\nÇözüm: Python 3.13 ile çalıştırmak.")
+    print(f"\nÇözüm: Python {config.System.PYTHON_VERSION_SHORT} ile çalıştırmak.")
     print("-"*60)
     
     # py launcher var mı kontrol et
@@ -151,7 +154,7 @@ def handle_python_version_fallback():
     
     # Python 3.13 yüklü mü kontrol et
     py313_check = subprocess.run(
-        ['py', '-3.13', '--version'],
+        ['py', f'-{config.System.PYTHON_VERSION_SHORT}', '--version'],
         capture_output=True,
         text=True
     )
@@ -165,7 +168,7 @@ def handle_python_version_fallback():
             env["APP_RESTART_ATTEMPT"] = str(restart_attempt + 1)
 
             result = subprocess.run(
-                ['py', '-3.13', script_path],
+                ['py', f'-{config.System.PYTHON_VERSION_SHORT}', script_path],
                 cwd=os.path.dirname(script_path),
                 env=env
             )
@@ -178,19 +181,19 @@ def handle_python_version_fallback():
                 OSUtils.clear_screen()
             except:
                 pass
-            print("\nProgramdan çıkıldı. İyi günler dilerim. ❄︎\n\n")
+            print(f"\n{config.UI.MSG_EXIT}\n\n")
             sys.exit(0)
     else:
         # 3.13 yüklü değil - kullanıcıya sor
-        print("\n❓ Python 3.13 sisteminizde bulunamadı.")
-        print("\nPython 3.13 otomatik olarak yüklensin mi?")
+        print(f"\n❓ Python {config.System.PYTHON_VERSION_SHORT} sisteminizde bulunamadı.")
+        print(f"\nPython {config.System.PYTHON_VERSION_SHORT} otomatik olarak yüklensin mi?")
         print("   • Python 3.14 ana sürümünüz olarak kalacak")
-        print("   • Sadece bu uygulama için 3.13 kullanılacak")
+        print(f"   • Sadece bu uygulama için {config.System.PYTHON_VERSION_SHORT} kullanılacak")
         print("   • İnternet bağlantısı gerekli (~30 MB)")
         print()
         
         while True:
-            response = input("Python 3.13 yüklensin mi? (E/H): ").strip().lower()
+            response = input(f"Python {config.System.PYTHON_VERSION_SHORT} yüklensin mi? (E/H): ").strip().lower()
             if response in ('e', 'evet', 'y', 'yes'):
                 if not install_python_313_silent():
                     input("\nÇıkmak için Enter...")
@@ -198,7 +201,7 @@ def handle_python_version_fallback():
                 break
             elif response in ('h', 'hayir', 'n', 'no'):
                 print("\n❌ Yükleme iptal edildi.")
-                print("   Manuel olarak Python 3.13 yükleyebilirsiniz:")
+                print(f"   Manuel olarak Python {config.System.PYTHON_VERSION_SHORT} yükleyebilirsiniz:")
                 print("   https://www.python.org/downloads/release/python-31311/")
                 input("\nÇıkmak için Enter...")
                 return False
@@ -206,7 +209,7 @@ def handle_python_version_fallback():
                 print("   Lütfen 'E' (Evet) veya 'H' (Hayır) girin.")
     
     # Python 3.13 ile yeniden başlat
-    print("\n🔄 Uygulama Python 3.13 ile yeniden başlatılıyor...\n")
+    print(f"\n🔄 Uygulama Python {config.System.PYTHON_VERSION_SHORT} ile yeniden başlatılıyor...\n")
     
     script_path = get_script_path()
     
@@ -218,7 +221,7 @@ def handle_python_version_fallback():
         env["APP_RESTART_ATTEMPT"] = str(restart_attempt + 1)
         
         result = subprocess.run(
-            ['py', '-3.13', script_path],
+            ['py', f'-{config.System.PYTHON_VERSION_SHORT}', script_path],
             cwd=os.path.dirname(script_path),
             env=env
         )
@@ -242,7 +245,7 @@ def ensure_curses():
     """Windows'ta curses modülü yoksa otomatik olarak yükler.
     
     Python 3.14+ için windows-curses desteği yoksa, otomatik olarak
-    Python 3.13'e geçiş yaparak sorunu çözer.
+    Python {config.System.PYTHON_VERSION_SHORT}'e geçiş yaparak sorunu çözer.
     """
     # 1. Önce curses'ı kontrol et
     try:
@@ -253,7 +256,7 @@ def ensure_curses():
     
     # 2. Windows değilse hata ver
     if os.name != 'nt':
-        print("❌ curses modülü bulunamadı.")
+        print(f"❌ {config.UI.MSG_CURSES_NOT_FOUND}")
         return False
     
     # 3. Windows'ta windows-curses yüklemeyi dene
@@ -262,7 +265,7 @@ def ensure_curses():
     
     try:
         result = subprocess.run(
-            [sys.executable, '-m', 'pip', 'install', 'windows-curses', '--quiet'],
+            [sys.executable, '-m', 'pip', 'install', config.System.PKG_WINDOWS_CURSES, '--quiet'],
             capture_output=True,
             text=True
         )
@@ -282,14 +285,14 @@ def ensure_curses():
             # Başka bir hata
             print(f"❌ Yükleme başarısız: {result.stderr}")
             print("   Manuel olarak şu komutu çalıştırın:")
-            print("   py -m pip install windows-curses")
+            print(f"   py -m pip install {config.System.PKG_WINDOWS_CURSES}")
             input("\nÇıkmak için Enter...")
             return False
             
     except Exception as e:
         print(f"❌ Hata: {e}")
         print("   Manuel olarak şu komutu çalıştırın:")
-        print("   py -m pip install windows-curses")
+        print(f"   py -m pip install {config.System.PKG_WINDOWS_CURSES}")
         input("\nÇıkmak için Enter...")
         return False
 
@@ -315,7 +318,7 @@ def main():
     try:
         # Pencereni genişlet (110x30)
         from ui_utils import OSUtils
-        OSUtils.resize_terminal(30, 110)
+        OSUtils.resize_terminal(config.Layout.TARGET_HEIGHT, config.Layout.TARGET_WIDTH)
 
         # controller'ı burada import et (curses yüklendikten sonra)
         import controller
@@ -327,7 +330,7 @@ def main():
             OSUtils.clear_screen()
         except:
             pass
-        print("\nProgramdan çıkıldı. İyi günler dilerim. ❄︎\n\n")
+        print(f"\n{config.UI.MSG_EXIT}\n\n")
         sys.exit(0)
     except Exception as e:
         print(f"\nBeklenmeyen bir hata oluştu: {e}")

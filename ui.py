@@ -8,6 +8,7 @@ import os
 import time
 import curses
 import locale
+import config
 
 # Locale ayarı - Türkçe karakter desteği için
 try:
@@ -17,7 +18,7 @@ except:
 
 # ESCDELAY ayarı - ESC tuşunun anında tepki vermesi için
 # (curses varsayılan olarak escape sequence bekler, bu gecikmeye neden olur)
-os.environ.setdefault('ESCDELAY', '25')
+os.environ.setdefault('ESCDELAY', config.Timing.ESCDELAY_ENV)
 
 # Alt modüllerden import
 from ui_utils import OSUtils
@@ -72,7 +73,7 @@ class Editor:
         
         # ESC tuşu için bekleme süresini minimize et (anında tepki için)
         try:
-            curses.set_escdelay(25)  # Python 3.9+
+            curses.set_escdelay(int(config.Timing.ESCDELAY_ENV))  # Python 3.9+
         except AttributeError:
             pass  # Eski Python sürümlerinde env variable kullanılır
         
@@ -80,25 +81,25 @@ class Editor:
         if curses.has_colors():
             curses.start_color()
             curses.use_default_colors()
-            curses.init_pair(1, curses.COLOR_RED, -1)      # Etiketler / Atlandı
-            curses.init_pair(2, curses.COLOR_CYAN, -1)     # İçerik
-            curses.init_pair(3, curses.COLOR_YELLOW, -1)   # İpucu/Mesaj
-            curses.init_pair(4, curses.COLOR_WHITE, -1)    # Soru
-            curses.init_pair(8, curses.COLOR_GREEN, -1)    # Başarıldı damgası
-            curses.init_pair(5, curses.COLOR_MAGENTA, -1)  # Keyword
-            curses.init_pair(6, curses.COLOR_GREEN, -1)    # String
-            curses.init_pair(7, curses.COLOR_BLUE, -1)     # Number
+            curses.init_pair(config.Colors.RED, curses.COLOR_RED, -1)      # Etiketler / Atlandı
+            curses.init_pair(config.Colors.CYAN, curses.COLOR_CYAN, -1)     # İçerik
+            curses.init_pair(config.Colors.YELLOW, curses.COLOR_YELLOW, -1)   # İpucu/Mesaj
+            curses.init_pair(config.Colors.WHITE, curses.COLOR_WHITE, -1)    # Soru
+            curses.init_pair(config.Colors.SUCCESS, curses.COLOR_GREEN, -1)    # Başarıldı damgası
+            curses.init_pair(config.Colors.MAGENTA, curses.COLOR_MAGENTA, -1)  # Keyword
+            curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)    # String
+            curses.init_pair(config.Colors.BLUE, curses.COLOR_BLUE, -1)     # Number
 
     # Windows Key Codes
-    KEY_ALT_LEFT_WIN = 493
-    KEY_ALT_RIGHT_WIN = 492
+    KEY_ALT_LEFT_WIN = config.Keys.WIN_ALT_LEFT
+    KEY_ALT_RIGHT_WIN = config.Keys.WIN_ALT_RIGHT
     
     # Windows Numpad Codes
-    KEY_WIN_PAD_SLASH = 458
-    KEY_WIN_PAD_ENTER = 459
-    KEY_WIN_PAD_STAR = 463
-    KEY_WIN_PAD_MINUS = 464
-    KEY_WIN_PAD_PLUS = 465
+    KEY_WIN_PAD_SLASH = config.Keys.WIN_PAD_SLASH
+    KEY_WIN_PAD_ENTER = config.Keys.WIN_PAD_ENTER
+    KEY_WIN_PAD_STAR = config.Keys.WIN_PAD_STAR
+    KEY_WIN_PAD_MINUS = config.Keys.WIN_PAD_MINUS
+    KEY_WIN_PAD_PLUS = config.Keys.WIN_PAD_PLUS
 
     def run(self):
         """Editörü başlatır ve kodu döndürür."""
@@ -109,7 +110,7 @@ class Editor:
         while True:
             # 1. Mesaj süresi doldu mu kontrol et
             if self.message and self.message_timestamp:
-                if time.time() - self.message_timestamp > 3:
+                if time.time() - self.message_timestamp > config.Timing.MSG_AUTOCLEAR_SEC:
                     self.message = ""
                     self.message_timestamp = None
                     should_redraw = True
@@ -136,9 +137,9 @@ class Editor:
                                (self.footer_state.vao_expire > 0)
             
             if has_active_timer:
-                self.stdscr.timeout(100)
+                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
             else:
-                self.stdscr.timeout(-1)  # Blocking mode (tuş bekle)
+                self.stdscr.timeout(config.Timing.TIMEOUT_BLOCKING)  # Blocking mode (tuş bekle)
             
             try:
                 # get_wch() kullanarak Unicode desteği sağla
@@ -166,7 +167,7 @@ class Editor:
                 if char_code == self.KEY_WIN_PAD_ENTER:
                     char = '\n'
                     is_char_str = True
-                    char_code = 10
+                    char_code = config.Keys.ENTER
                 elif char_code == self.KEY_WIN_PAD_PLUS:
                     char = '+'
                     is_char_str = True
@@ -185,7 +186,7 @@ class Editor:
                     char_code = 47
             
             # --- ÇIKIŞ (Ctrl+C) ---
-            if char_code == 3:  # Ctrl+C
+            if char_code == config.Keys.CTRL_C:  # Ctrl+C
                 raise KeyboardInterrupt
                 
             # --- WINDOWS ALT+ARROW FIX ---
@@ -231,18 +232,18 @@ class Editor:
                 self.message = ""
 
             # --- DÜZENLEME ---
-            elif char_code in (curses.KEY_BACKSPACE, 127, 8):  # Backspace
+            elif char_code in (curses.KEY_BACKSPACE, config.Keys.BACKSPACE_2, config.Keys.BACKSPACE_1):  # Backspace
                 if self.is_locked:
-                    self.message = "🔒 Bu görev tamamlandı."
+                    self.message = config.UI.MSG_TASK_COMPLETED
                     self.message_timestamp = time.time()
                 else:
                     self._handle_backspace()
                 
-            elif char_code in (curses.KEY_DC, 330):  # Delete tuşu
+            elif char_code in (curses.KEY_DC, config.Keys.DELETE):  # Delete tuşu
                 # RESET TRIGGER (Buffer boşsa VEYA kilitli görevde)
                 is_buffer_empty = all(line.strip() == "" for line in self.buffer)
                 if is_buffer_empty or self.is_locked:
-                    self.message = "⚠️  İLERLEMEYİ SIFIRLAMAK istiyor musun? (Evet: 'e' / Hayır: 'h')"
+                    self.message = config.UI.MSG_RESET_CONFIRM
                     self.renderer.refresh_screen()
                     while True:
                         confirm = self.stdscr.getch()
@@ -255,7 +256,7 @@ class Editor:
                     self._handle_delete()
 
             # --- ENTER MANTIĞI ---
-            elif char_code in (curses.KEY_ENTER, 10, 13) or (is_char_str and char in ('\n', '\r')):
+            elif char_code in (curses.KEY_ENTER, config.Keys.ENTER, config.Keys.RETURN) or (is_char_str and char in ('\n', '\r')):
                 # Celebration modunda - atlanmış görev varsa yönlendir
                 if self.task_status == "celebration":
                     if self.has_skipped:
@@ -264,7 +265,7 @@ class Editor:
                     continue
                 # Kilitli görevde (completed) - sadece mesaj göster
                 elif self.is_locked:
-                    self.message = "🔒 Bu görev tamamlandı."
+                    self.message = config.UI.MSG_TASK_COMPLETED
                     self.message_timestamp = time.time()
                 # Atlanmış görevde
                 elif self.task_status == "skipped":
@@ -292,9 +293,9 @@ class Editor:
                         
                         is_buffer_empty = all(line.strip() == "" for line in self.buffer)
                         if is_buffer_empty:
-                            self.message = "👉 CEVABI TEKRAR GÖRMEK için tekrar Enter'a basın."
+                            self.message = config.UI.MSG_PRESS_ENTER_AGAIN
                         else:
-                            self.message = "👉 Devam etmek için yazın, GÖNDERMEK için tekrar Enter'a basın."
+                            self.message = config.UI.MSG_SUBMIT_OR_TYPE
                 # Normal (pending) görev
                 else:
                     if self.waiting_for_submit:
@@ -327,9 +328,9 @@ class Editor:
                         is_buffer_empty = all(line.strip() == "" for line in self.buffer)
                         
                         if is_buffer_empty:
-                            self.message = "👉 SORUYU ATLAMAK için tekrar Enter'a basın."
+                            self.message = config.UI.MSG_SKIP_OR_TYPE
                         else:
-                            self.message = "👉 Devam etmek için yazın, GÖNDERMEK için tekrar Enter'a basın."
+                            self.message = config.UI.MSG_SUBMIT_OR_TYPE
 
             # --- KARAKTER GİRİŞİ (Unicode dahil) ---
             elif is_char_str and len(char) == 1 and ord(char) >= 32:
@@ -375,7 +376,7 @@ class Editor:
                 self.cx += 1
             
             # --- ESC tuşu ve Alt kombinasyonları ---
-            elif char_code == 27:  # ESC
+            elif char_code == config.Keys.ESC:  # ESC
                 result = self._handle_esc_sequence()
                 if result:
                     return result
@@ -390,7 +391,7 @@ class Editor:
         self.renderer.refresh_screen()
         
         # Non-blocking ile 1 saniye içinde sonraki tuşu bekle
-        next_char = self._wait_for_key_with_refresh(1.0)
+        next_char = self._wait_for_key_with_refresh(config.Timing.VAO_EXPIRE_SEC)
         
         # Timeout oldu (-1) - highlight 1 sn sonra sönecek (check_expired ile)
         if next_char == -1:
@@ -401,7 +402,7 @@ class Editor:
             self.footer_state.set_vao_progress(2)
             self.renderer.refresh_screen()
             
-            second = self._wait_for_key_with_refresh(1.0)
+            second = self._wait_for_key_with_refresh(config.Timing.VAO_EXPIRE_SEC)
             
             if second == -1:
                 return None
@@ -410,7 +411,7 @@ class Editor:
                 self.footer_state.set_vao_progress(3)
                 self.renderer.refresh_screen()
                 
-                third = self._wait_for_key_with_refresh(1.0)
+                third = self._wait_for_key_with_refresh(config.Timing.VAO_EXPIRE_SEC)
                 
                 if third == -1:
                     return None
@@ -427,7 +428,7 @@ class Editor:
         # --- Alt+Arrow ve diğer ESC kombinasyonları ---
         elif next_char == 91:  # '[' - ANSI escape sequence başlangıcı
             self.footer_state.reset_vao()
-            self.stdscr.timeout(50)  # Kısa timeout
+            self.stdscr.timeout(config.Timing.TIMEOUT_QUICK)  # Kısa timeout
             try:
                 seq_char = self.stdscr.getch()
             except:
@@ -441,7 +442,7 @@ class Editor:
                 except:
                     pass
                 else:
-                    self.stdscr.timeout(100)
+                    self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
                     if mod == 51:  # Alt modifier
                         if direction == 68:  # 'D' - Left
                             return "PREV_TASK"
@@ -449,13 +450,13 @@ class Editor:
                             return "NEXT_TASK"
             
             elif seq_char == 68:  # Direct Left arrow after ESC[
-                self.stdscr.timeout(100)
+                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
                 return "PREV_TASK"
             elif seq_char == 67:  # Direct Right arrow after ESC[
-                self.stdscr.timeout(100)
+                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
                 return "NEXT_TASK"
             
-            self.stdscr.timeout(100)
+            self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)
             return None
         
         elif next_char in (curses.KEY_LEFT, 260):
@@ -485,7 +486,7 @@ class Editor:
         """Belirtilen süre boyunca tuş bekle, bu sırada ekranı güncellemeye devam et."""
         # Burada redraw optimization gerekmez çünkü ESC sequence çok kısa sürer
         # ve highlight'ın görünmesi için sürekli redraw iyidir.
-        self.stdscr.timeout(50)  # 50ms non-blocking
+        self.stdscr.timeout(config.Timing.TIMEOUT_QUICK)  # 50ms non-blocking
         end_time = time.time() + timeout_seconds
         
         while time.time() < end_time:
@@ -495,12 +496,12 @@ class Editor:
                 char = -1
                 
             if char != -1:
-                self.stdscr.timeout(100)  # Normal timeout'a dön
+                self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)  # Normal timeout'a dön
                 return char
             # Ekranı güncelle (highlight görünsün)
             self.renderer.refresh_screen()
         
-        self.stdscr.timeout(100)  # Normal timeout'a dön
+        self.stdscr.timeout(config.Timing.TIMEOUT_NORMAL)  # Normal timeout'a dön
         return -1  # Timeout
 
     def _handle_backspace(self):

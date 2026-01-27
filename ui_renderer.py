@@ -8,6 +8,7 @@ import curses
 import re
 import time
 import os
+import config
 
 from ui_footer import FooterRenderer
 
@@ -46,7 +47,7 @@ class EditorRenderer:
         
         # Otomatik mesaj temizleme (3 saniye sonra)
         if editor.message and editor.message_timestamp:
-            if time.time() - editor.message_timestamp > 3:
+            if time.time() - editor.message_timestamp > config.Timing.MSG_AUTOCLEAR_SEC:
                 editor.message = ""
                 editor.message_timestamp = None
         
@@ -69,9 +70,9 @@ class EditorRenderer:
         row += 1
         
         if os.name == 'nt':
-            title = "PYTHON - YAZARAK ÖĞRENME/ÇALIŞMA SİMULATÖRÜ ☾☆"
+            title = config.System.WINDOW_TITLE_WIN
         else:
-            title = "PYTHON - YAZARAK ÖĞRENME/ÇALIŞMA SİMULATÖRÜ 🇹🇷"
+            title = config.System.WINDOW_TITLE_UNIX
         
         # 1. Adım: Satırı TAMAMEN temizle (Windows ghosting/artifact sorunu için en kesin çözüm)
         # erase() bazen yetersiz kalabilir, manuel boşluk basıyoruz.
@@ -84,7 +85,7 @@ class EditorRenderer:
         try:
             self.stdscr.addstr(row, 0, title[:width-1])
         except:
-            self.stdscr.addstr(row, 0, "PYTHON - YAZARAK OGRENME SIMULATORU"[:width-1])
+            self.stdscr.addstr(row, 0, config.System.WINDOW_TITLE_FALLBACK[:width-1])
         
         # Sayaç gösterimi (sağ üst köşe)
         # Her zaman 3 haneli ve BOŞLUKLU göster (  1,  10, 100) - Sıfırlı (001) istenmiyor.
@@ -100,11 +101,11 @@ class EditorRenderer:
                 
                 if counter_col > len(title) + 5:
                     # Başarıldı (yeşil)
-                    self.stdscr.addstr(row, counter_col, completed_text, curses.color_pair(8) | curses.A_BOLD)
+                    self.stdscr.addstr(row, counter_col, completed_text, curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
                     # Ayırıcı (normal)
                     self.stdscr.addstr(row, counter_col + len(completed_text), separator)
                     # Atlandı (kırmızı)
-                    self.stdscr.addstr(row, counter_col + len(completed_text) + len(separator), skipped_text, curses.color_pair(1) | curses.A_BOLD)
+                    self.stdscr.addstr(row, counter_col + len(completed_text) + len(separator), skipped_text, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
             except:
                 pass
         row += 1
@@ -118,7 +119,7 @@ class EditorRenderer:
         # Buffer çizimi (Kod editörü)
         buffer_start_row = row
         show_line_numbers = len(editor.buffer) > 2 or (len(editor.buffer) == 2 and len(editor.buffer[1]) > 0)
-        gutter_width = 12 if show_line_numbers else 0
+        gutter_width = config.Layout.GUTTER_WIDTH if show_line_numbers else 0
         
         for i, line in enumerate(editor.buffer):
             if row >= height - 2:
@@ -141,7 +142,7 @@ class EditorRenderer:
         if editor.message:
             # Mesaj varsa sarı renkte göster
             try:
-                self.stdscr.addstr(footer_row, 0, editor.message[:width-1], curses.color_pair(3))
+                self.stdscr.addstr(footer_row, 0, editor.message[:width-1], curses.color_pair(config.Colors.YELLOW))
             except:
                 pass
         else:
@@ -195,77 +196,77 @@ class EditorRenderer:
                 # Boş satır - SORU bloğunu bitir
                 in_soru_block = False
                 row += 1
-                if row >= height - 5:
+                if row >= height - config.Layout.BOTTOM_MARGIN:
                     break
                 continue
             
             wrapped = textwrap.wrap(line, width - 1) if len(line) > width - 1 else [line]
             for w_line in wrapped:
-                if row >= height - 5:
+                if row >= height - config.Layout.BOTTOM_MARGIN:
                     break
                 
                 # Renklendirme: BÖLÜM/GÖREV kırmızı etiket + turkuvaz içerik
                 try:
-                    if w_line.startswith("BÖLÜM:"):
+                    if w_line.startswith(config.UI.LABEL_SECTION):
                         # "BÖLÜM:" kırmızı, geri kalanı turkuvaz (12 karakter hizalama)
-                        raw_label = "BÖLÜM:"
-                        label = raw_label.ljust(12)
+                        raw_label = config.UI.LABEL_SECTION
+                        label = raw_label.ljust(config.Layout.LABEL_WIDTH)
                         content = w_line[len(raw_label):].lstrip()
-                        self.stdscr.addstr(row, 0, label, curses.color_pair(1) | curses.A_BOLD)
-                        self.stdscr.addstr(row, len(label), content[:width-1-len(label)], curses.color_pair(2) | curses.A_BOLD)
-                    elif w_line.startswith("GÖREV"):
+                        self.stdscr.addstr(row, 0, label, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
+                        self.stdscr.addstr(row, len(label), content[:width-1-len(label)], curses.color_pair(config.Colors.CYAN) | curses.A_BOLD)
+                    elif w_line.startswith(config.UI.LABEL_TASK):
                         # "GÖREV XXX:" kısmını bul, kırmızı yap, gerisini turkuvaz (12 karakter hizalama)
                         # Damga varsa renklendir: BAŞARILDI=yeşil, ATLANDI=kırmızı
                         colon_idx = w_line.find(":")
                         if colon_idx != -1:
                             raw_label = w_line[:colon_idx+1]
-                            label = raw_label.ljust(12)
+                            label = raw_label.ljust(config.Layout.LABEL_WIDTH)
                             content = w_line[colon_idx+1:].lstrip()
-                            self.stdscr.addstr(row, 0, label, curses.color_pair(1) | curses.A_BOLD)
+                            self.stdscr.addstr(row, 0, label, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
                             
                             # Damga kontrolü
-                            if " - BAŞARILDI" in content:
+                            if config.UI.BADGE_SUCCESS in content:
                                 # İçeriği damgadan ayır
-                                badge_idx = content.find(" - BAŞARILDI")
+                                badge_idx = content.find(config.UI.BADGE_SUCCESS)
                                 main_content = content[:badge_idx]
-                                badge = " - BAŞARILDI"
-                                self.stdscr.addstr(row, len(label), main_content[:width-1-len(label)], curses.color_pair(2) | curses.A_BOLD)
+                                badge = config.UI.BADGE_SUCCESS
+                                self.stdscr.addstr(row, len(label), main_content[:width-1-len(label)], curses.color_pair(config.Colors.CYAN) | curses.A_BOLD)
                                 badge_col = len(label) + len(main_content)
                                 if badge_col + len(badge) < width:
-                                    self.stdscr.addstr(row, badge_col, badge, curses.color_pair(8) | curses.A_BOLD)
-                            elif " - ATLANDI" in content:
+                                    self.stdscr.addstr(row, badge_col, badge, curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
+                            elif config.UI.BADGE_SKIPPED in content:
                                 # İçeriği damgadan ayır
-                                badge_idx = content.find(" - ATLANDI")
+                                badge_idx = content.find(config.UI.BADGE_SKIPPED)
                                 main_content = content[:badge_idx]
-                                badge = " - ATLANDI"
-                                self.stdscr.addstr(row, len(label), main_content[:width-1-len(label)], curses.color_pair(2) | curses.A_BOLD)
+                                badge = config.UI.BADGE_SKIPPED
+                                self.stdscr.addstr(row, len(label), main_content[:width-1-len(label)], curses.color_pair(config.Colors.CYAN) | curses.A_BOLD)
                                 badge_col = len(label) + len(main_content)
                                 if badge_col + len(badge) < width:
-                                    self.stdscr.addstr(row, badge_col, badge, curses.color_pair(1) | curses.A_BOLD)
+                                    self.stdscr.addstr(row, badge_col, badge, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
                             else:
-                                self.stdscr.addstr(row, len(label), content[:width-1-len(label)], curses.color_pair(2) | curses.A_BOLD)
+                                self.stdscr.addstr(row, len(label), content[:width-1-len(label)], curses.color_pair(config.Colors.CYAN) | curses.A_BOLD)
                         else:
-                            self.stdscr.addstr(row, 0, w_line[:width-1], curses.color_pair(1) | curses.A_BOLD)
-                    elif w_line.startswith("SORU:"):
+                            self.stdscr.addstr(row, 0, w_line[:width-1], curses.color_pair(config.Colors.RED) | curses.A_BOLD)
+                    elif w_line.startswith(config.UI.LABEL_QUESTION):
                         # SORU öncesi separator çizgisi
                         self.stdscr.addstr(row, 0, header_line[:width-1])
                         row += 1
-                        if row >= height - 5:
+                        if row >= height - config.Layout.BOTTOM_MARGIN:
                             break
                         # "SORU:" kırmızı, içerik beyaz (12 karakter hizalama)
-                        raw_label = "SORU:"
-                        label = raw_label.ljust(12)
+                        raw_label = config.UI.LABEL_QUESTION
+                        label = raw_label.ljust(config.Layout.LABEL_WIDTH)
                         content = w_line[len(raw_label):].lstrip()
-                        self.stdscr.addstr(row, 0, label, curses.color_pair(1) | curses.A_BOLD)
-                        self.stdscr.addstr(row, len(label), content[:width-1-len(label)], curses.color_pair(4))
+                        self.stdscr.addstr(row, 0, label, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
+                        self.stdscr.addstr(row, len(label), content[:width-1-len(label)], curses.color_pair(config.Colors.WHITE))
                         in_soru_block = True
                     elif in_soru_block:
                         # SORU devam satırları - beyaz (12 karakter hizalama)
-                        indent = " " * 12
-                        self.stdscr.addstr(row, 0, indent + w_line[:width-1-12], curses.color_pair(4))
+                        indent = " " * config.Layout.LABEL_WIDTH
+                        self.stdscr.addstr(row, 0, indent + w_line[:width-1-config.Layout.LABEL_WIDTH], curses.color_pair(config.Colors.WHITE))
                     else:
                         # Diğer satırlar turkuvaz
-                        self.stdscr.addstr(row, 0, w_line[:width-1], curses.color_pair(2))
+                        self.stdscr.addstr(row, 0, w_line[:width-1], curses.color_pair(config.Colors.CYAN))
                 except:
                     pass
                 row += 1
@@ -273,13 +274,13 @@ class EditorRenderer:
         # İpucu
         if editor.footer_state.show_hint and editor.hint_text:
             row += 1
-            hint_text = f"💡 İPUCU: {editor.hint_text}"
+            hint_text = f"{config.UI.LABEL_HINT} {editor.hint_text}"
             wrapped = textwrap.wrap(hint_text, width - 1)
             for h_line in wrapped:
-                if row >= height - 5:
+                if row >= height - config.Layout.BOTTOM_MARGIN:
                     break
                 try:
-                    self.stdscr.addstr(row, 0, h_line[:width-1], curses.color_pair(3))
+                    self.stdscr.addstr(row, 0, h_line[:width-1], curses.color_pair(config.Colors.YELLOW))
                 except:
                     pass
                 row += 1
@@ -307,13 +308,13 @@ class EditorRenderer:
                 if part.startswith("#"):
                     self.stdscr.addstr(row, col, display_part, curses.A_DIM)
                 elif part.startswith("'") or part.startswith('"'):
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(6))
+                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.GREEN))
                 elif part.isdigit():
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(7))
+                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.BLUE))
                 elif part in self.KEYWORDS:
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(5) | curses.A_BOLD)
+                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.MAGENTA) | curses.A_BOLD)
                 elif part in self.BUILTINS:
-                    self.stdscr.addstr(row, col, display_part, curses.color_pair(2))
+                    self.stdscr.addstr(row, col, display_part, curses.color_pair(config.Colors.CYAN))
                 else:
                     self.stdscr.addstr(row, col, display_part)
             except:
@@ -327,32 +328,32 @@ class EditorRenderer:
         
         # Tebrik mesajları
         messages = [
-            "🎉 TEBRİKLER! TÜM GÖREVLERİ TAMAMLADINIZ! 🎉",
+            config.UI.CELEBRATION_HEADER,
             "",
-            "Python öğrenme yolculuğunda harika bir adım attın.",
+            config.UI.CELEBRATION_SUB1,
             "",
         ]
         
         if editor.has_skipped:
             messages.extend([
-                "📝 Not: Bazı sorular atlanmış durumda.",
-                "Atlanmış sorulara çalışmak için Enter'a bas.",
+                config.UI.CELEBRATION_SKIPPED_NOTE,
+                config.UI.CELEBRATION_ENTER_HINT,
             ])
         else:
-            messages.append("Mükemmel! Hiçbir soru atlamadan tümünü başardın.")
+            messages.append(config.UI.CELEBRATION_PERFECT)
         
         for msg in messages:
-            if row >= height - 5:
+            if row >= height - config.Layout.BOTTOM_MARGIN:
                 break
             try:
                 if "TEBRİKLER" in msg:
-                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(8) | curses.A_BOLD)
+                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
                 elif "Not:" in msg:
-                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(3))
+                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(config.Colors.YELLOW))
                 elif "Mükemmel" in msg:
-                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(8) | curses.A_BOLD)
+                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
                 else:
-                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(2))
+                    self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(config.Colors.CYAN))
             except:
                 pass
             row += 1

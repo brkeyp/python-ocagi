@@ -6,6 +6,7 @@ Footer çizimi ve tuş highlight state yönetimi.
 import sys
 import time
 import curses
+import config
 
 
 class FooterState:
@@ -25,7 +26,7 @@ class FooterState:
         """VAO sequence progress ayarla (1 sn sonra sönecek)."""
         self.vao_progress = level
         if level > 0:
-            self.vao_expire = time.time() + 1.0
+            self.vao_expire = time.time() + config.Timing.VAO_EXPIRE_SEC
         else:
             self.vao_expire = 0
     
@@ -71,7 +72,7 @@ class FooterRenderer:
                 pass
         
         # Stiller
-        HIGHLIGHT = curses.color_pair(6) | curses.A_BOLD  # Yeşil parlak (aktif tuşlar)
+        HIGHLIGHT = curses.color_pair(config.Colors.GREEN) | curses.A_BOLD  # Yeşil parlak (aktif tuşlar)
         KEY = curses.A_BOLD  # Tuşlar için parlak beyaz
         DIM = curses.A_DIM   # Açıklamalar için soluk
         SEP = " · "          # Modern ayırıcı

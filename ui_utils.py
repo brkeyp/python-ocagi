@@ -7,6 +7,7 @@ import sys
 import os
 import contextlib
 import curses
+import config
 
 
 @contextlib.contextmanager
@@ -35,7 +36,7 @@ class OSUtils:
             return 80, 24
 
     @staticmethod
-    def resize_terminal(rows=30, cols=110):
+    def resize_terminal(rows=config.Layout.TARGET_HEIGHT, cols=config.Layout.TARGET_WIDTH):
         """Terminal pencere boyutunu değiştirmeyi dener (Unix/Windows ANSI destekli)."""
         sys.stdout.write(f"\x1b[8;{rows};{cols}t")
         sys.stdout.flush()

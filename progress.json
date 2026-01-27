@@ -1,8 +1,8 @@
 {
   "current_step_id": 38,
-  "highest_reached_id": 38,
+  "highest_reached_id": 37,
   "user_codes": {
-    "1": "mesaj=\"Merhaba Dünya\"\n"
+    "1": "mesaj=\"Merhaba Dünya\"\n\n"
   },
   "completed_tasks": [
     1
