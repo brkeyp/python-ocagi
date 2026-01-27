@@ -21,6 +21,17 @@ class CursesInputDriver(InputDriver):
         
         # Local pushback buffer (replaces curses.ungetch)
         self.pushback_buffer = []
+
+    def _normalize_key_code(self, char) -> int:
+        """
+        Converts char (str or int) to a safe integer key code.
+        Useful because curses.get_wch() returns strings for printable chars.
+        """
+        if char is None:
+            return -1
+        if isinstance(char, str):
+            return ord(char)
+        return char
         
     def close(self):
         """Stops the input collector thread."""
@@ -72,9 +83,9 @@ class CursesInputDriver(InputDriver):
         if char is None:
             return InputEvent(EventType.TIMEOUT)
             
-        # 2. Type Detection
+        # 2. Type Detection & Normalization
         is_char_str = isinstance(char, str)
-        char_code = ord(char) if is_char_str else char
+        char_code = self._normalize_key_code(char)
         
         # 3. Windows Native Alt+Key checks
         if char_code == config.Keys.WIN_ALT_LEFT:
@@ -139,47 +150,52 @@ class CursesInputDriver(InputDriver):
         next_char = self._get_raw_input(config.Timing.TIMEOUT_QUICK)
         
         if next_char is None:
-            # Timeout -> It was just ESC
             return InputEvent(EventType.ESCAPE)
             
         # We have a next char.
+        next_code = self._normalize_key_code(next_char)
         
         # 1. Check for standard CSI sequence start '['
-        if next_char == 91: # '['
+        if next_code == 91: # '['
              # Read more (blocking is fine here as sequence chars come together)
             seq_char = self._get_raw_input(config.Timing.TIMEOUT_QUICK) # Short timeout ok
+            seq_code = self._normalize_key_code(seq_char)
             
             if seq_char is None: 
                 return InputEvent(EventType.UNKNOWN)
                 
             # Handle Alt+Arrows (xterm style: 1;3D or just 1;3)
-            if seq_char == 49: # '1'
+            if seq_code == 49: # '1'
                 # Expect ';3D' or similar
                 self._get_raw_input(100) # swallow ';'
                 mod = self._get_raw_input(100) # modifier (3 = Alt)
-                direction = self._get_raw_input(100) # D=left, C=right
                 
-                if mod == 51: # Alt
+                direction_char = self._get_raw_input(100) # D=left, C=right
+                direction = self._normalize_key_code(direction_char)
+                
+                mod_code = self._normalize_key_code(mod)
+                
+                if mod_code == 51: # Alt
                     if direction == 68: # D (Left)
                         return InputEvent(EventType.PREV_TASK)
                     elif direction == 67: # C (Right)
                         return InputEvent(EventType.NEXT_TASK)
                         
-            elif seq_char == 68: # D
+            elif seq_code == 68: # D
                  return InputEvent(EventType.PREV_TASK)
-            elif seq_char == 67: # C
+            elif seq_code == 67: # C
                  return InputEvent(EventType.NEXT_TASK)
                  
         # 2. Check for Alt+Arrow aliases (ESC + ArrowKey)
-        elif next_char == curses.KEY_LEFT:
+        elif next_code == curses.KEY_LEFT:
              return InputEvent(EventType.PREV_TASK)
-        elif next_char == curses.KEY_RIGHT:
+        elif next_code == curses.KEY_RIGHT:
              return InputEvent(EventType.NEXT_TASK)
              
         # 3. Check for MacOS Option+Arrow ( ESC + b / f )
-        elif next_char == 98: # 'b'
+        elif next_code == 98: # 'b'
              return InputEvent(EventType.PREV_TASK)
-        elif next_char == 102: # 'f'
+        elif next_code == 102: # 'f'
              return InputEvent(EventType.NEXT_TASK)
              
         # 4. It wasn't a sequence we know.
