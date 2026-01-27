@@ -52,7 +52,7 @@ def handle_action(stdscr, action):
             with suspend_curses(stdscr):
                  try:
                      from ui_dev_message import show_developer_message
-                     show_developer_message()
+                     show_developer_message(stdscr)
                  except Exception:
                      pass
 

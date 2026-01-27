@@ -289,10 +289,14 @@ class DeveloperMessageScreen:
                 break
 
 
-def show_developer_message():
-    """Geliştirici mesajı ekranını gösterir (curses wrapper)."""
-    def _inner(stdscr):
-        screen = DeveloperMessageScreen(stdscr)
-        screen.run_demo()
-    
-    curses.wrapper(_inner)
+def show_developer_message(stdscr):
+    """Geliştirici mesajı ekranını gösterir."""
+    # Wrapper kullanma! Mevcut stdscr üzerinden devam et.
+    # Cursor'ı gizle (Zaten gizli ama garanti olsun)
+    try:
+        curses.curs_set(0)
+    except:
+        pass
+        
+    screen = DeveloperMessageScreen(stdscr)
+    screen.run_demo()

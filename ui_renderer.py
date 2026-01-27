@@ -137,25 +137,9 @@ class EditorRenderer:
             self._draw_colorized_line(row, gutter_width, line, width)
             row += 1
         
-        # Footer - İnteraktif renklendirme ile
+        # Footer - İnteraktif renklendirme ile (Unified)
         footer_row = height - 1
-        if editor.message:
-            # Mesaj varsa sarı renkte göster
-            try:
-                self.stdscr.addstr(footer_row, 0, editor.message[:width-1], curses.color_pair(config.Colors.YELLOW))
-            except:
-                pass
-        else:
-            # İnteraktif footer çizimi
-            is_buffer_empty = all(line.strip() == "" for line in editor.buffer)
-            self.footer_renderer.draw(
-                footer_row, 
-                width, 
-                is_buffer_empty, 
-                editor.is_locked, 
-                editor.task_status,
-                editor.has_skipped
-            )
+        self.footer_renderer.draw(footer_row, width, editor)
         
         # Cursor pozisyonu
         cursor_row = buffer_start_row + editor.cy

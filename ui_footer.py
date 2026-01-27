@@ -52,10 +52,24 @@ class FooterRenderer:
         self.stdscr = stdscr
         self.state = footer_state
     
-    def draw(self, row, width, is_buffer_empty, is_locked, task_status, has_skipped=False):
+    def draw(self, row, width, editor_state):
         """Footer'ı interaktif renklendirme ile çizer."""
         # Expire kontrolü
         self.state.check_expired()
+        
+        # 0. Mesaj Kontrolü (Varsa sarı renkte göster ve çık)
+        if editor_state.message:
+            try:
+                self.stdscr.addstr(row, 0, editor_state.message[:width-1], curses.color_pair(config.Colors.YELLOW))
+            except curses.error:
+                pass
+            return
+
+        # Durumları editor_state üzerinden al
+        is_buffer_empty = all(line.strip() == "" for line in editor_state.buffer)
+        is_locked = editor_state.is_locked
+        task_status = editor_state.task_status
+        has_skipped = editor_state.has_skipped
         
         col = 0
         
@@ -81,7 +95,7 @@ class FooterRenderer:
         is_celebration = (task_status == "celebration")
         
         # --- ESC+VAO Mesaj --- (her zaman gösterilir)
-        # vao_progress: 0=yok, 1=ESC, 2=ESC+V, 3=ESC+VA
+        # vao_progress: 0=yok, 1=ESC, 2=ESC+v, 3=ESC+va
         if self.state.vao_progress >= 1:
             draw_text("ESC", HIGHLIGHT)
         else:
