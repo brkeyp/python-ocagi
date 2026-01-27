@@ -9,6 +9,7 @@ import time
 import curses
 import locale
 import config
+import threading
 
 # Locale ayarı - Türkçe karakter desteği için
 try:
@@ -93,9 +94,16 @@ class Editor:
             curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)    # String
             curses.init_pair(config.Colors.BLUE, curses.COLOR_BLUE, -1)     # Number
 
+
+        
+        # Thread Protection
+        self.lock = threading.Lock()
+        
         # Input Driver
-        self.driver = CursesInputDriver(stdscr)
+        # Pass the lock to ensure input thread and main thread don't collision on stdscr
+        self.driver = CursesInputDriver(stdscr, lock=self.lock)
         self.vao_step = 0
+
 
 
     def run(self):
@@ -122,7 +130,8 @@ class Editor:
             
             # 2. Draw
             if should_redraw:
-                self.renderer.refresh_screen()
+                with self.lock:
+                    self.renderer.refresh_screen()
                 should_redraw = False
                 
             # 3. Input Timeout

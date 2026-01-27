@@ -11,12 +11,12 @@ class CursesInputDriver(InputDriver):
     ESC sequences for navigation (Alt+Arrows), and basic key mapping.
     """
     
-    def __init__(self, stdscr):
+    def __init__(self, stdscr, lock=None):
         self.stdscr = stdscr
         self._setup_numpad_map()
         
-        # Initialize Threaded Input Collector
-        self.collector = InputCollector(stdscr)
+        # Initialize Threaded Input Collector with Lock
+        self.collector = InputCollector(stdscr, lock=lock)
         self.collector.start()
         
         # Local pushback buffer (replaces curses.ungetch)

@@ -6,11 +6,14 @@ import time
 
 class InputCollector:
     """
-    Runs a blocking getch() call in a separate thread and
-    puts the results into a thread-safe Queue.
+    Runs a non-blocking getch() loop in a separate thread.
+    Uses a Lock to ensure thread-safe access to stdscr.
     """
-    def __init__(self, stdscr):
+    def __init__(self, stdscr, lock=None):
         self.stdscr = stdscr
+        # Use provided lock or create a new one (though sharing is best)
+        self.lock = lock if lock else threading.Lock()
+        
         self.queue = queue.Queue()
         self.running = threading.Event()
         self.thread = None
@@ -27,43 +30,53 @@ class InputCollector:
     def stop(self):
         """Stops the input collection thread."""
         self.running.clear()
-        # Note: The thread might still be blocked on getch(), but since it's a daemon,
-        # it will die when the main program exits. 
-        # We can't easily interrupt a blocking curses call from another thread.
+        if self.thread:
+            self.thread.join(timeout=0.2)
         
     def _input_loop(self):
         """The actual loop running in the background thread."""
+        
+        # Ensure we are in non-blocking mode for the polling loop
+        # We need the lock to set this safely if main thread is drawing
+        with self.lock:
+             try:
+                 self.stdscr.nodelay(True)
+             except curses.error:
+                 pass
+
         while self.running.is_set():
             try:
-                # Blocking call - this is what we want to isolate
-                # Using get_wch() for unicode support if available
-                try:
-                    ch = self.stdscr.get_wch()
-                except AttributeError:
-                    ch = self.stdscr.getch()
-                except curses.error:
-                    # Timeout or other error
-                    continue
-                    
-                if not self.running.is_set():
-                    break
-                    
-                self.queue.put(ch)
-                
+                # 1. Acquire Lock
+                # We hold the lock ONLY while calling get_wch/getch
+                # This prevents collision with renderer.refresh()
+                char = None
+                with self.lock:
+                    try:
+                        # Try to get a unicode character first
+                        try:
+                            char = self.stdscr.get_wch()
+                        except AttributeError:
+                            char = self.stdscr.getch()
+                    except curses.error:
+                        # Timeout/No Input in nodelay mode
+                        char = None
+
+                # 2. Process Result
+                if char is not None and char != -1:
+                    # Valid input
+                    self.queue.put(char)
+                else:
+                    # No input, sleep to avoid busy loop
+                    # 10ms sleep -> 100 Hz polling rate (plenty fast)
+                    time.sleep(0.01)
+
             except Exception:
-                # If something goes wrong, wait a bit to avoid busy loop
+                # If something goes really wrong, wait a bit
                 time.sleep(0.1)
 
     def get_input(self, block=False, timeout=None):
         """
         Retrieves input from the queue.
-        
-        Args:
-            block (bool): Whether to block waiting for input.
-            timeout (float): Timeout in seconds if blocking.
-            
-        Returns:
-            The character/code, or None if queue is empty.
         """
         try:
             return self.queue.get(block=block, timeout=timeout)
