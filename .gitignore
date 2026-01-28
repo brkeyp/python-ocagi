@@ -3,3 +3,6 @@ __pycache__/
 *.tmp
 *.backup.json
 .app.log
+
+Gecmis_Versiyonlar/
+.coverage
