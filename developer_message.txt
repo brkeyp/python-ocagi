@@ -1,6 +1,6 @@
 Merhaba! 👋
 
-Bu mesaj, Python Kurs Simulatörü'nün geliştiricisinden geliyor.
+Bu mesaj, PYTHON OCAĞI'nın geliştiricisinden geliyor.
 
 Bu uygulama, Python öğrenme yolculuğunda sana yardımcı olmak için tasarlandı.
 Her gün biraz pratik yaparak, yazarak öğrenmenin gücünü keşfedeceksin.

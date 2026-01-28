@@ -56,9 +56,9 @@ class DependencyManifest:
 
 class System:
     """System configuration and file paths."""
-    WINDOW_TITLE_WIN = "PYTHON - YAZARAK ÖĞRENME/ÇALIŞMA SİMULATÖRÜ ☾☆"
-    WINDOW_TITLE_UNIX = "PYTHON - YAZARAK ÖĞRENME/ÇALIŞMA SİMULATÖRÜ 🇹🇷"
-    WINDOW_TITLE_FALLBACK = "PYTHON - YAZARAK OGRENME SIMULATORU"
+    WINDOW_TITLE_WIN = "PYTHON OCAĞI - YAZARAK ÖĞRENME/ÇALIŞMA ☾☆"
+    WINDOW_TITLE_UNIX = "PYTHON OCAĞI - YAZARAK ÖĞRENME/ÇALIŞMA 🇹🇷"
+    WINDOW_TITLE_FALLBACK = "PYTHON OCAGI - YAZARAK OGRENME"
     
     FILENAME_CURRICULUM = 'curriculum.json'
     FILENAME_PROGRESS = 'progress.json'
