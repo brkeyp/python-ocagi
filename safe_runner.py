@@ -10,18 +10,9 @@ def _worker_process(user_code, step_id, result_queue):
     Bu fonksiyon ayrı bir işlemde (process) çalışır.
     Kullanıcı kodunu izole bir ortamda çalıştırır ve sonucu doğrular.
     """
-    # 1. Scope Hazırla (engine.reset_scope mantığıyla aynı)
-    import math
-    import random
-    import datetime
-    
-    scope = {
-        'math': math,
-        'random': random,
-        'datetime': datetime,
-        '__name__': '__main__',
-        '__builtins__': __builtins__ # Gerekirse kısıtlanabilir, şimdilik standart
-    }
+    # 1. Güvenli Scope Hazırla (sandbox modülü ile)
+    from sandbox import get_sandbox_scope
+    scope = get_sandbox_scope()
     
     output_capture = io.StringIO()
     success = False
