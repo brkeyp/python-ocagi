@@ -71,7 +71,8 @@ class InputCollector:
                     time.sleep(0.01)
 
             except Exception:
-                # If something goes really wrong, wait a bit
+                # Fallback for unexpected thread errors - prevents input loop crash
+                # Sleeping allows system to recover before next attempt
                 time.sleep(0.1)
 
     def get_input(self, block=False, timeout=None):

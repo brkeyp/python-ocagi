@@ -14,8 +14,8 @@ import threading
 # Locale ayarı - Türkçe karakter desteği için
 try:
     locale.setlocale(locale.LC_ALL, '')
-except:
-    pass
+except Exception:
+    pass  # Locale setting may fail on some systems - non-critical
 
 # ESCDELAY ayarı - ESC tuşunun anında tepki vermesi için
 # (curses varsayılan olarak escape sequence bekler, bu gecikmeye neden olur)

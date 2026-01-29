@@ -46,7 +46,7 @@ class EditorRenderer:
         # 2. clear() yerine erase() kullan (cursor pozisyonunu korur)
         try:
             curses.curs_set(0)  # Cursor'ı gizle
-        except:
+        except curses.error:
             pass
         
         self.stdscr.erase()  # clear() yerine erase() - daha az flicker
@@ -82,7 +82,7 @@ class EditorRenderer:
             try:
                 self.stdscr.addstr(row, 0, " " * (width - 1), curses.A_REVERSE) # Arkaplan şeridi
                 self.stdscr.addstr(row, start_x, display_title, curses.A_REVERSE | curses.A_BOLD)
-            except:
+            except curses.error:
                 pass
             
             # Compact mode'da sayaçları başlık satırına göm (Sağ köşe)
@@ -92,7 +92,7 @@ class EditorRenderer:
                     counter_text = f"✓{editor.completed_count} ✗{editor.skipped_count}"
                     if len(counter_text) + start_x + len(display_title) < width - 2:
                         self.stdscr.addstr(row, width - len(counter_text) - 2, counter_text, curses.A_REVERSE)
-                except:
+                except curses.error:
                     pass
             
             row += 1
@@ -106,12 +106,12 @@ class EditorRenderer:
             # 2. Başlık Satırı (Temizle + Yaz)
             try:
                 self.stdscr.addstr(row, 0, " " * (width - 1))
-            except:
+            except curses.error:
                 pass
                 
             try:
                 self.stdscr.addstr(row, 0, title[:width-1])
-            except:
+            except curses.error:
                 self.stdscr.addstr(row, 0, config.System.WINDOW_TITLE_FALLBACK[:width-1])
             
             # Sayaç gösterimi (Normal)
@@ -128,7 +128,7 @@ class EditorRenderer:
                         self.stdscr.addstr(row, counter_col, completed_text, curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
                         self.stdscr.addstr(row, counter_col + len(completed_text), separator)
                         self.stdscr.addstr(row, counter_col + len(completed_text) + len(separator), skipped_text, curses.color_pair(config.Colors.RED) | curses.A_BOLD)
-                except:
+                except curses.error:
                     pass
             row += 1
             
@@ -153,7 +153,7 @@ class EditorRenderer:
                 prefix = f"Satır {i+1}: ".ljust(gutter_width)
                 try:
                     self.stdscr.addstr(row, 0, prefix, curses.A_DIM)
-                except:
+                except curses.error:
                     pass
             
             # Syntax highlighting
@@ -171,7 +171,7 @@ class EditorRenderer:
         if cursor_row < height - 1 and cursor_col < width:
             try:
                 self.stdscr.move(cursor_row, cursor_col)
-            except:
+            except curses.error:
                 pass
         
         # Optimized refresh: noutrefresh + doupdate for less flicker
@@ -181,7 +181,7 @@ class EditorRenderer:
         # Cursor'ı tekrar göster
         try:
             curses.curs_set(1)
-        except:
+        except curses.error:
             pass
 
     
@@ -275,7 +275,7 @@ class EditorRenderer:
                     else:
                         # Diğer satırlar turkuvaz
                         self.stdscr.addstr(row, 0, w_line[:width-1], curses.color_pair(config.Colors.CYAN))
-                except:
+                except curses.error:
                     pass
                 row += 1
         
@@ -289,7 +289,7 @@ class EditorRenderer:
                     break
                 try:
                     self.stdscr.addstr(row, 0, h_line[:width-1], curses.color_pair(config.Colors.YELLOW))
-                except:
+                except curses.error:
                     pass
                 row += 1
         
@@ -332,7 +332,7 @@ class EditorRenderer:
                      attr = curses.color_pair(config.Colors.CYAN) | curses.A_BOLD
                 
                 self.stdscr.addstr(row, col, display_part, attr)
-            except:
+            except curses.error:
                 pass
             
             col += len(display_part)
@@ -369,7 +369,7 @@ class EditorRenderer:
                     self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(config.Colors.SUCCESS) | curses.A_BOLD)
                 else:
                     self.stdscr.addstr(row, 0, msg[:width-1], curses.color_pair(config.Colors.CYAN))
-            except:
+            except curses.error:
                 pass
             row += 1
         
@@ -405,5 +405,5 @@ class EditorRenderer:
             if cy + 4 < height:
                 cx4 = max(0, (width - len(msg4)) // 2)
                 self.stdscr.addstr(cy + 4, cx4, msg4, curses.color_pair(config.Colors.WHITE))
-        except:
+        except curses.error:
             pass

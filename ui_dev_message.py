@@ -202,7 +202,7 @@ class DeveloperMessageScreen:
         # 2. FADE-IN EFEKTİ
         try:
             self.stdscr.addstr(row, content_x, "2. FADE-IN EFEKTİ:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
-        except:
+        except curses.error:
             pass
         row += 1
         self.fade_in_text(row, content_x + 3, "Bu metin soluktan netleşiyor!", color_pair=config.Colors.GREEN)
@@ -211,7 +211,7 @@ class DeveloperMessageScreen:
         # 3. PROGRESS BAR
         try:
             self.stdscr.addstr(row, content_x, "3. PROGRESS BAR:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
-        except:
+        except curses.error:
             pass
         row += 1
         self.progress_bar_animation(row, content_x + 3, min(40, content_width - 10), duration_ms=1500)
@@ -220,7 +220,7 @@ class DeveloperMessageScreen:
         # 4. YANIP SÖNEN METİN
         try:
             self.stdscr.addstr(row, content_x, "4. YANIP SÖNEN METİN:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
-        except:
+        except curses.error:
             pass
         row += 1
         self.blink_text(row, content_x + 3, "DİKKAT! Bu metin yanıp sönüyor!", times=3, delay_ms=250)
@@ -229,7 +229,7 @@ class DeveloperMessageScreen:
         # 5. GÖKKUŞAĞI METİN
         try:
             self.stdscr.addstr(row, content_x, "5. GÖKKUŞAĞI METİN:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
-        except:
+        except curses.error:
             pass
         row += 1
         self.rainbow_text(row, content_x + 3, "Her harf farkli renkte!")
@@ -239,7 +239,7 @@ class DeveloperMessageScreen:
         if row + 7 < box_y + box_height - 2:
             try:
                 self.stdscr.addstr(row, content_x, "6. KAYAN METİN:", curses.color_pair(config.Colors.RED) | curses.A_BOLD)
-            except:
+            except curses.error:
                 pass
             row += 1
             scroll_lines = [
@@ -259,7 +259,7 @@ class DeveloperMessageScreen:
         try:
             separator = "─" * (content_width)
             self.stdscr.addstr(row, content_x, separator[:content_width], curses.color_pair(config.Colors.CYAN))
-        except:
+        except curses.error:
             pass
         
         # Geliştirici mesajı
@@ -268,7 +268,7 @@ class DeveloperMessageScreen:
         first_line = message.split('\n')[0] if message else ""
         try:
             self.stdscr.addstr(row, content_x, f"📝 {first_line[:content_width-4]}", curses.color_pair(config.Colors.YELLOW))
-        except:
+        except curses.error:
             pass
         
         # Footer
@@ -276,7 +276,7 @@ class DeveloperMessageScreen:
         footer_x = box_x + (box_width - len(footer_text)) // 2
         try:
             self.stdscr.addstr(box_y + box_height - 2, footer_x, footer_text, curses.A_DIM)
-        except:
+        except curses.error:
             pass
         
         self.stdscr.refresh()
@@ -295,7 +295,7 @@ def show_developer_message(stdscr):
     # Cursor'ı gizle (Zaten gizli ama garanti olsun)
     try:
         curses.curs_set(0)
-    except:
+    except curses.error:
         pass
         
     screen = DeveloperMessageScreen(stdscr)

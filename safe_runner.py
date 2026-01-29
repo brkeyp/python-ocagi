@@ -62,8 +62,11 @@ def _worker_process(user_code, step_id, result_queue):
     except Exception as e:
         # Traceback detaylarını burada kısaltabiliriz ama şimdilik str(e) yeterli
         error_message = f"Çalışma Zamanı Hatası (Runtime Error): {str(e)}"
-    except:
-         error_message = "Bilinmeyen kritik bir hata oluştu."
+    except:  # noqa: E722 - Intentional catch-all for sandbox security
+        # This catches any unexpected errors from user code execution
+        # to prevent subprocess crashes. Do NOT add logging here as it
+        # could expose user code to log files.
+        error_message = "Bilinmeyen kritik bir hata oluştu."
 
     # 3. Doğrulama (Sadece kod başarıyla çalıştıysa)
     if success:

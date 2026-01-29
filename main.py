@@ -253,8 +253,8 @@ def handle_python_version_fallback():
             try:
                 # Burasi genellikle gorunmez ama ne olur ne olmaz
                 OSUtils.clear_screen()
-            except:
-                pass
+            except Exception as e:
+                logging.debug(f"Screen clear failed during version fallback: {e}")
             print(f"\n{config.UI.MSG_EXIT}\n\n")
             sys.exit(0)
     else:
@@ -305,8 +305,8 @@ def handle_python_version_fallback():
         from ui_utils import OSUtils
         try:
             OSUtils.clear_screen()
-        except:
-            pass
+        except Exception as e:
+            logging.debug(f"Screen clear failed during restart: {e}")
         print("\nProgramdan çıkıldı. İyi günler dilerim. ❄︎\n\n")
         sys.exit(0)
     except Exception as e:
@@ -402,8 +402,8 @@ def main():
         try:
              # Try to set a comfortable size, but don't force it if user resizes later
              OSUtils.resize_terminal(config.Layout.TARGET_HEIGHT, config.Layout.TARGET_WIDTH)
-        except:
-             pass
+        except Exception:
+            pass  # Terminal resize failure is non-critical
 
         # controller'ı burada import et (curses yüklendikten sonra)
         import controller
@@ -413,8 +413,8 @@ def main():
         # Simsiyah ekran/artık sorununu çözmek için ekranı temizle
         try:
             OSUtils.clear_screen()
-        except:
-            pass
+        except Exception as e:
+            logging.debug(f"Screen clear failed during exit: {e}")
         print(f"\n{config.UI.MSG_EXIT}\n\n")
         sys.exit(0)
     except Exception as e:
