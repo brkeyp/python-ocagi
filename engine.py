@@ -46,7 +46,6 @@ class ActionExit:
 # --- DATA & HELPERS ---
 
 DATA_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_DIR = os.path.dirname(os.path.abspath(__file__))
 CURRICULUM_FILE = os.path.join(DATA_DIR, config.System.FILENAME_CURRICULUM)
 PROGRESS_FILE = os.path.join(DATA_DIR, config.System.FILENAME_PROGRESS)
 PROGRESS_BACKUP_FILE = os.path.join(DATA_DIR, config.System.FILENAME_PROGRESS_BACKUP)

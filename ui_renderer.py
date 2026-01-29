@@ -15,23 +15,7 @@ from ui_footer import FooterRenderer
 
 class EditorRenderer:
     """Editor ekran çizim işlemleri."""
-    
-    # Syntax highlighting için keyword ve builtin setleri
-    KEYWORDS = {
-        "def", "import", "from", "return", "if", "else", "elif",
-        "for", "while", "class", "try", "except", "pass", "break",
-        "continue", "and", "or", "not", "in", "is", "None", "True", "False"
-    }
-    
-    BUILTINS = {
-        "print", "len", "input", "str", "int", "float", "list",
-        "dict", "set", "range", "enumerate", "open", "type"
-    }
-    
-    # Syntax highlighting pattern
-    SYNTAX_PATTERN = r"(#[^\n]*|\"[^\"]*\"|'[^']*'|\b\d+\b|\b\w+\b|[^\w\s])"
-    
-    
+
     def __init__(self, stdscr, editor):
         """
         Args:

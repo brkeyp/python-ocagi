@@ -149,6 +149,11 @@ class UI:
     MSG_SUBMIT_OR_TYPE = "👉 Devam etmek için yazın, GÖNDERMEK için tekrar Enter'a basın."
     MSG_SKIP_OR_TYPE = "👉 SORUYU ATLAMAK için tekrar Enter'a basın."
     
+    # Prompts (Centralized for DRY)
+    PROMPT_EXIT = "Çıkmak için Enter'a basın..."
+    PROMPT_CONTINUE = "Devam etmek için Enter'a bas..."
+    PROMPT_RETRY = "Tekrar denemek için Enter'a bas..."
+    
     # Celebration
     CELEBRATION_HEADER = "🎉 TEBRİKLER! TÜM GÖREVLERİ TAMAMLADINIZ! 🎉"
     CELEBRATION_SUB1 = "Python öğrenme yolculuğunda harika bir adım attın."

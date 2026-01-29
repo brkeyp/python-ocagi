@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
-
-import os
 import config
 import platform # For architecture detection
 import logging
@@ -202,7 +200,7 @@ def handle_python_version_fallback():
         print(f"\nLütfen uygulamayı doğrudan Python {config.System.PYTHON_VERSION_SHORT} ile başlatmayı deneyin:")
         print(f"   py -{config.System.PYTHON_VERSION_SHORT} main.py")
         print("-" * 60)
-        input("\nÇıkmak için Enter'a basın...")
+        input(f"\n{config.UI.PROMPT_EXIT}")
         sys.exit(1)
     
     print("\n" + "="*60)
@@ -228,7 +226,7 @@ def handle_python_version_fallback():
         print("\n❌ 'py' launcher bulunamadı.")
         print("   Python'u python.org'dan yeniden yüklemeniz gerekebilir.")
         logging.error("py launcher not found.")
-        input("\nÇıkmak için Enter...")
+        input(f"\n{config.UI.PROMPT_EXIT}")
         return False
     
     # Python 3.13 yüklü mü VE gerekli minimum sürümü karşılıyor mu kontrol et
@@ -272,14 +270,14 @@ def handle_python_version_fallback():
             response = input(f"Python {config.System.PYTHON_VERSION_SHORT} yüklensin mi? (E/H): ").strip().lower()
             if response in ('e', 'evet', 'y', 'yes'):
                 if not install_python_313_silent():
-                    input("\nÇıkmak için Enter...")
+                    input(f"\n{config.UI.PROMPT_EXIT}")
                     return False
                 break
             elif response in ('h', 'hayir', 'n', 'no'):
                 print("\n❌ Yükleme iptal edildi.")
                 print(f"   Manuel olarak Python {config.System.PYTHON_VERSION_SHORT} yükleyebilirsiniz:")
                 print("   https://www.python.org/downloads/release/python-31311/")
-                input("\nÇıkmak için Enter...")
+                input(f"\n{config.UI.PROMPT_EXIT}")
                 return False
             else:
                 print("   Lütfen 'E' (Evet) veya 'H' (Hayır) girin.")
@@ -313,7 +311,7 @@ def handle_python_version_fallback():
         sys.exit(0)
     except Exception as e:
         print(f"❌ Yeniden başlatma hatası: {e}")
-        input("\nÇıkmak için Enter...")
+        input(f"\n{config.UI.PROMPT_EXIT}")
         return False
 
 
@@ -362,14 +360,14 @@ def ensure_curses():
             print(f"❌ Yükleme başarısız: {result.stderr}")
             print("   Manuel olarak şu komutu çalıştırın:")
             print(f"   py -m pip install {config.System.PKG_WINDOWS_CURSES}")
-            input("\nÇıkmak için Enter...")
+            input(f"\n{config.UI.PROMPT_EXIT}")
             return False
             
     except Exception as e:
         print(f"❌ Hata: {e}")
         print("   Manuel olarak şu komutu çalıştırın:")
         print(f"   py -m pip install {config.System.PKG_WINDOWS_CURSES}")
-        input("\nÇıkmak için Enter...")
+        input(f"\n{config.UI.PROMPT_EXIT}")
         return False
 
 
@@ -421,7 +419,7 @@ def main():
         sys.exit(0)
     except Exception as e:
         print(f"\nBeklenmeyen bir hata oluştu: {e}")
-        input("Çıkmak için Enter...")
+        input(f"{config.UI.PROMPT_EXIT}")
 
 if __name__ == "__main__":
     main()

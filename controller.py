@@ -41,9 +41,9 @@ def handle_action(stdscr, action):
             # Interactions
             if action.wait_for_enter:
                 if action.type == 'error':
-                    input("\nTekrar denemek için Enter'a bas...")
+                    input(f"\n{config.UI.PROMPT_RETRY}")
                 else:
-                    input("\nDevam etmek için Enter'a bas...")
+                    input(f"\n{config.UI.PROMPT_CONTINUE}")
             else:
                 time.sleep(config.Timing.ACTION_WAIT_SUCCESS if action.type == 'success' else config.Timing.ACTION_WAIT_DEFAULT)
                 
@@ -69,7 +69,7 @@ def validate_terminal_size():
             print(f"\n❌ TERMINAL BOYUTU ÇOK KÜÇÜK ({cols}x{lines})")
             print("Lütfen pencereyi genişletin ve uygulamayı yeniden başlatın.")
             print(f"Minimum gerekli boyut: {config.Layout.MIN_WIDTH}x{config.Layout.MIN_HEIGHT}")
-            input("\nÇıkmak için Enter'a basın...")
+            input(f"\n{config.UI.PROMPT_EXIT}")
             return False
         return True
     except Exception:
@@ -139,7 +139,7 @@ def run_controller():
         print("1. 'TERM' ortam değişkenini kontrol edin (örn: xterm-256color).")
         print("2. Windows kullanıyorsanız 'windows-curses' düzgün yüklenmemiş olabilir.")
         print("-" * 40)
-        input("\nÇıkmak için Enter'a basın...")
+        input(f"\n{config.UI.PROMPT_EXIT}")
         sys.exit(1)
     except KeyboardInterrupt:
         # Ctrl+C Clean exit
@@ -154,5 +154,5 @@ def run_controller():
         import traceback
         traceback.print_exc()
         print("-" * 40)
-        input("\nÇıkmak için Enter'a basın...")
+        input(f"\n{config.UI.PROMPT_EXIT}")
         sys.exit(1)
