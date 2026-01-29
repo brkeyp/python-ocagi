@@ -208,7 +208,53 @@ class EditorRenderer:
                     break
                 continue
             
-            wrapped = textwrap.wrap(line, width - 1) if len(line) > width - 1 else [line]
+            # Renklendirme ve Wrapping hazırlığı
+            # Label dolgusu nedeniyle oluşacak taşmayı hesapla
+            # "BÖLÜM:", "GÖREV X:" gibi kısımlar 12 karaktere tamamlanıyor (ljust).
+            # Bu yüzden string'in ham uzunluğu arttığı için wrap limiti düşmeli.
+            
+            expansion = 0
+            is_special_line = False
+            
+            # Potansiyel genişlemeyi hesapla
+            if line.startswith(config.UI.LABEL_SECTION):
+                raw_label_len = len(config.UI.LABEL_SECTION)
+                expansion = max(0, config.Layout.LABEL_WIDTH - raw_label_len)
+                is_special_line = True
+            elif line.startswith(config.UI.LABEL_TASK):
+                colon_idx = line.find(":")
+                if colon_idx != -1:
+                    raw_label_len = colon_idx + 1
+                    expansion = max(0, config.Layout.LABEL_WIDTH - raw_label_len)
+                is_special_line = True
+            elif line.startswith(config.UI.LABEL_QUESTION):
+                raw_label_len = len(config.UI.LABEL_QUESTION)
+                expansion = max(0, config.Layout.LABEL_WIDTH - raw_label_len)
+                is_special_line = True
+            
+            # İlk satır için wrap genişliği (Expand edilen boşluk kadar azalt)
+            first_line_width = (width - 1) - expansion
+            
+            wrapped = []
+            if len(line) <= first_line_width:
+                 wrapped = [line]
+            else:
+                 # İlk satır dar, sonrakiler normal
+                 # Standart textwrap ilk satır farklı genişlik desteklemez, manuel bölüyoruz.
+                 # En yakın kelime boşluğundan bölmek için textwrap kullanıp kalanı alacağız.
+                 temp_wrap = textwrap.wrap(line, width=first_line_width)
+                 if temp_wrap:
+                     first_part = temp_wrap[0]
+                     wrapped.append(first_part)
+                     
+                     # Geri kalan kısım (kelime bölünmesini textwrap hallettiği için güvenli)
+                     remaining = line[len(first_part):].lstrip() 
+                     if remaining:
+                         wrapped.extend(textwrap.wrap(remaining, width - 1))
+                 else:
+                     # Çok dar alan durumu (nadir)
+                     wrapped = textwrap.wrap(line, width - 1)
+
             for w_line in wrapped:
                 if row >= height - config.Layout.BOTTOM_MARGIN:
                     break
