@@ -12,6 +12,8 @@ def _worker_process(user_code, step_id, result_queue):
     """
     # 1. Güvenli Scope Hazırla (sandbox modülü ile)
     from sandbox import get_sandbox_scope
+    from resource_guard import ResourceGuardian, ResourceLimitError
+    
     scope = get_sandbox_scope()
     
     output_capture = io.StringIO()
@@ -21,9 +23,15 @@ def _worker_process(user_code, step_id, result_queue):
     stdout_val = ""
 
     try:
-        # 2. Kodu Çalıştır
-        with contextlib.redirect_stdout(output_capture):
-            exec(user_code, scope)
+        # 2. Kodu Çalıştır (Kaynak limitleri ile korumalı)
+        with ResourceGuardian(
+            memory_limit_mb=100,      # 100 MB bellek limiti
+            cpu_time_limit_s=5,       # 5 saniye CPU limiti
+            max_operations=2_000_000, # 2M işlem (sonsuz döngü koruması)
+            recursion_limit=500       # 500 özyineleme derinliği
+        ):
+            with contextlib.redirect_stdout(output_capture):
+                exec(user_code, scope)
         
         success = True
         stdout_val = output_capture.getvalue()
@@ -39,10 +47,18 @@ def _worker_process(user_code, step_id, result_queue):
         else:
             error_message += f"Satır {e.lineno}"
     
+    except ResourceLimitError as e:
+        # Kaynak limiti hatalarını yakala (Türkçe mesajlar resource_guard'dan gelir)
+        error_message = str(e)
+    
     except SystemExit:
         error_message = "⚠️  UYARI: Kod 'sys.exit()' veya benzeri bir çıkış komutu içeriyor. Lütfen bunu yapma."
     except KeyboardInterrupt:
         error_message = "⚠️  İşlem kullanıcı tarafından durduruldu."
+    except RecursionError:
+        error_message = "🔄 Fonksiyon kendini çok fazla çağırdı (özyineleme limiti aşıldı)."
+    except MemoryError:
+        error_message = "💾 Bellek limiti aşıldı. Çok büyük veri yapıları oluşturmayın."
     except Exception as e:
         # Traceback detaylarını burada kısaltabiliriz ama şimdilik str(e) yeterli
         error_message = f"Çalışma Zamanı Hatası (Runtime Error): {str(e)}"
