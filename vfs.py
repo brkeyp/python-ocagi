@@ -16,7 +16,7 @@ class MockFileHandle(io.StringIO):
         self.fs = fs
         self.path = path
         self.mode = mode
-        self.closed = False
+        self._closed_flag = False
         
         # Determine initial content based on mode
         initial_content = ""
@@ -47,11 +47,15 @@ class MockFileHandle(io.StringIO):
         elif 'r' in mode:
              self.seek(0, io.SEEK_SET)
 
+    @property
+    def closed(self):
+        return self._closed_flag
+
     def close(self):
         """
         Flushes buffer to the VFS storage on close.
         """
-        if self.closed:
+        if self._closed_flag:
             return
             
         # If writing mode, save content back to FS
@@ -59,7 +63,7 @@ class MockFileHandle(io.StringIO):
             self.fs.files[self.path] = self.getvalue()
             
         super().close()
-        self.closed = True
+        self._closed_flag = True
         
     def __enter__(self):
         return self

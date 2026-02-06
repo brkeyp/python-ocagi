@@ -1,24 +1,6 @@
 {
-    "current_step": "dd5face9-ff05-4fc9-9e9b-65ad6e86ac38",
+    "current_step": null,
     "completed_tasks": [],
-    "skipped_tasks": [
-        "395ec290-d186-42c5-9586-6ad4ce82e347",
-        "bf9d1901-a2a7-427d-8fa9-26a8c2d37f9b",
-        "ca00d735-09fc-4b46-867c-acf7da7cb1e2",
-        "10bb5c09-5284-4c77-b049-7f1259c12826",
-        "180000a1-e47a-41e7-927a-5b8bf8faca66",
-        "693a37e7-9d4c-49a1-9184-4fac88f9f063",
-        "d4238c04-89c2-4d13-a95f-253111b164c5",
-        "262845ec-4bac-4ba8-a75a-37e358def511",
-        "b3ae2403-28fd-43be-9ab2-3c40a07b4f3d",
-        "8d1b95c1-aea1-4f32-92f8-6bb4a66bd806",
-        "cc69e5d4-417c-44b9-9801-bfb12db9467b",
-        "e64c11cf-8344-450d-b91a-e39b42f79ac3",
-        "60730682-b61e-4cc6-b441-491f93e6f598",
-        "96580da5-c6ed-4b80-aa9c-2f03de567fc8",
-        "ed996d4f-472a-4cbd-8729-343e7d82cc5a",
-        "e0870fcd-8dba-46aa-aff5-d5e789dd04f8",
-        "590a42e0-9a80-4553-a4a5-b52eba11003d"
-    ],
+    "skipped_tasks": [],
     "user_code": {}
 }

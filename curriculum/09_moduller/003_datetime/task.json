@@ -1,0 +1,14 @@
+{
+    "id": "003_datetime",
+    "category": "Modüller",
+    "title": "Zaman Yönetimi (Datetime)",
+    "description": "'datetime' modülünü kullanarak şu anki tarihi ve saati 'simdi' değişkenine ata. Sonra bu değişkeni ekrana yazdır.",
+    "hint": "dt.datetime.now() metodunu kullanabilirsin.",
+    "type": "code",
+    "xp": 10,
+    "tags": [
+        "moduller",
+        "datetime"
+    ],
+    "uuid": "4c47b59e-9b55-46fd-b52b-7c186064f2fb"
+}

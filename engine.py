@@ -135,11 +135,14 @@ class SimulationEngine:
             step = self.cm.get_lesson_by_uuid(current_step_id)
         
         if not step:
-            step = self.cm.get_first_lesson()
-            if step:
-                current_step_id = step.uuid
-                self.progress["current_step"] = current_step_id
-                # Don't save yet, wait for interaction
+            # Only fallback to first lesson for NEW users (no history)
+            is_new_user = len(completed) == 0 and len(skipped) == 0
+            if is_new_user:
+                step = self.cm.get_first_lesson()
+                if step:
+                    current_step_id = step.uuid
+                    self.progress["current_step"] = current_step_id
+                    # Don't save yet, wait for interaction
         
         return self.progress, current_step_id, completed, skipped, step
 
@@ -196,37 +199,49 @@ class SimulationEngine:
             return ActionCustomView("dev_message")
 
         # 3. NAVIGATION (PREV/NEXT)
-        # 3. NAVIGATION (PREV/NEXT)
         if user_input == "PREV_TASK":
-            prev_lesson = self.cm.get_prev_lesson(current_step_id)
-            if prev_lesson:
-                self.progress["current_step"] = prev_lesson.uuid
-                self._save_progress()
+            if current_step_id is None:
+                # From celebration, go to last lesson
+                if self.cm.lessons:
+                    self.progress["current_step"] = self.cm.lessons[-1].uuid
+                    self._save_progress()
+            else:
+                prev_lesson = self.cm.get_prev_lesson(current_step_id)
+                if prev_lesson:
+                    self.progress["current_step"] = prev_lesson.uuid
+                    self._save_progress()
             return self.get_next_action()
             
         if user_input == "NEXT_TASK":
-            # Allow next if current is completed OR skipped
-            # OR if we want to allow linear progression even if not completed? 
-            # Strict mode: Only if current in completed/skipped.
-            # But let's check if the NEXT lesson is *accessible*.
+            if current_step_id is None:
+                # Already on celebration, stay there
+                return self.get_next_action()
+            
             next_lesson = self.cm.get_next_lesson(current_step_id)
             if next_lesson:
-                # Logic: Is the user allowed to go to next?
-                # If current task is done/skipped: YES.
-                # If current task is NOT done, but next task was ALREADY DONE (revisiting): YES.
+                # Normal case: go to next lesson (if allowed)
                 can_advance = (current_step_id in completed or current_step_id in skipped)
-                # Or if next is already unlocked (in completed/skipped)
                 if next_lesson.uuid in completed or next_lesson.uuid in skipped:
                     can_advance = True
                     
                 if can_advance:
                     self.progress["current_step"] = next_lesson.uuid
                     self._save_progress()
+            else:
+                # No next lesson = we're on the last one
+                # If current is done/skipped, go to celebration
+                if current_step_id in completed or current_step_id in skipped:
+                    self.progress["current_step"] = None
+                    self._save_progress()
             return self.get_next_action()
 
         if user_input == "GOTO_FIRST_SKIPPED":
-            # Need to map logic to UUIDs
-            pass # Removed for simplification unless critical
+            if skipped:
+                first_skipped_uuid = skipped[0]
+                if self.cm.get_lesson_by_uuid(first_skipped_uuid):
+                    self.progress["current_step"] = first_skipped_uuid
+                    self._save_progress()
+            return self.get_next_action()
             
         if user_input == "SHOW_SOLUTION":
              if step:
@@ -240,12 +255,17 @@ class SimulationEngine:
             is_skipped = current_step_id in skipped
             msg_title = "📖 ÇÖZÜM (Daha önce atlanmış görev)" if is_skipped else "⏩ SORU ATLANDI"
             
+            # Mark as skipped if not already
             if not is_skipped:
                 self.progress["skipped_tasks"].append(current_step_id)
-                next_l = self.cm.get_next_lesson(current_step_id)
-                if next_l:
-                    self.progress["current_step"] = next_l.uuid
-                self._save_progress()
+            
+            # ALWAYS advance to next lesson or celebration
+            next_l = self.cm.get_next_lesson(current_step_id)
+            if next_l:
+                self.progress["current_step"] = next_l.uuid
+            else:
+                self.progress["current_step"] = None  # Trigger celebration
+            self._save_progress()
             
             return ActionShowMessage(
                 title=msg_title,
@@ -285,6 +305,8 @@ class SimulationEngine:
             next_l = self.cm.get_next_lesson(current_step_id)
             if next_l:
                 self.progress["current_step"] = next_l.uuid
+            else:
+                self.progress["current_step"] = None  # Trigger celebration
             self._save_progress()
             
             msg = "Görev başarıyla tamamlandı."

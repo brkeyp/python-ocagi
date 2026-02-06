@@ -3,7 +3,7 @@
   "uuid": "53b62680-374a-489a-a063-0e830fb6b324",
   "category": "Dosya",
   "title": "Dosya Yazma",
-  "description": "Write file",
+  "description": "'test.txt' adında bir dosya oluştur ve içine bir şeyler yaz.",
   "hint": "open",
   "type": "code",
   "xp": 20,

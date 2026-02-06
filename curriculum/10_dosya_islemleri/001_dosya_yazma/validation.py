@@ -1,4 +1,8 @@
-# -*- coding: utf-8 -*-
 def validate(scope, output):
-    import os
-    return os.path.exists('test.txt')
+    # Check VFS via scope['open']
+    try:
+        # scope['open'] is fs.open (bound method)
+        fs = scope['open'].__self__
+        return fs.exists('test.txt')
+    except:
+        return False

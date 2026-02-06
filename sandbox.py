@@ -36,6 +36,8 @@ ALLOWED_MODULES = frozenset([
     'fractions',
     'operator',
     'statistics',
+    'os',
+    'sys',
 ])
 
 

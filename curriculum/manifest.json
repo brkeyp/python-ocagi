@@ -49,8 +49,16 @@
       "title": "Nesne Yönelimli Programlama"
     },
     {
-      "slug": "13_final",
-      "title": "Final Projesi"
+      "slug": "14_ileri_python",
+      "title": "İleri Python"
+    },
+    {
+      "slug": "15_json_ve_api",
+      "title": "JSON ve Veri Yapıları"
+    },
+    {
+      "slug": "99_final_proje",
+      "title": "Final Projesi: Todo Uygulaması"
     }
   ]
 }

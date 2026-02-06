@@ -1,0 +1,14 @@
+{
+    "id": "004_kalitim",
+    "category": "OOP",
+    "title": "Kalıtım (Inheritance)",
+    "description": "'Canli' sınıfı oluştur (metodu 'nefes_al' olsun). Sonra 'Canli'dan türeyen 'Insan' sınıfı oluştur.",
+    "hint": "class Insan(Canli): şeklinde tanımlamalısın.",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "oop",
+        "inheritance"
+    ],
+    "uuid": "7f8e3c9d-5a2e-4b6d-9c8e-1f3a5b7d9e2c"
+}
