@@ -1,0 +1,14 @@
+{
+    "id": "001_demet_olusturma",
+    "uuid": "6bf7ad54-8092-4440-aa94-e60bd9f5d37e",
+    "category": "Demetler ve Kümeler",
+    "title": "Demet (Tuple) Oluşturma",
+    "description": "'koordinatlar' adında bir demet (tuple) oluştur. İçine (40.7128, -74.0060) değerlerini koy.",
+    "hint": "Demetler normal parantez () ile tanımlanır: demet = (deger1, deger2). Listelerden farkı değiştirilemez (immutable) olmalarıdır.",
+    "type": "code",
+    "xp": 10,
+    "tags": [
+        "demetler",
+        "tuple"
+    ]
+}

@@ -1,13 +1,14 @@
 {
   "id": "001_try_except",
   "uuid": "cf6400f8-1513-40b4-aea8-c08c9f5661c5",
-  "category": "Hata",
-  "title": "Try Except",
-  "description": "Handle error",
-  "hint": "try",
+  "category": "Hata Yönetimi",
+  "title": "Try-Except Bloğu",
+  "description": "'sayi = int(\"abc\")' satırını try-except bloğu içine al. Hata yakalandığında 'hata_olustu' değişkenine True ata.",
+  "hint": "try: bloğu hata verebilecek kodu içerir. except: bloğu hata durumunda çalışır. Önce hata_olustu = False tanımla, except içinde True yap.",
   "type": "code",
-  "xp": 20,
+  "xp": 15,
   "tags": [
-    "hata"
+    "hata_yonetimi",
+    "try_except"
   ]
 }

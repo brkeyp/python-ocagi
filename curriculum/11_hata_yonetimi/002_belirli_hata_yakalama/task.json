@@ -1,0 +1,14 @@
+{
+    "id": "002_belirli_hata_yakalama",
+    "uuid": "cceccab0-cf9d-4dba-b568-18ac38d7007f",
+    "category": "Hata Yönetimi",
+    "title": "Belirli Hata Türü Yakalama",
+    "description": "Bir sayıyı sıfıra bölmeyi dene. Sadece ZeroDivisionError hatasını yakala ve 'bolme_hatasi' değişkenine True ata.",
+    "hint": "except ZeroDivisionError: şeklinde belirli hata türünü yakala. Diğer hatalar yakalanmaz.",
+    "type": "code",
+    "xp": 15,
+    "tags": [
+        "hata_yonetimi",
+        "exception_types"
+    ]
+}

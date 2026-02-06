@@ -1,0 +1,14 @@
+{
+    "id": "003_finally_blogu",
+    "uuid": "775257cb-ba9d-468d-9ce8-90a28cb9bb35",
+    "category": "Hata Yönetimi",
+    "title": "Finally Bloğu",
+    "description": "try-except-finally yapısı kur. Hata olsa da olmasa da 'temizlik_yapildi' değişkenine True ata (finally bloğunda).",
+    "hint": "finally: bloğu her durumda çalışır. Hata olsa da olmasa da!",
+    "type": "code",
+    "xp": 15,
+    "tags": [
+        "hata_yonetimi",
+        "finally"
+    ]
+}

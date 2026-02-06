@@ -1,0 +1,13 @@
+{
+    "id": "002_dosya_okuma",
+    "uuid": "fa87da06-d59e-46ee-ab2b-9f8252205d10",
+    "category": "Dosya İşlemleri",
+    "title": "Dosyadan Okuma",
+    "description": "'veri.txt' dosyasını oku ve içeriğini 'icerik' değişkenine ata.",
+    "hint": "open('dosya.txt', 'r') ile okuma modunda aç. .read() ile tüm içeriği oku.",
+    "type": "code",
+    "xp": 15,
+    "tags": [
+        "dosya_islemleri"
+    ]
+}

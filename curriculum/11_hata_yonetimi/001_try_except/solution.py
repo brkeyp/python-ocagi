@@ -1,3 +1,6 @@
-# -*- coding: utf-8 -*-
-try: 1/0
-except: pass
+hata_olustu = False
+
+try:
+    sayi = int("abc")
+except:
+    hata_olustu = True
