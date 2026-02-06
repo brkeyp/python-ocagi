@@ -1,0 +1,13 @@
+{
+  "id": "004_string_dilimleme_slicing",
+  "category": "Stringler",
+  "title": "String Dilimleme (Slicing)",
+  "description": "'alfabe' = 'ABCDEF' olsun. 'ilk_uc' değişkenine sadece 'ABC' kısmını alarak ata.",
+  "hint": "Köşeli parantez kullan: degisken[baslangic:bitis]. Baştan başlamak için ilk kısmı boş bırak.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "stringler"
+  ],
+  "uuid": "e64c11cf-8344-450d-b91a-e39b42f79ac3"
+}

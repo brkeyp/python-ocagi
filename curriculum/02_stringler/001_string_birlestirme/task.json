@@ -1,0 +1,13 @@
+{
+  "id": "001_string_birlestirme",
+  "category": "Stringler",
+  "title": "String Birleştirme",
+  "description": "'ad' = 'Python', 'soyad' = 'Kursu' değişkenlerini oluştur. Sonra 'tam_isim' değişkeninde bunları aralarında boşluk olacak şekilde birleştir.",
+  "hint": "Değişkenleri alt alta tanımla. Bitince boş satırda Enter'a bas.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "stringler"
+  ],
+  "uuid": "b3ae2403-28fd-43be-9ab2-3c40a07b4f3d"
+}

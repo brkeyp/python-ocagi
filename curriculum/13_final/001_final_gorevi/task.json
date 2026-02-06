@@ -1,0 +1,13 @@
+{
+  "id": "001_final_gorevi",
+  "category": "Final",
+  "title": "Final Görevi",
+  "description": "1'den 10'a kadar olan sayıların karelerini içeren bir liste oluştur (List Comprehension kullan) ve 'kareler' değişkenine ata.",
+  "hint": "[islem for eleman in liste] yapısını hatırla.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "final"
+  ],
+  "uuid": "b7ae8116-fb7b-42cf-882f-d599dcf229cd"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "003_varsayilan_parametre_default_args",
+  "category": "Fonksiyonlar",
+  "title": "Varsayılan Parametre (Default Args)",
+  "description": "'selamla' fonksiyonu tanımla. 'isim' alsın, varsayılanı 'Misafir' olsun. 'Merhaba {isim}' döndürsün.",
+  "hint": "def selamla(isim='Misafir'):",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "fonksiyonlar"
+  ],
+  "uuid": "3c14caad-f466-4ae9-ac7c-cd876d2f065e"
+}

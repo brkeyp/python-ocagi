@@ -1,0 +1,13 @@
+{
+  "id": "004_eleman_silme_pop",
+  "category": "Listeler",
+  "title": "Eleman Silme (Pop)",
+  "description": "liste = [1, 2, 3, 4, 99]. Listenin son elemanını sil (pop kullan).",
+  "hint": ".pop() metodu parametre verilmezse son elemanı siler.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "listeler"
+  ],
+  "uuid": "590a42e0-9a80-4553-a4a5-b52eba11003d"
+}

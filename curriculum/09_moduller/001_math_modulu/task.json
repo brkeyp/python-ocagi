@@ -1,0 +1,13 @@
+{
+  "id": "001_math_modulu",
+  "uuid": "7910209a-4ef3-4292-bee0-ceb89f67ca13",
+  "category": "Modüller",
+  "title": "Math Modülü",
+  "description": "import math",
+  "hint": "import",
+  "type": "code",
+  "xp": 20,
+  "tags": [
+    "modüller"
+  ]
+}

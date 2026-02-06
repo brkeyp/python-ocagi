@@ -2,7 +2,7 @@
   "chapters": [
     {
       "slug": "01_temeller",
-      "title": "Temel"
+      "title": "Temeller"
     },
     {
       "slug": "02_stringler",
@@ -13,36 +13,44 @@
       "title": "Listeler"
     },
     {
-      "slug": "04_sozcukler",
+      "slug": "04_demetler_ve_kumeler",
+      "title": "Demetler ve Kümeler"
+    },
+    {
+      "slug": "05_sozcukler",
       "title": "Sözlükler"
     },
     {
-      "slug": "05_kosullar",
-      "title": "Koşullar"
+      "slug": "06_kosullar",
+      "title": "Koşullu İfadeler"
     },
     {
-      "slug": "06_donguler",
+      "slug": "07_donguler",
       "title": "Döngüler"
     },
     {
-      "slug": "07_fonksiyonlar",
+      "slug": "08_fonksiyonlar",
       "title": "Fonksiyonlar"
     },
     {
-      "slug": "08_moduller",
+      "slug": "09_moduller",
       "title": "Modüller"
     },
     {
-      "slug": "09_hata_yonetimi",
+      "slug": "10_dosya_islemleri",
+      "title": "Dosya İşlemleri"
+    },
+    {
+      "slug": "11_hata_yonetimi",
       "title": "Hata Yönetimi"
     },
     {
-      "slug": "10_oop",
-      "title": "OOP"
+      "slug": "12_oop",
+      "title": "Nesne Yönelimli Programlama"
     },
     {
-      "slug": "11_final",
-      "title": "Final"
+      "slug": "13_final",
+      "title": "Final Projesi"
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-    "current_step": "ed996d4f-472a-4cbd-8729-343e7d82cc5a",
+    "current_step": "dd5face9-ff05-4fc9-9e9b-65ad6e86ac38",
     "completed_tasks": [],
     "skipped_tasks": [
         "395ec290-d186-42c5-9586-6ad4ce82e347",
@@ -15,7 +15,10 @@
         "cc69e5d4-417c-44b9-9801-bfb12db9467b",
         "e64c11cf-8344-450d-b91a-e39b42f79ac3",
         "60730682-b61e-4cc6-b441-491f93e6f598",
-        "96580da5-c6ed-4b80-aa9c-2f03de567fc8"
+        "96580da5-c6ed-4b80-aa9c-2f03de567fc8",
+        "ed996d4f-472a-4cbd-8729-343e7d82cc5a",
+        "e0870fcd-8dba-46aa-aff5-d5e789dd04f8",
+        "590a42e0-9a80-4553-a4a5-b52eba11003d"
     ],
     "user_code": {}
 }

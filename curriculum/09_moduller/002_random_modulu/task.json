@@ -1,0 +1,13 @@
+{
+  "id": "002_random_modulu",
+  "uuid": "9e208150-175e-464c-824b-87daa19d7e4c",
+  "category": "Modüller",
+  "title": "Random Modülü",
+  "description": "import random",
+  "hint": "random",
+  "type": "code",
+  "xp": 20,
+  "tags": [
+    "modüller"
+  ]
+}

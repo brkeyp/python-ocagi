@@ -1,0 +1,13 @@
+{
+  "id": "002_deger_okuma",
+  "category": "Sözlükler",
+  "title": "Değer Okuma",
+  "description": "'kimlik' sözlüğünden 'ad' anahtarının değerini alıp 'isim_degeri' değişkenine ata.",
+  "hint": "sozluk['anahtar'] yapısını kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "sozlukler"
+  ],
+  "uuid": "c60f6c72-ad4f-4aad-8530-3587f08e18da"
+}

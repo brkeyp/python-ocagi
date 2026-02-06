@@ -1,0 +1,13 @@
+{
+  "id": "003_eleman_erisimi",
+  "category": "Listeler",
+  "title": "Eleman Erişimi",
+  "description": "'meyveler' = ['Elma', 'Armut', 'Muz'] olsun. 'ortadaki' değişkenine 'Armut' değerini listeden çekerek ata.",
+  "hint": "Python'da indeksler 0'dan başlar. İkinci eleman 1. indekstir.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "listeler"
+  ],
+  "uuid": "e0870fcd-8dba-46aa-aff5-d5e789dd04f8"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "001_if_blogu",
+  "category": "Koşullar",
+  "title": "If Bloğu",
+  "description": "'puan' = 85 olsun. Eğer puan 50'den büyükse 'durum' değişkenine 'Geçti' ata.",
+  "hint": "if bloğundan sonra girintiye (indentation) dikkat et. Alt satıra geçmek için Enter'a bas.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "kosullar"
+  ],
+  "uuid": "427ce2f3-89dd-4f4d-be5f-b7a7f7ec3a36"
+}
