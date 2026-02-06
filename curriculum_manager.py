@@ -9,6 +9,7 @@ import config
 class Lesson:
     def __init__(self, data, path, numeric_id):
         self.slug = data.get('id') # String ID (e.g. 'basics_vars')
+        self.uuid = data.get('uuid') # Stable UUID
         self.numeric_id = numeric_id # Integer ID for UI order
         self.category = data.get('category', 'Genel')
         self.title = data.get('title', 'Başlıksız')
@@ -51,8 +52,10 @@ class CurriculumManager:
     def load(self):
         """Loads the entire curriculum from the file system."""
         self.lessons = []
+        self.lessons = []
         self.lesson_map = {}
         self.id_map = {}
+        self.uuid_map = {} # uuid -> Lesson
         
         manifest_path = os.path.join(self.root_dir, 'manifest.json')
         if not os.path.exists(manifest_path):
@@ -109,16 +112,58 @@ class CurriculumManager:
                             self.lessons.append(lesson)
                             self.lesson_map[lesson.slug] = lesson
                             self.id_map[global_id_counter] = lesson
+                            if lesson.uuid:
+                                self.uuid_map[lesson.uuid] = lesson
                             
                             global_id_counter += 1
                         except Exception as e:
                             logging.error(f"Error loading lesson {entry}: {e}")
 
     def get_lesson_by_id(self, numeric_id):
+        # Legacy support: ID map is still populated but we should prefer UUIDs
         return self.id_map.get(numeric_id)
+
+    def get_lesson_by_uuid(self, uuid_str):
+        """Returns lesson by its stable UUID."""
+        return self.uuid_map.get(uuid_str)
 
     def get_lesson_by_slug(self, slug):
         return self.lesson_map.get(slug)
+    
+    def get_next_lesson(self, current_uuid):
+        """Returns the next lesson in the ordered list after the given UUID."""
+        if current_uuid not in self.uuid_map:
+            return None
+            
+        current_lesson = self.uuid_map[current_uuid]
+        # Find index in the ordered list
+        # Optimization: We could store index in Lesson but that duplicates state
+        try:
+            idx = self.lessons.index(current_lesson)
+            if idx + 1 < len(self.lessons):
+                return self.lessons[idx + 1]
+        except ValueError:
+            pass
+        return None
+
+    def get_prev_lesson(self, current_uuid):
+        """Returns the previous lesson in the ordered list."""
+        if current_uuid not in self.uuid_map:
+            return None
+            
+        current_lesson = self.uuid_map[current_uuid]
+        try:
+            idx = self.lessons.index(current_lesson)
+            if idx > 0:
+                return self.lessons[idx - 1]
+        except ValueError:
+            pass
+        return None
+
+    def get_first_lesson(self):
+        if self.lessons:
+            return self.lessons[0]
+        return None
 
     def get_total_lessons(self):
         return len(self.lessons)
