@@ -1,0 +1,1 @@
+mesaj = 'Merhaba Dünya'

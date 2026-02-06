@@ -298,14 +298,13 @@ def get_safe_builtins():
     return _SAFE_BUILTINS
 
 
-def get_sandbox_scope():
+def get_sandbox_scope(fs=None):
     """
     Kullanıcı kodu için güvenli çalıştırma kapsamını döndürür.
     
-    Bu kapsam:
-    - Sadece güvenli yerleşik fonksiyonları içerir
-    - math, random, datetime modüllerini önceden yükler
-    - '__name__' değerini '__main__' olarak ayarlar
+    Args:
+        fs: (Opsiyonel) MockFileSystem örneği.
+            Verilirse 'open' fonksiyonu bu dosya sistemini kullanır.
     
     Returns:
         dict: Güvenli çalıştırma kapsamı
@@ -326,5 +325,9 @@ def get_sandbox_scope():
         # Kısıtlı yerleşikler
         '__builtins__': get_safe_builtins(),
     }
+    
+    # Eğer dosya sistemi verildiyse, güvenli open fonksiyonunu ekle
+    if fs:
+        scope['open'] = fs.open
     
     return scope

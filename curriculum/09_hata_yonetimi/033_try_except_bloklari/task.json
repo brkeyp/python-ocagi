@@ -1,0 +1,12 @@
+{
+  "id": "033_try_except_bloklari",
+  "category": "Hata Yönetimi",
+  "title": "Try-Except Blokları",
+  "description": "Bir try-except bloğu yaz. '10 / 0' işlemini yapmaya çalış. ZeroDivisionError hatası olursa 'sonuc' değişkenine 'Hata' ata.",
+  "hint": "Sıfıra bölme hatası ZeroDivisionError olarak yakalanır.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "hata_yonetimi"
+  ]
+}

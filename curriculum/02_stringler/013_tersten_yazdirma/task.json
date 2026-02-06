@@ -1,0 +1,12 @@
+{
+  "id": "013_tersten_yazdirma",
+  "category": "Stringler",
+  "title": "Tersten Yazdırma",
+  "description": "'metin' = 'elma' olsun. 'ters_metin' değişkenine 'amle' değerini (tersini) ata.",
+  "hint": "[::-1] dilimleme yöntemi listeyi veya stringi ters çevirir.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "stringler"
+  ]
+}

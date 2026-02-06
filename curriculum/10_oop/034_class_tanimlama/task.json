@@ -1,0 +1,12 @@
+{
+  "id": "034_class_tanimlama",
+  "category": "OOP",
+  "title": "Class Tanımlama",
+  "description": "'Araba' adında bir sınıf (class) oluştur. Henüz içi boş olabilir (pass kullan).",
+  "hint": "class Araba: yazıp altına pass ekle.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "oop"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "026_listeyi_gezme_iteration",
+  "category": "Döngüler",
+  "title": "Listeyi Gezme (Iteration)",
+  "description": "'sayilar' = [10, 20, 30]. For döngüsü ile her elemanı 2 ile çarpıp ekrana yazdır (print).",
+  "hint": "print fonksiyonu her adımda çalışmalıdır.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "donguler"
+  ]
+}

@@ -1,0 +1,2 @@
+class Araba:
+    pass

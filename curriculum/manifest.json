@@ -1,0 +1,48 @@
+{
+  "chapters": [
+    {
+      "slug": "01_temeller",
+      "title": "Temel"
+    },
+    {
+      "slug": "02_stringler",
+      "title": "Stringler"
+    },
+    {
+      "slug": "03_listeler",
+      "title": "Listeler"
+    },
+    {
+      "slug": "04_sozcukler",
+      "title": "Sözlükler"
+    },
+    {
+      "slug": "05_kosullar",
+      "title": "Koşullar"
+    },
+    {
+      "slug": "06_donguler",
+      "title": "Döngüler"
+    },
+    {
+      "slug": "07_fonksiyonlar",
+      "title": "Fonksiyonlar"
+    },
+    {
+      "slug": "08_moduller",
+      "title": "Modüller"
+    },
+    {
+      "slug": "09_hata_yonetimi",
+      "title": "Hata Yönetimi"
+    },
+    {
+      "slug": "10_oop",
+      "title": "OOP"
+    },
+    {
+      "slug": "11_final",
+      "title": "Final"
+    }
+  ]
+}

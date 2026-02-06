@@ -1,0 +1,12 @@
+{
+  "id": "031_modul_i_ce_aktarma_import",
+  "category": "Modüller",
+  "title": "Modül İçe Aktarma (Import)",
+  "description": "'math' modülünü import et ve 'karekok' değişkenine 16'nın karekökünü (sqrt) ata.",
+  "hint": "math.sqrt() fonksiyonunu kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "moduller"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "002_tamsayilar_integers",
+  "category": "Temel",
+  "title": "Tamsayılar (Integers)",
+  "description": "'yil' değişkeni oluştur ve değerini 2025 yap.",
+  "hint": "Tamsayılar tırnak işareti olmadan yazılır.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "temel"
+  ]
+}

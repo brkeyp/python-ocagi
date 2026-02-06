@@ -1,0 +1,12 @@
+{
+  "id": "003_ondalikli_sayilar_floats",
+  "category": "Temel",
+  "title": "Ondalıklı Sayılar (Floats)",
+  "description": "'pi_sayisi' değişkeni oluştur ve 3.14 değerini ata.",
+  "hint": "Ondalık ayracı olarak nokta (.) kullanmalısın.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "temel"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "014_liste_olusturma",
+  "category": "Listeler",
+  "title": "Liste Oluşturma",
+  "description": "'sayilar' adında bir liste oluştur ve içine 10, 20, 30 değerlerini koy.",
+  "hint": "Listeler köşeli parantez [] ile tanımlanır.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "listeler"
+  ]
+}

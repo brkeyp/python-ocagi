@@ -1,0 +1,12 @@
+{
+  "id": "015_eleman_ekleme_append",
+  "category": "Listeler",
+  "title": "Eleman Ekleme (Append)",
+  "description": "'renkler' boş bir liste olsun ([]). İçine sırasıyla 'Mavi' ve 'Yesil' ekle.",
+  "hint": ".append() metodunu iki kez kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "listeler"
+  ]
+}

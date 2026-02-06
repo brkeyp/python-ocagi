@@ -1,0 +1,12 @@
+{
+  "id": "010_f_string_kullanimi",
+  "category": "Stringler",
+  "title": "f-String Kullanımı",
+  "description": "'yas' = 25 olsun. f-string kullanarak 'kisi_bilgisi' değişkenine 'Yaşım: 25' yazısını ata.",
+  "hint": "f'...{degisken}...' yapısını kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "stringler"
+  ]
+}

@@ -1,0 +1,1 @@
+kimlik = {'ad': 'Ali', 'yas': 30}

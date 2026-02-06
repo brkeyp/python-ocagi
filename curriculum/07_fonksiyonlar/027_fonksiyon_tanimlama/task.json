@@ -1,0 +1,12 @@
+{
+  "id": "027_fonksiyon_tanimlama",
+  "category": "Fonksiyonlar",
+  "title": "Fonksiyon Tanımlama",
+  "description": "'kare_al' isminde bir fonksiyon tanımla. Bir sayı alsın ve karesini return etsin.",
+  "hint": "def anahtar kelimesini ve return ifadesini kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "fonksiyonlar"
+  ]
+}

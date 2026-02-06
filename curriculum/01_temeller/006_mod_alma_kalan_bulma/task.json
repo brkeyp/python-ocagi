@@ -1,0 +1,12 @@
+{
+  "id": "006_mod_alma_kalan_bulma",
+  "category": "Matematik",
+  "title": "Mod Alma (Kalan Bulma)",
+  "description": "'kalan' değişkeni oluştur, 10'un 3'e bölümünden kalanı hesapla.",
+  "hint": "Mod almak için yüzde (%) işaretini kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "matematik"
+  ]
+}

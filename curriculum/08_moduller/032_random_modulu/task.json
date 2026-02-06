@@ -1,0 +1,12 @@
+{
+  "id": "032_random_modulu",
+  "category": "Modüller",
+  "title": "Random Modülü",
+  "description": "'random' modülünü import et. 'sansli_sayi' değişkenine 1 ile 100 arasında rastgele bir tam sayı ata.",
+  "hint": "random.randint(min, max) kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "moduller"
+  ]
+}

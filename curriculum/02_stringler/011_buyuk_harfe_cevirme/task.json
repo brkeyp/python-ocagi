@@ -1,0 +1,12 @@
+{
+  "id": "011_buyuk_harfe_cevirme",
+  "category": "Stringler",
+  "title": "Büyük Harfe Çevirme",
+  "description": "'sehir' = 'istanbul' değişkenini oluştur. 'sehir_buyuk' değişkenine bu stringin tamamen büyük harfli halini ata.",
+  "hint": ".upper() metodunu kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "stringler"
+  ]
+}

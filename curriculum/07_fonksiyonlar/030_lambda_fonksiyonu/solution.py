@@ -1,0 +1,1 @@
+ikiye_bol = lambda x: x / 2

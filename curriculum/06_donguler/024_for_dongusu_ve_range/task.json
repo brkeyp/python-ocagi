@@ -1,0 +1,12 @@
+{
+  "id": "024_for_dongusu_ve_range",
+  "category": "Döngüler",
+  "title": "For Döngüsü ve Range",
+  "description": "'toplam' = 0 değişkeni oluştur. for döngüsü ile 1'den 5'e kadar (5 dahil) sayıları 'toplam'a ekle.",
+  "hint": "range(start, stop) fonksiyonunda stop değeri dahil edilmez. 5'i dahil etmek için 6 yazmalısın.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "donguler"
+  ]
+}
