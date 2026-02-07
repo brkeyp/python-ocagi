@@ -12,7 +12,7 @@ sys.modules['curses'] = MagicMock()
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ui_utils import OSUtils
+from ui.utils import OSUtils
 
 
 class TestOSUtils:

@@ -13,7 +13,7 @@ sys.modules['curses'] = MagicMock()
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ui_footer import FooterState
+from ui.footer import FooterState
 
 
 class TestFooterState:

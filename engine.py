@@ -84,8 +84,11 @@ class SimulationEngine:
         # Define base directory
         self.base_dir = os.path.dirname(os.path.abspath(__file__))
         
-        self.progress_file = os.path.join(self.base_dir, 'progress.json')
-        self.progress_backup = os.path.join(self.base_dir, 'progress.backup.json')
+        # User data stored in platform-specific location
+        from config import get_user_data_dir
+        user_data_dir = get_user_data_dir()
+        self.progress_file = os.path.join(user_data_dir, 'progress.json')
+        self.progress_backup = os.path.join(user_data_dir, 'progress.backup.json')
         
         # Initialize Curriculum Manager
         from curriculum_manager import CurriculumManager
@@ -284,7 +287,7 @@ class SimulationEngine:
         self._save_progress()
         
         # Execute Code
-        from safe_runner import run_safe
+        from sandbox.executor import run_safe
         
         validator_path = step.validator_script if step.validator_script and os.path.exists(step.validator_script) else None
         

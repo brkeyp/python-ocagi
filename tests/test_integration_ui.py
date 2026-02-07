@@ -7,9 +7,9 @@ from unittest.mock import MagicMock, patch
 from tests.virtual_terminal import VirtualTerminal
 
 # Import app modules
-import ui
+import ui.editor as ui
 import config
-from input_api import EventType
+from input.api import EventType
 
 class IntegrationTestRunner:
     def __init__(self):
@@ -79,7 +79,7 @@ def runner():
                         doupdate=runner_instance.term.refresh):
         
         # Also patch input_curses which might depend on curses module
-        with patch('input_curses.curses', new=curses):
+        with patch('input.curses_driver.curses', new=curses):
              yield runner_instance
              runner_instance.stop()
              if runner_instance.exception:

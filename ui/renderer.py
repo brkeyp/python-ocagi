@@ -10,7 +10,7 @@ import time
 import os
 import config
 
-from ui_footer import FooterRenderer
+from ui.footer import FooterRenderer
 
 
 class EditorRenderer:

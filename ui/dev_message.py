@@ -7,7 +7,7 @@ Animasyon efektleri ve geliştirici mesajı gösterimi.
 import os
 import curses
 import config
-from ui_colors import init_colors
+from ui.colors import init_colors
 
 
 def load_developer_message():

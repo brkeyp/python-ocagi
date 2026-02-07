@@ -1,0 +1,85 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "python-ocagi"
+version = "1.1.0"
+description = "Terminal tabanlı, interaktif Python öğrenme platformu"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.13"
+authors = [
+    { name = "Python Ocağı Team" }
+]
+keywords = ["python", "education", "learning", "terminal", "curses", "interactive"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console :: Curses",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: Turkish",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Education",
+]
+
+dependencies = [
+    # curses is built-in on Unix; Windows gets it via windows-curses
+    "windows-curses>=2.0; sys_platform == 'win32'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=3.0.0",
+    "hypothesis>=6.0.0",
+]
+quality = [
+    "mypy>=1.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "isort>=5.12.0",
+]
+
+[project.scripts]
+python-ocagi = "main:main"
+
+[project.urls]
+Homepage = "https://github.com/python-ocagi/python-ocagi"
+Documentation = "https://github.com/python-ocagi/python-ocagi#readme"
+Repository = "https://github.com/python-ocagi/python-ocagi"
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
+exclude = [
+    "tests/",
+    "tools/",
+    ".agent/",
+    "*.backup.json",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')"
+]
+
+[tool.mypy]
+python_version = "3.13"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 120
+target-version = ['py313']
+
+[tool.isort]
+profile = "black"
+line_length = 120

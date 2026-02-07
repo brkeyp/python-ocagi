@@ -11,7 +11,7 @@ import pytest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from curriculum_manager import CurriculumManager
-from safe_runner import run_safe
+from sandbox.executor import run_safe
 
 
 @pytest.fixture(scope="module")

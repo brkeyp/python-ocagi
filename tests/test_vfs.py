@@ -20,7 +20,7 @@ import pytest
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from vfs import MockFileHandle, MockFileSystem
+from sandbox.vfs import MockFileHandle, MockFileSystem
 
 
 class TestMockFileHandle:

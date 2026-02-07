@@ -20,7 +20,7 @@ import tempfile
 # Add parent directory to path
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from safe_runner import run_safe
+from sandbox.executor import run_safe
 
 # Proje kök dizini
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

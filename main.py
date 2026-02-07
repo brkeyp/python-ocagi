@@ -249,7 +249,7 @@ def handle_python_version_fallback():
             sys.exit(result.returncode)
         except KeyboardInterrupt:
             # Parent process Ctrl+C yakalarsa sessizce ve temiz çık (Check 1)
-            from ui_utils import OSUtils
+            from ui.utils import OSUtils
             try:
                 # Burasi genellikle gorunmez ama ne olur ne olmaz
                 OSUtils.clear_screen()
@@ -302,7 +302,7 @@ def handle_python_version_fallback():
         sys.exit(result.returncode)
     except KeyboardInterrupt:
         # Parent process Ctrl+C yakalarsa sessizce ve temiz çık
-        from ui_utils import OSUtils
+        from ui.utils import OSUtils
         try:
             OSUtils.clear_screen()
         except Exception as e:
@@ -384,7 +384,7 @@ def main():
     
     # 0. Başlangıç Temizliği
     # Önceki terminal artıklarını sil
-    from ui_utils import OSUtils
+    from ui.utils import OSUtils
     OSUtils.clear_screen()
     
     # Force UTF-8 encoding for stdout/stdin to ensure emojis render correctly
@@ -398,7 +398,7 @@ def main():
     try:
         # 1. Terminal Boyutlandırma (Opsiyonel / Başlangıç için öneri)
         # Artık responsiv yapıdayız, sadece "en iyi" başlangıç boyutunu deniyoruz.
-        from ui_utils import OSUtils
+        from ui.utils import OSUtils
         try:
              # Try to set a comfortable size, but don't force it if user resizes later
              OSUtils.resize_terminal(config.Layout.TARGET_HEIGHT, config.Layout.TARGET_WIDTH)

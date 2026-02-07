@@ -1,5 +1,32 @@
 # -*- coding: utf-8 -*-
+import os
 import curses
+
+
+def get_user_data_dir() -> str:
+    """
+    Kullanıcı verisi için platform-bağımsız dizin döndürür.
+    
+    Unix/Mac: ~/.python_ocagi/
+    Windows: %APPDATA%/python_ocagi/
+    
+    Dizin yoksa oluşturulur.
+    """
+    if os.name == 'nt':  # Windows
+        base = os.environ.get('APPDATA', os.path.expanduser('~'))
+        data_dir = os.path.join(base, 'python_ocagi')
+    else:  # Unix/Mac
+        data_dir = os.path.join(os.path.expanduser('~'), '.python_ocagi')
+    
+    # Dizin yoksa oluştur
+    if not os.path.exists(data_dir):
+        try:
+            os.makedirs(data_dir, exist_ok=True)
+        except OSError:
+            # Fallback to cwd if cannot create
+            return os.getcwd()
+    
+    return data_dir
 
 class DependencyManifest:
     """Manages external tool dependencies and versioning."""
@@ -63,7 +90,7 @@ class System:
     FILENAME_CURRICULUM = 'curriculum.json'
     FILENAME_PROGRESS = 'progress.json'
     FILENAME_PROGRESS_BACKUP = 'progress.backup.json'
-    FILENAME_DEV_MESSAGE = 'developer_message.txt'
+    FILENAME_DEV_MESSAGE = 'dev_message.txt'
     
     # Python Installer Configuration
     # Refactored to use DependencyManifest

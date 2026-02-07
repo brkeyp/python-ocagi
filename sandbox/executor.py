@@ -8,9 +8,9 @@ def _worker_process(user_code, validator_script_path, result_queue):
     Bu fonksiyon ayrı bir işlemde (process) çalışır.
     """
     # 1. Güvenli Scope Hazırla (sandbox modülü ile)
-    from sandbox import get_sandbox_scope
-    from resource_guard import ResourceGuardian, ResourceLimitError
-    from vfs import MockFileSystem
+    from sandbox.security import get_sandbox_scope
+    from sandbox.guards import ResourceGuardian, ResourceLimitError
+    from sandbox.vfs import MockFileSystem
     import importlib.util
     import os
     

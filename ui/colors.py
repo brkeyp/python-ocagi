@@ -18,7 +18,7 @@ def init_colors():
     renk başlatma işlemi yapılır.
     
     Usage:
-        from ui_colors import init_colors
+        from ui.colors import init_colors
         init_colors()
     """
     global _initialized

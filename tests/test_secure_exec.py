@@ -13,7 +13,7 @@ import time
 # Add parent directory to path to import safe_runner
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from safe_runner import run_safe
+from sandbox.executor import run_safe
 
 # Test için basit bir validation script path (ilk ders)
 SAMPLE_VALIDATOR_PATH = os.path.join(

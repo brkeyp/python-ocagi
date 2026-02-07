@@ -22,12 +22,12 @@ except Exception:
 os.environ.setdefault('ESCDELAY', config.Timing.ESCDELAY_ENV)
 
 # Alt modüllerden import
-from ui_utils import OSUtils
-from ui_footer import FooterState
-from ui_renderer import EditorRenderer
-from ui_colors import init_colors
-from input_api import EventType, InputEvent
-from input_curses import CursesInputDriver
+from ui.utils import OSUtils
+from ui.footer import FooterState
+from ui.renderer import EditorRenderer
+from ui.colors import init_colors
+from input.api import EventType, InputEvent
+from input.curses_driver import CursesInputDriver
 
 
 class Editor:

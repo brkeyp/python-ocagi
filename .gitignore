@@ -46,3 +46,7 @@ super_prompts/
 
 # Gemini
 .gemini/
+
+#anti-gravity
+.antigravity/
+.agent/

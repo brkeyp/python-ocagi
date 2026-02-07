@@ -3,8 +3,8 @@ import sys
 import curses
 import engine
 import config
-from ui import run_editor_session
-from ui_utils import OSUtils, suspend_curses
+from ui.editor import run_editor_session
+from ui.utils import OSUtils, suspend_curses
 
 def handle_action(stdscr, action):
     """Executes non-render actions (Messages, Custom Views, Exit)."""
@@ -51,7 +51,7 @@ def handle_action(stdscr, action):
         if action.view_name == "dev_message":
             with suspend_curses(stdscr):
                  try:
-                     from ui_dev_message import show_developer_message
+                     from ui.dev_message import show_developer_message
                      show_developer_message(stdscr)
                  except Exception:
                      pass

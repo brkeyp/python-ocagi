@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import curses
 import config
-from input_api import InputDriver, InputEvent, EventType
-from input_threaded import InputCollector
+from input.api import InputDriver, InputEvent, EventType
+from input.threaded import InputCollector
 
 class CursesInputDriver(InputDriver):
     """

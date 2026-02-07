@@ -4,7 +4,7 @@ Terminal tabanlı, interaktif Python öğrenme platformu.
 
 ## ✨ Özellikler
 
-- 🎓 **78+ Ders** - 16 bölüm boyunca kapsamlı Python müfredatı
+- 🎓 **98 Ders** - 16 bölüm boyunca kapsamlı Python müfredatı
 - 🔒 **Güvenli Sandbox** - Kullanıcı kodu izole çalışır
 - 🎨 **Syntax Highlighting** - Gerçek zamanlı renklendirme
 - 📊 **İlerleme Takibi** - Tamamlanan ve atlanan görevler kaydedilir
