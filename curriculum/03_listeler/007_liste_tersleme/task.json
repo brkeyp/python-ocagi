@@ -1,0 +1,15 @@
+{
+    "id": "007_liste_tersleme",
+    "uuid": "9fae4ce3-ec56-4b4e-ad42-78434e1d76d3",
+    "category": "Listeler",
+    "title": "Liste Tersleme",
+    "description": "'harfler' = ['A', 'B', 'C'] listesini ters çevir. Listeyi yerinde ters çevir (reverse metodu).",
+    "hint": "liste.reverse() metodu listeyi yerinde ters çevirir. liste[::-1] yeni liste oluşturur.",
+    "type": "code",
+    "xp": 15,
+    "tags": [
+        "listeler",
+        "reverse",
+        "tersleme"
+    ]
+}

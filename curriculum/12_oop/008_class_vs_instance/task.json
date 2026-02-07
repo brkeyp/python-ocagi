@@ -1,0 +1,16 @@
+{
+    "id": "008_class_vs_instance",
+    "uuid": "87844922-c67a-4c3c-9653-1edae78330fd",
+    "category": "OOP",
+    "title": "Sınıf vs Örnek Özellikleri",
+    "description": "'Araba' sınıfı oluştur. 'toplam_araba' sınıf değişkeni (başlangıç 0). Her __init__'te 1 artır. İki araba oluşturup 'sayi' = Araba.toplam_araba yap.",
+    "hint": "Sınıf değişkeni: tüm örneklerde paylaşılır. self.xxx örnek, Sinif.xxx sınıf değişkenidir.",
+    "type": "code",
+    "xp": 25,
+    "tags": [
+        "oop",
+        "class",
+        "instance",
+        "variable"
+    ]
+}

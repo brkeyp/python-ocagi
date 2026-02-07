@@ -1,0 +1,15 @@
+{
+    "id": "006_scope_kavrami",
+    "uuid": "896a0bad-fae0-42ab-8551-2a8f76d3cfaa",
+    "category": "Fonksiyonlar",
+    "title": "Scope (Kapsam) Kavramı",
+    "description": "'sayi' = 10 global değişkeni olsun. 'degistir' fonksiyonu içinde global anahtar kelimesi ile 'sayi' değerini 20 yap.",
+    "hint": "Fonksiyon içinde global değişkeni değiştirmek için 'global degisken_adi' kullan.",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "fonksiyonlar",
+        "scope",
+        "global"
+    ]
+}

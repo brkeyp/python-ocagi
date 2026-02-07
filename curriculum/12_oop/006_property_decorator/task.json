@@ -1,0 +1,15 @@
+{
+    "id": "006_property_decorator",
+    "uuid": "4d6d870d-9584-428b-a754-eb41caafb4d2",
+    "category": "OOP",
+    "title": "@property Decorator",
+    "description": "'Dikdortgen' sınıfı oluştur. 'genislik' ve 'yukseklik' al. 'alan' property'si ile genişlik*yükseklik döndür.",
+    "hint": "@property decorator'ı ile metodu özellik gibi erişilebilir yaparsın: obj.alan (parantez yok).",
+    "type": "code",
+    "xp": 25,
+    "tags": [
+        "oop",
+        "property",
+        "decorator"
+    ]
+}

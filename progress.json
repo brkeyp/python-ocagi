@@ -1,6 +1,9 @@
 {
-    "current_step": null,
+    "current_step": "395ec290-d186-42c5-9586-6ad4ce82e347",
     "completed_tasks": [],
-    "skipped_tasks": [],
+    "skipped_tasks": [
+        "62bbc24b-6414-4a08-ba2a-731fe853e281",
+        "546d1b88-d3ef-4f4a-beef-aa181851bae2"
+    ],
     "user_code": {}
 }

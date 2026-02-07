@@ -1,0 +1,15 @@
+{
+    "id": "006_else_blogu",
+    "uuid": "6a26b347-df7f-492c-a03c-7d54c6c3a9b7",
+    "category": "Hata Yönetimi",
+    "title": "Try-Except-Else Yapısı",
+    "description": "'sonuc' değişkenine 10/2 bölme işlemini ata. try-except-else kullan. Hata yoksa 'basarili' değişkenini True yap.",
+    "hint": "else bloğu hata OLMADIĞINDA çalışır. try: işlem except: hata else: başarı",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "hata",
+        "else",
+        "tryexcept"
+    ]
+}

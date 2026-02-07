@@ -1,0 +1,15 @@
+{
+    "id": "009_liste_birlestirme",
+    "uuid": "2705ac93-e80a-4ff7-b38e-0c282b8f969a",
+    "category": "Listeler",
+    "title": "Liste Birleştirme (Extend)",
+    "description": "'liste1' = [1, 2] ve 'liste2' = [3, 4] olsun. liste1'e liste2'nin elemanlarını ekle (extend metodu).",
+    "hint": "extend() metodu diğer listenin elemanlarını ekler. append() ise listeyi tek eleman olarak ekler.",
+    "type": "code",
+    "xp": 15,
+    "tags": [
+        "listeler",
+        "extend",
+        "birlestirme"
+    ]
+}

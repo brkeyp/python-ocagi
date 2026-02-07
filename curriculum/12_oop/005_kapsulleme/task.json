@@ -1,0 +1,15 @@
+{
+    "id": "005_kapsulleme",
+    "uuid": "4e0c2303-d0b6-4214-84e3-cf8f5879ce2f",
+    "category": "OOP",
+    "title": "Kapsülleme (Encapsulation)",
+    "description": "'Hesap' sınıfı oluştur. '_bakiye' özelliği private olsun (tek alt çizgi). 'para_yatir' metodu ile bakiyeyi artır.",
+    "hint": "Tek alt çizgi (_) convention olarak private'ı, çift alt çizgi (__) name mangling'i temsil eder.",
+    "type": "code",
+    "xp": 25,
+    "tags": [
+        "oop",
+        "encapsulation",
+        "private"
+    ]
+}

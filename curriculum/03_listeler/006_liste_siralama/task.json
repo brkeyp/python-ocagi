@@ -1,0 +1,15 @@
+{
+    "id": "006_liste_siralama",
+    "uuid": "0eb8b3a1-7424-43d8-bf0f-6426d4a1fca8",
+    "category": "Listeler",
+    "title": "Liste Sıralama",
+    "description": "'sayilar' = [3, 1, 4, 1, 5, 9, 2] listesini küçükten büyüğe sırala. Listeyi yerinde değiştir (sort metodu).",
+    "hint": "liste.sort() metodu listeyi yerinde sıralar. sorted(liste) ise yeni liste döndürür.",
+    "type": "code",
+    "xp": 15,
+    "tags": [
+        "listeler",
+        "sort",
+        "siralama"
+    ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "003_merhaba_python",
+  "category": "Temel",
+  "title": "Merhaba Python",
+  "description": "'mesaj' adında bir değişken oluştur ve içeriğine 'Merhaba Dünya' stringini ata.",
+  "hint": "Stringleri tanımlamak için tırnak işareti kullanmalısın. Örn: x = 'y'",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "temel"
+  ],
+  "uuid": "395ec290-d186-42c5-9586-6ad4ce82e347"
+}

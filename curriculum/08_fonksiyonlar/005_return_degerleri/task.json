@@ -1,0 +1,15 @@
+{
+    "id": "005_return_degerleri",
+    "uuid": "c567683b-70f4-489d-8758-2c018a4e73d0",
+    "category": "Fonksiyonlar",
+    "title": "Çoklu Return Değerleri",
+    "description": "'hesapla' fonksiyonu yaz: iki sayı alıp hem toplamını hem çarpımını döndürsün. 'toplam, carpim = hesapla(3, 4)' şeklinde kullan.",
+    "hint": "return deger1, deger2 şeklinde birden fazla değer döndürebilirsin. Bunlar tuple olarak döner.",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "fonksiyonlar",
+        "return",
+        "tuple"
+    ]
+}

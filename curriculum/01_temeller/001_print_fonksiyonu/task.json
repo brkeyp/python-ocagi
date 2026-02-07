@@ -1,0 +1,15 @@
+{
+    "id": "001_print_fonksiyonu",
+    "uuid": "62bbc24b-6414-4a08-ba2a-731fe853e281",
+    "category": "Temel",
+    "title": "Print Fonksiyonu",
+    "description": "print() fonksiyonunu kullanarak ekrana 'Merhaba Python!' yazdır.",
+    "hint": "print('metin') şeklinde kullanılır. Tırnak işaretlerini unutma!",
+    "type": "code",
+    "xp": 5,
+    "tags": [
+        "temel",
+        "print",
+        "cikti"
+    ]
+}

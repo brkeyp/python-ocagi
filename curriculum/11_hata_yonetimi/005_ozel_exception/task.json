@@ -1,0 +1,15 @@
+{
+    "id": "005_ozel_exception",
+    "uuid": "3970625f-21ae-40d8-9db6-27ac701042a1",
+    "category": "Hata Yönetimi",
+    "title": "Özel Exception Sınıfı",
+    "description": "'YasHatasi' adında özel bir exception sınıfı oluştur. Exception sınıfından miras alsın.",
+    "hint": "class YasHatasi(Exception): pass şeklinde tanımlarsın. İsterseniz __init__ ile mesaj ekleyebilirsin.",
+    "type": "code",
+    "xp": 25,
+    "tags": [
+        "hata",
+        "exception",
+        "class"
+    ]
+}

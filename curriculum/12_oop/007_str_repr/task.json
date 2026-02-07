@@ -1,0 +1,16 @@
+{
+    "id": "007_str_repr",
+    "uuid": "924619e9-5d13-4f0e-b075-1de885919cf1",
+    "category": "OOP",
+    "title": "__str__ ve __repr__ Metodları",
+    "description": "'Kitap' sınıfı oluştur. 'baslik' al. __str__ metodu 'Kitap: <baslik>' döndürsün.",
+    "hint": "__str__ kullanıcı dostu çıktı, __repr__ geliştirici dostu çıktı için kullanılır.",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "oop",
+        "dunder",
+        "str",
+        "repr"
+    ]
+}

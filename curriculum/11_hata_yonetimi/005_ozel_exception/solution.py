@@ -1,0 +1,2 @@
+class YasHatasi(Exception):
+    pass
