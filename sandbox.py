@@ -37,8 +37,7 @@ ALLOWED_MODULES = frozenset([
     'fractions',
     'operator',
     'statistics',
-    'os',
-    'sys',
+    'os',  # 09_moduller/004_os_sys dersi için gerekli (sadece os.getcwd kullanılıyor)
 ])
 
 

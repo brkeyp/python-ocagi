@@ -90,33 +90,29 @@ def mock_fs():
 
 @pytest.fixture
 def sample_curriculum():
+    """Sample curriculum data for testing."""
     return [
         {
             "id": 1,
-            "cat": "Temeller",
-            "task": "1. Merhaba Dünya\nEkrana 'Merhaba Dünya' yazdır.",
+            "uuid": "test-uuid-1",
+            "category": "Temeller",
+            "title": "Merhaba Dünya",
+            "description": "Ekrana 'Merhaba Dünya' yazdır.",
             "hint": "print() fonksiyonunu kullan.",
-            "sol": "print('Merhaba Dünya')",
-            "v_func": "validate_basic"
         },
         {
             "id": 2,
-            "cat": "Değişkenler",
-            "task": "2. Değişken Tanımlama\nx adında bir değişken tanımla ve 5 değerini ata.",
+            "uuid": "test-uuid-2", 
+            "category": "Değişkenler",
+            "title": "Değişken Tanımlama",
+            "description": "x adında bir değişken tanımla ve 5 değerini ata.",
             "hint": "x = 5",
-            "sol": "x = 5",
-            "v_func": "validate_variable"
         }
     ]
-
-@pytest.fixture(autouse=True)
-def mock_curriculum_load(sample_curriculum):
-    """Automatically mock curriculum loading for all tests."""
-    with patch('engine.load_curriculum', return_value=sample_curriculum):
-        yield
 
 @pytest.fixture
 def clean_env():
     """Clean up environment variables or singletons."""
     # Add any global reset logic here if needed
     yield
+

@@ -2,8 +2,6 @@ import multiprocessing
 import sys
 import io
 import contextlib
-import contextlib
-import time
 
 def _worker_process(user_code, validator_script_path, result_queue):
     """

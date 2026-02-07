@@ -52,7 +52,6 @@ class CurriculumManager:
     def load(self):
         """Loads the entire curriculum from the file system."""
         self.lessons = []
-        self.lessons = []
         self.lesson_map = {}
         self.id_map = {}
         self.uuid_map = {} # uuid -> Lesson

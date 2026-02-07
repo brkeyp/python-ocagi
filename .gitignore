@@ -3,6 +3,10 @@ __pycache__/
 *.tmp
 *.backup.json
 .app.log
+progress.json
+.vscode/
+.idea/
+*.bak
 
 Gecmis_Versiyonlar/
 .coverage

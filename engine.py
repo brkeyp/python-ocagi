@@ -167,7 +167,6 @@ class SimulationEngine:
         status_badge = config.UI.BADGE_SUCCESS if is_completed else (config.UI.BADGE_SKIPPED if is_skipped else "")
         
         task_info = f"{config.UI.LABEL_SECTION} {step.category}\n"
-        task_info = f"{config.UI.LABEL_SECTION} {step.category}\n"
         task_info += f"{config.UI.LABEL_TASK} {step.numeric_id}: {step.title}{status_badge}\n"
         task_info += f"\n{config.UI.LABEL_QUESTION} {step.description}"
             
