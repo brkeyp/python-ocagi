@@ -25,6 +25,7 @@ os.environ.setdefault('ESCDELAY', config.Timing.ESCDELAY_ENV)
 from ui_utils import OSUtils
 from ui_footer import FooterState
 from ui_renderer import EditorRenderer
+from ui_colors import init_colors
 from input_api import EventType, InputEvent
 from input_curses import CursesInputDriver
 
@@ -80,19 +81,8 @@ class Editor:
         except AttributeError:
             pass  # Eski Python sürümlerinde env variable kullanılır
         
-        # Renk çiftleri
-        if curses.has_colors():
-            curses.start_color()
-            curses.use_default_colors()
-            curses.init_pair(config.Colors.RED, curses.COLOR_RED, -1)      # Etiketler / Atlandı
-            curses.init_pair(config.Colors.CYAN, curses.COLOR_CYAN, -1)     # İçerik
-            curses.init_pair(config.Colors.YELLOW, curses.COLOR_YELLOW, -1)   # İpucu/Mesaj
-            curses.init_pair(config.Colors.WHITE, curses.COLOR_WHITE, -1)    # Soru
-            curses.init_pair(config.Colors.SUCCESS, curses.COLOR_GREEN, -1)    # Başarıldı damgası
-            curses.init_pair(config.Colors.MAGENTA, curses.COLOR_MAGENTA, -1)  # Keyword
-            curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)    # String
-            curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)    # String
-            curses.init_pair(config.Colors.BLUE, curses.COLOR_BLUE, -1)     # Number
+        # Renk çiftleri (merkezi modülden)
+        init_colors()
 
 
         

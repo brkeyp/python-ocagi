@@ -7,6 +7,7 @@ Animasyon efektleri ve geliştirici mesajı gösterimi.
 import os
 import curses
 import config
+from ui_colors import init_colors
 
 
 def load_developer_message():
@@ -32,19 +33,8 @@ class DeveloperMessageScreen:
         curses.curs_set(0)  # Cursor gizle
         self.stdscr.keypad(True)
         
-        # Renk çiftleri
-        if curses.has_colors():
-            curses.start_color()
-            curses.use_default_colors()
-            curses.use_default_colors()
-            curses.init_pair(config.Colors.RED, curses.COLOR_RED, -1)
-            curses.init_pair(config.Colors.CYAN, curses.COLOR_CYAN, -1)
-            curses.init_pair(config.Colors.YELLOW, curses.COLOR_YELLOW, -1)
-            curses.init_pair(config.Colors.WHITE, curses.COLOR_WHITE, -1)
-            curses.init_pair(config.Colors.MAGENTA, curses.COLOR_MAGENTA, -1)
-            curses.init_pair(config.Colors.GREEN, curses.COLOR_GREEN, -1)
-            curses.init_pair(config.Colors.BLUE, curses.COLOR_BLUE, -1)
-            curses.init_pair(config.Colors.SUCCESS, curses.COLOR_GREEN, -1)
+        # Renk çiftleri (merkezi modülden)
+        init_colors()
     
     def draw_box(self, y, x, height, width, title=""):
         """Unicode çerçeve çizer."""

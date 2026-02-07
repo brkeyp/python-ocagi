@@ -27,7 +27,6 @@ class EventType(Enum):
     # Special
     ESCAPE = auto()
     SHOW_HINT = auto() # '?'
-    TRIGGER_DEV_MESSAGE = auto() # VAO sequence completion
     
     # Meta / No-op
     TIMEOUT = auto() # Nothing happened within timeout
@@ -48,5 +47,11 @@ class InputEvent:
 
 class InputDriver:
     """Abstract base class for input drivers."""
+    
     def get_event(self, timeout_ms: int = -1) -> InputEvent:
+        """Get the next input event. Subclasses must implement."""
         raise NotImplementedError
+    
+    def close(self):
+        """Clean up resources. Subclasses should override if needed."""
+        pass

@@ -11,3 +11,6 @@ progress.json
 Gecmis_Versiyonlar/
 .coverage
 super_prompts/
+.pytest_cache/
+.gemini/
+htmlcov/

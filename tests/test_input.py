@@ -9,7 +9,7 @@ Bu test dosyası input modüllerinin doğru çalıştığını doğrular:
 
 Güncel API:
 - EventType: UP, DOWN, LEFT, RIGHT, BACKSPACE, DELETE, ENTER, CHAR, EXIT, RESIZE, 
-             PREV_TASK, NEXT_TASK, ESCAPE, SHOW_HINT, TRIGGER_DEV_MESSAGE, TIMEOUT, UNKNOWN
+             PREV_TASK, NEXT_TASK, ESCAPE, SHOW_HINT, TIMEOUT, UNKNOWN
 - InputEvent: dataclass with type and value fields
 """
 
@@ -65,7 +65,6 @@ class TestEventType:
     def test_has_special_events(self):
         """Özel event tipleri olmalı."""
         assert hasattr(EventType, 'SHOW_HINT')
-        assert hasattr(EventType, 'TRIGGER_DEV_MESSAGE')
         assert hasattr(EventType, 'UNKNOWN')
     
     def test_event_types_are_unique(self):

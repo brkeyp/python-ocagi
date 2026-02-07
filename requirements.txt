@@ -1,0 +1,9 @@
+# Python Kurs Simulatörü - Gereksinimler
+
+# Runtime
+# curses, Unix sistemlerde yerleşik olarak gelir
+# Windows'ta program otomatik olarak windows-curses yükler
+
+# Geliştirme Bağımlılıkları
+pytest>=7.0.0
+pytest-cov>=3.0.0
