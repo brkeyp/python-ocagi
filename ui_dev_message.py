@@ -58,8 +58,8 @@ class DeveloperMessageScreen:
             # Yan kenarlar
             for i in range(1, height - 1):
                 if y + i < curses.LINES - 1:
-                    self.stdscr.addstr(y + i, x, v_line, curses.color_pair(2))
-                    self.stdscr.addstr(y + i, x + width - 1, v_line, curses.color_pair(2))
+                    self.stdscr.addstr(y + i, x, v_line, curses.color_pair(config.Colors.CYAN))
+                    self.stdscr.addstr(y + i, x + width - 1, v_line, curses.color_pair(config.Colors.CYAN))
             
             # Alt kenar
             if y + height - 1 < curses.LINES:

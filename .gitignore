@@ -1,16 +1,48 @@
+# Python Ocağı - Git Ignore
+
+# Python bytecode
 __pycache__/
-*.pyc
-*.tmp
-*.backup.json
+*.py[cod]
+*$py.class
+*.so
+
+# Logs
 .app.log
+.app.log.*
+*.log
+
+# User Data (Progress)
 progress.json
+*.backup.json
+
+# IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 *.bak
 
-Gecmis_Versiyonlar/
+# OS
+.DS_Store
+Thumbs.db
+
+# Virtual Environment
+venv/
+.venv/
+
+# Testing
 .coverage
-super_prompts/
-.pytest_cache/
-.gemini/
 htmlcov/
+.pytest_cache/
+
+# Type checking
+.mypy_cache/
+
+# Project specific
+Gecmis_Versiyonlar/
+super_prompts/
+*.tmp
+
+# Gemini
+.gemini/

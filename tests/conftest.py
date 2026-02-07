@@ -90,23 +90,29 @@ def mock_fs():
 
 @pytest.fixture
 def sample_curriculum():
-    """Sample curriculum data for testing."""
+    """Sample curriculum data matching actual Lesson structure."""
     return [
         {
-            "id": 1,
+            "id": "001_merhaba",
             "uuid": "test-uuid-1",
             "category": "Temeller",
             "title": "Merhaba Dünya",
             "description": "Ekrana 'Merhaba Dünya' yazdır.",
             "hint": "print() fonksiyonunu kullan.",
+            "type": "code",
+            "xp": 5,
+            "tags": ["temel", "print"]
         },
         {
-            "id": 2,
-            "uuid": "test-uuid-2", 
+            "id": "002_degisken", 
+            "uuid": "test-uuid-2",
             "category": "Değişkenler",
             "title": "Değişken Tanımlama",
             "description": "x adında bir değişken tanımla ve 5 değerini ata.",
             "hint": "x = 5",
+            "type": "code",
+            "xp": 5,
+            "tags": ["degisken", "atama"]
         }
     ]
 

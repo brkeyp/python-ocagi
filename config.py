@@ -115,7 +115,15 @@ class Timing:
     TIMEOUT_NORMAL = 100
 
 class Colors:
-    """Curses color pair IDs."""
+    """
+    Curses color pair IDs.
+    
+    Note: SUCCESS and GREEN both use COLOR_GREEN but serve different purposes:
+    - SUCCESS (8): Task completion badges, celebration UI
+    - GREEN (6): String syntax highlighting in code editor
+    
+    This semantic separation allows independent customization in the future.
+    """
     RED = 1      # Labels / Skipped
     CYAN = 2     # Content / Builtins
     YELLOW = 3   # Hint / Messages

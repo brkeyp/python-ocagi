@@ -7,7 +7,7 @@ Python Ocağı'na katkıda bulunmak istediğiniz için teşekkürler!
 1. Projeyi fork edin
 2. Yeni bir branch oluşturun: `git checkout -b feature/yeni-ozellik`
 3. Değişikliklerinizi yapın
-4. Testleri çalıştırın: `python3 -m pytest tests/ -v`
+4. Testleri çalıştırın: `python -m pytest tests/ -v`
 5. Commit edin: `git commit -m "feat: yeni özellik eklendi"`
 6. Push edin: `git push origin feature/yeni-ozellik`
 7. Pull Request açın
