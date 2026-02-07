@@ -242,6 +242,67 @@ print(int(result))
         self.assertTrue(result['success'])
         self.assertIn('12', result['stdout'])
         print(f"  ✓ Math operations work")
+
+
+@unittest.skipUnless(validator_exists(), "Validator file not found")
+class TestSafeOSRestrictions(unittest.TestCase):
+    """SafeOS güvenlik kısıtlamalarını doğrular."""
+    
+    def test_os_system_blocked(self):
+        """os.system engellenmeli."""
+        print("\n--- Test os.system Blocked ---")
+        
+        code = "import os; os.system('ls')"
+        result = run_safe(code, SIMPLE_VALIDATOR, timeout=2.0)
+        
+        self.assertFalse(result['success'])
+        self.assertIn('tehlikeli sistem işlemleri yapılamaz', result['error_message'])
+        print(f"  ✓ os.system blocked")
+        
+    def test_os_popen_blocked(self):
+        """os.popen engellenmeli."""
+        print("\n--- Test os.popen Blocked ---")
+        
+        code = "import os; os.popen('ls')"
+        result = run_safe(code, SIMPLE_VALIDATOR, timeout=2.0)
+        
+        self.assertFalse(result['success'])
+        self.assertIn('devre dışı', result['error_message'])
+        print(f"  ✓ os.popen blocked")
+        
+    def test_os_remove_blocked(self):
+        """os.remove engellenmeli."""
+        print("\n--- Test os.remove Blocked ---")
+        
+        code = "import os; os.remove('test.txt')"
+        result = run_safe(code, SIMPLE_VALIDATOR, timeout=2.0)
+        
+        self.assertFalse(result['success'])
+        self.assertIn('devre dışı', result['error_message'])
+        print(f"  ✓ os.remove blocked")
+
+    def test_os_getcwd_allowed(self):
+        """os.getcwd izin verilmeli."""
+        print("\n--- Test os.getcwd Allowed ---")
+        
+        code = "import os; print(os.getcwd())"
+        result = run_safe(code, SIMPLE_VALIDATOR, timeout=2.0)
+        
+        self.assertTrue(result['success'])
+        # Path should be in stdout (may vary but shouldn't fail)
+        print(f"  ✓ os.getcwd allowed")
+
+    def test_os_path_allowed(self):
+        """os.path işlemleri izin verilmeli."""
+        print("\n--- Test os.path Allowed ---")
+        
+        code = "import os; print(os.path.join('klasör', 'dosya.txt'))"
+        result = run_safe(code, SIMPLE_VALIDATOR, timeout=2.0)
+        
+        self.assertTrue(result['success'])
+        self.assertIn('dosya.txt', result['stdout'])
+        print(f"  ✓ os.path allowed")
+
     
     def test_os_allowed(self):
         """os modülü izinli olmalı (müfredat dersi için gerekli)."""

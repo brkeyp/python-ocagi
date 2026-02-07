@@ -92,6 +92,63 @@ def _create_blocked_builtin(name, message):
     return blocked
 
 
+def _create_safe_os_module():
+    """Güvenli (kısıtlı) os modülü oluşturur."""
+    import os
+    import types
+    
+    # Yeni, boş bir modül oluştur
+    safe_os = types.ModuleType('os')
+    
+    # --- İZİN VERİLEN NİTELİKLER (WHITELIST) ---
+    allowed_attributes = [
+        # Sabitler
+        'name', 'sep', 'extsep', 'altsep', 'pathsep', 'linesep', 'devnull', 'defpath',
+        # Güvenli Fonksiyonlar
+        'getcwd',    # Ders 09_moduller/004_os_sys için gerekli
+        'getpid',    # Genellikle zararsız
+        'strerror',  # Hata mesajı
+        'fspath',    # Path dönüşümü
+        'PathLike',  # Tip kontrolü
+    ]
+    
+    for attr in allowed_attributes:
+        if hasattr(os, attr):
+            setattr(safe_os, attr, getattr(os, attr))
+    
+    # --- os.path (Genellikle güvenli string manipülasyonu) ---
+    # os.path modülü dosya sistemi erişimi yapmaz (exists/isfile hariç), çoğunlukla path string işlemidir.
+    # Güvenlik için yine de orijinalini veriyoruz, çünkü çok temel.
+    if hasattr(os, 'path'):
+        setattr(safe_os, 'path', os.path)
+
+    # --- ENGELLENEN FONKSİYONLAR (BLACKLIST) ---
+    # Kullanıcıya açıklayıcı hata mesajı vermek için
+    dangerous_functions = [
+        'system', 'popen', 'spawnl', 'spawnle', 'spawnv', 'spawnve',
+        'remove', 'unlink', 'rmdir', 'mkdir', 'rename', 'replace',
+        'chdir', 'chmod', 'chown', 'link', 'symlink', 'kill', 'abort'
+    ]
+    
+    def _create_blocked_os_func(name):
+        def blocked(*args, **kwargs):
+            raise SandboxSecurityError(
+                f"⛔ Güvenlik: 'os.{name}' fonksiyonu devre dışı. "
+                "Bu simülatörde tehlikeli sistem işlemleri yapılamaz."
+            )
+        blocked.__name__ = name
+        return blocked
+
+    for func_name in dangerous_functions:
+        setattr(safe_os, func_name, _create_blocked_os_func(func_name))
+
+    return safe_os
+
+
+# Güvenli os modülünü önbelleğe al
+_SAFE_OS_MODULE = None
+
+
 def _create_restricted_import():
     """Kısıtlı __import__ fonksiyonu oluşturur."""
     
@@ -113,7 +170,22 @@ def _create_restricted_import():
                 f"   İzin verilen modüller: {allowed_list}"
             )
         
-        # İzin verilen modüller için orijinal import'u kullan
+        # --- ÖZEL MODÜL KORUMALARI ---
+        
+        # Eğer 'os' isteniyorsa, güvenli (kısıtlı) versiyonu döndür
+        if base_module == 'os':
+            global _SAFE_OS_MODULE
+            if _SAFE_OS_MODULE is None:
+                _SAFE_OS_MODULE = _create_safe_os_module()
+            
+            # Eğer 'from os import ...' kullanılıyorsa, simülasyonu zorlaştırmamak için
+            # yine bizim safe module'den almasını sağlamalıyız ama __import__
+            # zaten modülü döndürür, 'from' kısmı bytecode instruction ile halledilir.
+            # Ancak alt modül erişimi (os.path) için orijinal import gerekebilir.
+            # Şimdilik SafeOS döndürelim ve path'i içine embed ettik.
+            return _SAFE_OS_MODULE
+        
+        # Diğer izin verilen modüller için orijinal import'u kullan
         return _original_import(name, globals, locals, fromlist, level)
     
     return restricted_import
