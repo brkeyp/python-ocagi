@@ -1,4 +1,4 @@
-# 🐍 Python Kurs Simulatörü
+# 🐍 Python Ocağı
 
 Terminal tabanlı, interaktif Python öğrenme platformu.
 
@@ -22,7 +22,7 @@ Terminal tabanlı, interaktif Python öğrenme platformu.
 ```bash
 # Projeyi klonla
 git clone <repo-url>
-cd "Python Kurs Simulatörü"
+cd "Python Ocağı"
 
 # Çalıştır
 python3 main.py
@@ -47,7 +47,7 @@ python3 main.py
 
 ```
 ┌─────────────────────────────────────┐
-│  🐍 Python Kurs Simulatörü          │
+│  🐍 Python Ocağı          │
 ├─────────────────────────────────────┤
 │  BÖLÜM:     Temeller                │
 │  GÖREV 1:   Print Fonksiyonu        │

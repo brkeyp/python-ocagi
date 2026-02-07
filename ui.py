@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Python Kurs Simulatörü - Ana UI Modülü
+Python Ocağı - Ana UI Modülü
 Curses tabanlı kod editörü.
 """
 import sys

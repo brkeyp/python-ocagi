@@ -1,6 +1,6 @@
 # 🤝 Katkıda Bulunma Rehberi
 
-Python Kurs Simulatörü'ne katkıda bulunmak istediğiniz için teşekkürler!
+Python Ocağı'na katkıda bulunmak istediğiniz için teşekkürler!
 
 ## 🚀 Başlarken
 

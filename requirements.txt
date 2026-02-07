@@ -1,4 +1,4 @@
-# Python Kurs Simulatörü - Gereksinimler
+# Python Ocağı - Gereksinimler
 
 # Runtime
 # curses, Unix sistemlerde yerleşik olarak gelir
