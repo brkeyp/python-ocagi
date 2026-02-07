@@ -13,8 +13,8 @@
       "title": "Listeler"
     },
     {
-      "slug": "04_demetler_ve_kumeler",
-      "title": "Demetler ve Kümeler"
+      "slug": "04_tuple_ve_set",
+      "title": "Tuple ve Set (Demetler ve Kümeler)"
     },
     {
       "slug": "05_sozcukler",
@@ -49,12 +49,16 @@
       "title": "Nesne Yönelimli Programlama"
     },
     {
-      "slug": "14_ileri_python",
-      "title": "İleri Python"
+      "slug": "13_ileri_veri_yapilari",
+      "title": "İleri Veri Yapıları"
+    },
+    {
+      "slug": "14_ileri_fonksiyonlar",
+      "title": "İleri Fonksiyonlar"
     },
     {
       "slug": "15_json_ve_api",
-      "title": "JSON ve Veri Yapıları"
+      "title": "JSON ve API"
     },
     {
       "slug": "99_final_proje",

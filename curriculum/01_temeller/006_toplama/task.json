@@ -1,0 +1,13 @@
+{
+  "id": "006_toplama",
+  "category": "Matematik",
+  "title": "Toplama",
+  "description": "'toplam' değişkeni oluştur, 10 ve 25 sayılarını toplayarak bu değişkene ata.",
+  "hint": "Toplama operatörü (+) kullan.",
+  "type": "code",
+  "xp": 10,
+  "tags": [
+    "matematik"
+  ],
+  "uuid": "180000a1-e47a-41e7-927a-5b8bf8faca66"
+}

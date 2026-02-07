@@ -1,0 +1,16 @@
+{
+    "id": "004_set_operasyonlari",
+    "uuid": "7780c4ac-4c80-41e8-8bac-54e70ae79682",
+    "category": "Demetler ve Kümeler",
+    "title": "Küme Operasyonları",
+    "description": "'a' = {1, 2, 3} ve 'b' = {3, 4, 5} kümelerini oluştur. 'birlesim' değişkenine bu iki kümenin birleşimini (union), 'kesisim' değişkenine kesişimini (intersection) ata.",
+    "hint": "Birleşim için a.union(b) veya a | b, kesişim için a.intersection(b) veya a & b kullanabilirsin.",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "set",
+        "operasyonlar",
+        "union",
+        "intersection"
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "id": "005_ternary_operator",
+    "uuid": "c127ddb0-8c0b-4bac-b2ab-e6fb493a513d",
+    "category": "Koşullar",
+    "title": "Ternary Operatör",
+    "description": "'sayi' = 15 olsun. Tek satırda ternary operatör kullanarak 'tip' değişkenine 'çift' veya 'tek' ata (sayı çiftse 'çift', tekse 'tek').",
+    "hint": "Python'da ternary: degisken = 'deger1' if kosul else 'deger2'",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "ternary",
+        "if",
+        "tek_satir"
+    ]
+}

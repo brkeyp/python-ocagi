@@ -27,6 +27,7 @@ ALLOWED_MODULES = frozenset([
     'math',
     'random', 
     'datetime',
+    'json',  # JSON ve API bölümü için eklendi
     # Eğitim amaçlı güvenli yardımcı modüller
     'string',
     'collections',

@@ -1,0 +1,15 @@
+{
+    "id": "006_generator_fonksiyonlar",
+    "uuid": "da38355c-2a0e-4bba-8811-9e86888a2a36",
+    "category": "İleri Veri Yapıları",
+    "title": "Generator Fonksiyonlar",
+    "description": "'sayac' generator fonksiyonu yaz: 1'den parametreye kadar sayıları yield etsin. 'sonuclar' listesine sayac(3) çağrısından gelen değerleri ekle.",
+    "hint": "def sayac(n): içinde 'for i in range(1, n+1): yield i' kullan. Generator'dan liste: list(sayac(3))",
+    "type": "code",
+    "xp": 30,
+    "tags": [
+        "generator",
+        "yield",
+        "fonksiyon"
+    ]
+}

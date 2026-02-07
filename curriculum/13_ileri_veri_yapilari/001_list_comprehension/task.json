@@ -1,0 +1,15 @@
+{
+    "id": "001_list_comprehension",
+    "uuid": "d5455ac6-4620-4248-8506-88a50401eacc",
+    "category": "İleri Veri Yapıları",
+    "title": "List Comprehension",
+    "description": "'kareler' listesini tek satırda oluştur: 1'den 5'e kadar sayıların karelerini içersin. Sonuç: [1, 4, 9, 16, 25]",
+    "hint": "Liste comprehension sözdizimi: [ifade for eleman in kaynak]. Örnek: [x**2 for x in range(1, 6)]",
+    "type": "code",
+    "xp": 25,
+    "tags": [
+        "comprehension",
+        "liste",
+        "ileri"
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "id": "003_decorator_temel",
+    "uuid": "3949c18e-fe5a-4a00-bd6a-438839106e4d",
+    "category": "İleri Fonksiyonlar",
+    "title": "Decorator Temelleri",
+    "description": "'buyuk_harf' decorator'ı yaz: sarmaladığı fonksiyonun dönüş değerini büyük harfe çevirsin. 'selamla' fonksiyonu 'merhaba' döndürsün ve decorator uygula.",
+    "hint": "Decorator: def buyuk_harf(func): def wrapper(): return func().upper() return wrapper",
+    "type": "code",
+    "xp": 30,
+    "tags": [
+        "decorator",
+        "wrapper",
+        "ileri"
+    ]
+}

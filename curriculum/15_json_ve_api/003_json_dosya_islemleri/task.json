@@ -1,0 +1,15 @@
+{
+    "id": "003_json_dosya_islemleri",
+    "uuid": "ee859491-7b59-4693-bcd5-cf1b122cfe2f",
+    "category": "JSON ve API",
+    "title": "JSON Dosya İşlemleri",
+    "description": "'ogrenciler' = [{'ad': 'Ali', 'not': 85}, {'ad': 'Veli', 'not': 90}] listesini oluştur. 'en_yuksek' değişkenine en yüksek notu alan öğrencinin adını ata.",
+    "hint": "max() fonksiyonunu key parametresi ile kullan: max(liste, key=lambda x: x['not'])",
+    "type": "code",
+    "xp": 25,
+    "tags": [
+        "json",
+        "liste",
+        "isleme"
+    ]
+}

@@ -1,3 +1,5 @@
-# -*- coding: utf-8 -*-
 def validate(scope, output):
-    return 'random' in scope
+    zar = scope.get("zar")
+    if not isinstance(zar, int):
+        return False
+    return 1 <= zar <= 6

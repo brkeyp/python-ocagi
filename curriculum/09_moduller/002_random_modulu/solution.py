@@ -1,2 +1,2 @@
-# -*- coding: utf-8 -*-
 import random
+zar = random.randint(1, 6)

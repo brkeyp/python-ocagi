@@ -1,0 +1,1 @@
+renkler = {'kirmizi', 'yesil', 'mavi'}

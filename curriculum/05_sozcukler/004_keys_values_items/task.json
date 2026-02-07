@@ -1,0 +1,16 @@
+{
+    "id": "004_keys_values_items",
+    "uuid": "6b3a6766-c581-4ce8-8456-80b3a87fd6e1",
+    "category": "Sözlükler",
+    "title": "Keys, Values ve Items",
+    "description": "'ogrenci' = {'ad': 'Ali', 'yas': 20, 'sinif': '3A'} sözlüğünü oluştur. 'anahtarlar' değişkenine tüm anahtarları, 'degerler' değişkenine tüm değerleri liste olarak ata.",
+    "hint": "dict.keys() anahtarları, dict.values() değerleri verir. list() ile listeye çevirebilirsin.",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "dict",
+        "keys",
+        "values",
+        "items"
+    ]
+}

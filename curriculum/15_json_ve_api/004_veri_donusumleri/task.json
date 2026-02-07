@@ -1,0 +1,15 @@
+{
+    "id": "004_veri_donusumleri",
+    "uuid": "1da865a1-4d6b-4293-94f6-b1fc8d42e358",
+    "category": "JSON ve API",
+    "title": "Veri Dönüşümleri",
+    "description": "'urunler' = [{'ad': 'Elma', 'fiyat': 5}, {'ad': 'Armut', 'fiyat': 7}] listesinden 'fiyat_listesi' = [5, 7] çıkar (sadece fiyatları al).",
+    "hint": "Liste comprehension kullan: [urun['fiyat'] for urun in urunler]",
+    "type": "code",
+    "xp": 20,
+    "tags": [
+        "json",
+        "donusum",
+        "map"
+    ]
+}

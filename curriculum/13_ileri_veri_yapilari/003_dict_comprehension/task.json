@@ -1,0 +1,15 @@
+{
+    "id": "003_dict_comprehension",
+    "uuid": "0cc16d0c-2ae7-40c1-82a9-6de888ee1032",
+    "category": "İleri Veri Yapıları",
+    "title": "Dict Comprehension",
+    "description": "'kare_sozluk' sözlüğünü tek satırda oluştur: anahtarlar 1-5, değerler kareleri olsun. Sonuç: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}",
+    "hint": "Sözlük comprehension: {anahtar: deger for eleman in kaynak}",
+    "type": "code",
+    "xp": 25,
+    "tags": [
+        "comprehension",
+        "dict",
+        "sozluk"
+    ]
+}

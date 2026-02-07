@@ -1,0 +1,15 @@
+{
+    "id": "005_generator_ifadeler",
+    "uuid": "dc84e787-1adc-43f5-9dc2-bb4f7b6af86d",
+    "category": "İleri Veri Yapıları",
+    "title": "Generator İfadeler",
+    "description": "'gen' generator ifadesi oluştur: 1-5 arası sayıların karelerini üretsin. Sonra 'ilk' değişkenine next(gen) ile ilk değeri ata.",
+    "hint": "Generator ifade: (x**2 for x in range(1, 6)). Parantez kullanılır, köşeli değil!",
+    "type": "code",
+    "xp": 30,
+    "tags": [
+        "generator",
+        "lazy",
+        "memory"
+    ]
+}
