@@ -82,7 +82,15 @@ rm -rf "$HOME/Desktop/Python Ocağı"
 rm -f "$HOME/Desktop/PYTHON OCAĞINA GİR.command"
 rm -rf "$HOME/.python_ocagi"
 
-echo -e "\033[0;32mKaldırma tamamlandı. Bilgisayarınızdan tüm izler silindi.\033[0m"
+echo -e ""
+echo -e "\033[0;32mUygulama başarıyla kaldırıldı. Bilgisayarınızdan tüm izler silindi.\033[0m"
+echo -e ""
+read -n 1 -s -r -p "Bu ekranı kapatmak için herhangi bir tuşa basın..."
+echo -e ""
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    osascript -e 'tell application "Terminal" to close front window' & exit
+fi
 EOF
 chmod +x "$UNINSTALL_FILE"
 
