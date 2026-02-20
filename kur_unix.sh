@@ -46,12 +46,19 @@ REPO_DIR="PLACEHOLDER_DIR"
 
 curl -sL -o /tmp/app_update.zip "$ZIP_URL"
 rm -rf /tmp/app_extracted
-unzip -q /tmp/app_update.zip -d /tmp/app_extracted
+unzip -qo /tmp/app_update.zip -d /tmp/app_extracted
 cp -R "/tmp/app_extracted/$REPO_DIR/"* "$HOME/Desktop/Python Ocağı/"
 
 echo -e "\033[0;32mGüncelleme tamamlandı. Başlatılıyor...\033[0m"
+sleep 1
+clear
 cd "$HOME/Desktop/Python Ocağı"
 python3 main.py || python main.py
+
+# Mac'te iş bitince pencereyi otomatik kapat (kullanıcı çıkış yaptığında)
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    osascript -e 'tell application "Terminal" to close front window' & exit
+fi
 EOF
 
 # Placeholder'ları değiştir
