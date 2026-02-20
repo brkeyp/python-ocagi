@@ -101,4 +101,11 @@ echo -e "\033[0;36mUygulamayı hemen başlatmak üzere Masaüstünüzdeki kısay
 sleep 2
 
 # 5. İlk İndirme ve Başlatma
-open "$SHORTCUT_FILE" || "$SHORTCUT_FILE"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    open "$SHORTCUT_FILE"
+    # Mac'te kurulum yapılan eski terminal penceresini kapatmak için üst kabuğu yokediyoruz
+    kill -9 $PPID 2>/dev/null
+else
+    # Linux'ta yeni terminal açmak sisteme göre değiştiği için aynı ekranda başlat
+    exec "$SHORTCUT_FILE"
+fi

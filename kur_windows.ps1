@@ -103,3 +103,7 @@ Start-Sleep -Seconds 2
 
 # 5. Ilk Indirme (Kisa yolu cagirarak yapalim)
 Start-Process -FilePath $ShortcutPath
+Start-Sleep -Seconds 1
+
+# Kurulum yapilan ilk siyah pencereyi tertemiz kapat
+Stop-Process -Id $PID -Force
