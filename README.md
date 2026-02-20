@@ -10,25 +10,23 @@ Terminal tabanlı, interaktif Python öğrenme platformu.
 - 📊 **İlerleme Takibi** - Tamamlanan ve atlanan görevler kaydedilir
 - 🌈 **Türkçe Arayüz** - Tamamen Türkçe kullanıcı deneyimi
 
-## 📦 Kurulum
+## 🚀 Hızlı Kurulum (Sıfır Zahmet)
 
-### Gereksinimler
+Uygulamayı kurmak ve otomatik olarak her zaman güncel kalmasını sağlamak için, işletim sisteminize uygun olan aşağıdaki **tek satırlık sihirli komutu** kopyalayıp bilgisayarınızın siyah ekranına (Terminal/PowerShell) yapıştırıp ENTER'a basmanız yeterlidir.
 
-- Python 3.13+
-- Terminal (curses destekli)
-
-### Başlatma
-
-```bash
-# Projeyi klonla
-git clone <repo-url>
-cd "Python Ocağı"
-
-# Çalıştır
-python3 main.py
+### 🪟 Windows İçin
+PowerShell programını açın (Başlat menüsüne "powershell" yazabilirsiniz) ve şu komutu yapıştırın:
+```powershell
+iex (iwr -useb https://raw.githubusercontent.com/python-ocagi/python-ocagi/main/kur_windows.ps1)
 ```
+*(Eğer sisteminizde Python yoksa sizin için otomatik olarak indirip kuracaktır. Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
 
-> **Windows Kullanıcıları:** Program otomatik olarak `windows-curses` paketini yükleyecektir.
+### 🍎 Mac ve 🐧 Linux İçin
+Terminal programını açın ve şu komutu yapıştırın:
+```bash
+curl -sL https://raw.githubusercontent.com/python-ocagi/python-ocagi/main/kur_unix.sh | bash
+```
+*(Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
 
 ## 🎮 Kullanım
 
