@@ -4,7 +4,7 @@
 #=======================================================
 
 # NOT: Bu dosyayı GitHub'a yüklemeden önce kendi GitHub bilgilerinizi aşağıya giriniz.
-REPO_OWNER="python-ocagi" # <-- KENDI KULLANICI ADINIZI BURAYA YAZIN
+REPO_OWNER="brkeyp" # <-- KENDI KULLANICI ADINIZI BURAYA YAZIN
 REPO_NAME="python-ocagi"  # <-- GITHUB REPO ADINIZ
 BRANCH="main"
 
