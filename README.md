@@ -17,14 +17,14 @@ Uygulamayı kurmak ve otomatik olarak her zaman güncel kalmasını sağlamak i�
 ### 🪟 Windows İçin
 PowerShell programını açın (Başlat menüsüne "powershell" yazabilirsiniz) ve şu komutu yapıştırın:
 ```powershell
-iex (iwr -useb https://raw.githubusercontent.com/python-ocagi/python-ocagi/main/kur_windows.ps1)
+iex (iwr -useb https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_windows.ps1)
 ```
 *(Eğer sisteminizde Python yoksa sizin için otomatik olarak indirip kuracaktır. Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
 
 ### 🍎 Mac ve 🐧 Linux İçin
 Terminal programını açın ve şu komutu yapıştırın:
 ```bash
-curl -sL https://raw.githubusercontent.com/python-ocagi/python-ocagi/main/kur_unix.sh | bash
+curl -sL https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_unix.sh | bash
 ```
 *(Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
 
