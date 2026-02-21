@@ -215,6 +215,7 @@ class EditorRenderer:
             
             expansion = 0
             is_special_line = False
+            is_soru_line = False
             
             # Potansiyel genişlemeyi hesapla
             if line.startswith(config.UI.LABEL_SECTION):
@@ -231,6 +232,7 @@ class EditorRenderer:
                 raw_label_len = len(config.UI.LABEL_QUESTION)
                 expansion = max(0, config.Layout.LABEL_WIDTH - raw_label_len)
                 is_special_line = True
+                is_soru_line = True
             
             # İlk satır için wrap genişliği (Expand edilen boşluk kadar azalt)
             first_line_width = (width - 1) - expansion
@@ -245,12 +247,13 @@ class EditorRenderer:
                  temp_wrap = textwrap.wrap(line, width=first_line_width)
                  if temp_wrap:
                      first_part = temp_wrap[0]
-                     wrapped.append(first_part)
+                     wrapped = [first_part]
                      
                      # Geri kalan kısım (kelime bölünmesini textwrap hallettiği için güvenli)
                      remaining = line[len(first_part):].lstrip() 
                      if remaining:
-                         wrapped.extend(textwrap.wrap(remaining, width - 1))
+                          cont_width = (width - 1 - config.Layout.LABEL_WIDTH) if is_soru_line else (width - 1)
+                          wrapped.extend(textwrap.wrap(remaining, cont_width))
                  else:
                      # Çok dar alan durumu (nadir)
                      wrapped = textwrap.wrap(line, width - 1)

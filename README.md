@@ -36,8 +36,8 @@ curl -sL https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_unix.sh 
 |-----|-------|
 | `Enter (x2)` | Kodu gönder / Soruyu atla |
 | `Alt+←/→` | Önceki/Sonraki soru |
-| `?` | İpucu göster/gizle |
-| `Del` | İlerlemeyi sıfırla |
+| `F1` | İpucu göster/gizle |
+| `Ctrl+R` | İlerlemeyi sıfırla |
 | `Ctrl+C` | Çıkış |
 | `ESC+VAO` | Geliştirici mesajı |
 

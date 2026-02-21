@@ -47,9 +47,9 @@ quality = [
 python-ocagi = "main:main"
 
 [project.urls]
-Homepage = "https://github.com/python-ocagi/python-ocagi"
-Documentation = "https://github.com/python-ocagi/python-ocagi#readme"
-Repository = "https://github.com/python-ocagi/python-ocagi"
+Homepage = "https://github.com/brkeyp/python-ocagi"
+Documentation = "https://github.com/brkeyp/python-ocagi#readme"
+Repository = "https://github.com/brkeyp/python-ocagi"
 
 [tool.hatch.build.targets.wheel]
 packages = ["."]

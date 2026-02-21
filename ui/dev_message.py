@@ -34,9 +34,6 @@ class DeveloperMessageScreen:
         self.stdscr.keypad(True)
         init_colors()
         
-        # Mouse desteği
-        curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
-        
         self.raw_message = load_developer_message()
     
     def draw_box(self, y, x, height, width, title=""):
@@ -206,25 +203,6 @@ class DeveloperMessageScreen:
             
             if key in (27, ord('q'), ord('Q'), 10, 13):
                 break
-            
-            elif key == curses.KEY_MOUSE:
-                try:
-                    _, _, _, _, bstate = curses.getmouse()
-                    if bstate & curses.BUTTON4_PRESSED:  # Scroll up
-                        if self.scroll_offset > 0:
-                            self.scroll_offset -= 3
-                            self.scroll_offset = max(0, self.scroll_offset)
-                            self.draw_screen(lines, box_y, box_x, box_height, box_width,
-                                             content_x, content_width, visible_height)
-                    elif bstate & curses.BUTTON5_PRESSED:  # Scroll down
-                        max_offset = max(0, len(lines) - visible_height)
-                        if self.scroll_offset < max_offset:
-                            self.scroll_offset += 3
-                            self.scroll_offset = min(max_offset, self.scroll_offset)
-                            self.draw_screen(lines, box_y, box_x, box_height, box_width,
-                                             content_x, content_width, visible_height)
-                except curses.error:
-                    pass
             
             elif key == curses.KEY_UP:
                 if self.scroll_offset > 0:
