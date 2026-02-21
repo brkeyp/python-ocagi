@@ -11,7 +11,7 @@ $BRANCH = "main"              # Default şube adı
 $ZIP_URL = "https://github.com/$REPO_OWNER/$REPO_NAME/archive/refs/heads/$BRANCH.zip"
 $DesktopPath = [Environment]::GetFolderPath("Desktop")
 $AppFolder = Join-Path $DesktopPath "Python Ocagi"
-$ShortcutPath = Join-Path $DesktopPath "PYTHON OCAGINA GIR.bat"
+$ShortcutPath = Join-Path $DesktopPath "PYTHON OCAGINA GIR.lnk"
 $UninstallPath = Join-Path $AppFolder "Uygulamayi Kaldir.bat"
 
 Write-Host "=========================================" -ForegroundColor Cyan
@@ -45,31 +45,23 @@ if (-not $PythonExists) {
     Write-Host "Sisteminizde Python yuklu, harika!" -ForegroundColor Green
 }
 
-# 3. Kisa Yol Olustur (Masaustu `.bat`)
+# 3. Kisa Yol Olustur (Masaustu .lnk)
+# .lnk dosyası PowerShell'i doğrudan açar → cmd.exe devre dışı
+# → BOM sorunu yok, "Terminate batch job" sorunu yok
 Write-Host "Masaustu kisayolu ayarlaniyor..." -ForegroundColor Cyan
-$ShortcutContent = @"
-@echo off
-color 0B
-echo =========================================
-echo Python Ocagi Guncelleniyor...
-echo Lutfen bekleyin... (Internet baglantisina gore degisir)
-echo =========================================
-powershell -Command "`$ProgressPreference = 'SilentlyContinue'; Invoke-WebRequest -Uri '$ZIP_URL' -OutFile '%TEMP%\app_update.zip' -UseBasicParsing; if (Test-Path '%TEMP%\app_extracted') { Remove-Item -Path '%TEMP%\app_extracted' -Recurse -Force }; Expand-Archive -Path '%TEMP%\app_update.zip' -DestinationPath '%TEMP%\app_extracted' -Force; Copy-Item -Path '%TEMP%\app_extracted\$REPO_NAME-$BRANCH\*' -Destination '%USERPROFILE%\Desktop\Python Ocagi' -Recurse -Force | Out-Null"
-echo.
-echo Guncelleme tamamlandi. Uygulama baslatiliyor!
-echo.
-cd /d "%USERPROFILE%\Desktop\Python Ocagi"
-py -3.13 main.py
-if errorlevel 1 (
-   echo Baslatma hatasi! Python 3.13 launcher calismadi, genel isimle deneniyor...
-   python main.py
-)
-"@
-
-Set-Content -Path $ShortcutPath -Value $ShortcutContent -Encoding UTF8
+$WScriptShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WScriptShell.CreateShortcut($ShortcutPath)
+$Shortcut.TargetPath = "powershell.exe"
+$Shortcut.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$AppFolder\baslat.ps1`""
+$Shortcut.WorkingDirectory = $AppFolder
+$Shortcut.Description = "Python Ocagi - Yazarak Ogrenme"
+$Shortcut.Save()
 
 # 4. Kaldirma Dosyasi Olustur
-Write-Host "Kaldırma aracı hazirlaniyor..." -ForegroundColor Cyan
+# Strateji: .bat → PowerShell'e silme işini devreder → exit ile cmd kapanır
+# → klasör kilidi açılır → PowerShell 1 sn sonra siler
+Write-Host "Kaldirma araci hazirlaniyor..." -ForegroundColor Cyan
+$LnkName = "PYTHON OCAGINA GIR.lnk"
 $UninstallScript = @"
 @echo off
 title Python Ocagi - Kaldirma
@@ -82,17 +74,12 @@ echo IPTAL ETMEK ICIN SU AN BU PENCEREYI KAPATIN.
 echo DEVAM ETMEK ICIN:
 pause
 echo =======================================================
-echo Siliniyor...
-rd /s /q "%USERPROFILE%\Desktop\Python Ocagi"
-del "%USERPROFILE%\Desktop\PYTHON OCAGINA GIR.bat"
-rd /s /q "%APPDATA%\python_ocagi"
-rd /s /q "%USERPROFILE%\.python_ocagi"
-echo.
-echo Kaldirma islemei tamamanlandi. Bu pencere otomatik kapanacak.
-ping 127.0.0.1 -n 3 > nul
-(goto) 2>nul & del "%~f0" & rd /s /q "%~dp0"
+echo Kaldirma islemi baslatildi...
+start "" powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Sleep -Seconds 1; Write-Host 'Dosyalar siliniyor...' -ForegroundColor Red; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Python Ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) '$LnkName') -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path `$env:APPDATA 'python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path `$HOME '.python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Write-Host '' ; Write-Host 'Kaldirma tamamlandi! Bu pencere kapanacak.' -ForegroundColor Green; Start-Sleep -Seconds 3"
+exit
 "@
-Set-Content -Path $UninstallPath -Value $UninstallScript -Encoding UTF8
+# BOM'suz yaz (kritik! BOM .bat dosyalarını bozar)
+[System.IO.File]::WriteAllText($UninstallPath, $UninstallScript, [System.Text.UTF8Encoding]::new($false))
 
 Write-Host ""
 Write-Host "=========================================" -ForegroundColor Green
@@ -101,9 +88,9 @@ Write-Host "=========================================" -ForegroundColor Green
 Write-Host "Uygulamayi hemen baslatmak uzere masaustunuzdeki dosyaya ulasiliyor..." -ForegroundColor Cyan
 Start-Sleep -Seconds 2
 
-# 5. Ilk Indirme (Kisa yolu cagirarak yapalim)
+# 5. Ilk Indirme (Kisayolu cagirarak yapalim)
 Start-Process -FilePath $ShortcutPath
 Start-Sleep -Seconds 1
 
-# Kurulum yapilan ilk siyah pencereyi tertemiz kapat
-Stop-Process -Id $PID -Force
+# Kurulum penceresini temiz kapat (Stop-Process yerine exit → "process exited" hatası yok)
+exit 0
