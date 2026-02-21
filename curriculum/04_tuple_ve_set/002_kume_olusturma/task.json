@@ -6,7 +6,6 @@
   "description": "'renkler' adında bir küme (set) oluştur. İçinde 'kirmizi', 'yesil' ve 'mavi' değerleri olsun. Kümeler tekrar eden elemanları kabul etmez ve sırasızdır.",
   "hint": "Küme oluşturmak için süslü parantez kullan: renkler = {'eleman1', 'eleman2'}. Dikkat: Boş küme için set() kullanılır, {} boş sözlük oluşturur!",
   "type": "code",
-  "xp": 20,
   "tags": [
     "set",
     "kume",

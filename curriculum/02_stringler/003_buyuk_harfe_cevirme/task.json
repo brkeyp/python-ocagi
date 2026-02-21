@@ -5,7 +5,6 @@
   "description": "'sehir' = 'istanbul' değişkenini oluştur. 'sehir_buyuk' değişkenine bu stringin tamamen büyük harfli halini ata.",
   "hint": ".upper() metodunu kullan.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "stringler"
   ],

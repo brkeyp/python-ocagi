@@ -19,6 +19,7 @@ class EventType(Enum):
     # System/App
     EXIT = auto() # Ctrl+C
     RESIZE = auto()
+    RESET_ALL = auto() # Ctrl+R
     
     # Navigation Actions
     PREV_TASK = auto()

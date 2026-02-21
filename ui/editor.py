@@ -124,11 +124,10 @@ class Editor:
                     self.renderer.refresh_screen()
                 should_redraw = False
                 
-            # 3. Input Timeout
+            # 3. Input Timeout / Animations Update
             has_active_timer = (self.message is not None and self.message != "") or \
                                (self.footer_state.vao_progress > 0)
             
-            # 3. Input Timeout
             # Fixed 30 FPS update rate (approx 33ms) to allow background tasks/animations
             timeout = 33
             
@@ -233,8 +232,17 @@ class Editor:
                     self._handle_backspace()
 
             elif event.type == EventType.DELETE:
-                is_buffer_empty = all(line.strip() == "" for line in self.buffer)
-                if is_buffer_empty or self.is_locked:
+                if self.is_locked:
+                    self.message = config.UI.MSG_TASK_COMPLETED
+                    self.message_timestamp = time.time()
+                else:
+                    self._handle_delete()
+
+            elif event.type == EventType.RESET_ALL:
+                if self.is_locked:
+                    self.message = config.UI.MSG_TASK_COMPLETED
+                    self.message_timestamp = time.time()
+                else:
                     self.message = config.UI.MSG_RESET_CONFIRM
                     self.renderer.refresh_screen()
                     while True:
@@ -245,9 +253,6 @@ class Editor:
                             self.message = ""
                             should_redraw = True
                             break
-                        # Otherwise ignore (modifier keys etc)
-                else:
-                    self._handle_delete()
 
             # --- ENTER ---
             elif event.type == EventType.ENTER:
@@ -280,7 +285,7 @@ class Editor:
             # --- CHAR INPUT ---
             elif event.type == EventType.CHAR:
                 if self.is_locked:
-                    self.message = "🔒 Bu görev tamamlandı."
+                    self.message = config.UI.MSG_TASK_COMPLETED
                     self.message_timestamp = time.time()
                     continue
                 

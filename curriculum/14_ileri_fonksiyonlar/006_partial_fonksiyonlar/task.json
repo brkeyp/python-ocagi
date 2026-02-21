@@ -1,15 +1,14 @@
 {
-    "id": "006_partial_fonksiyonlar",
-    "uuid": "42d23d52-a755-4d42-9409-ed64832bab52",
-    "category": "İleri Fonksiyonlar",
-    "title": "Partial Fonksiyonlar",
-    "description": "'us_al' fonksiyonu yaz: taban ve us alarak taban**us döndürsün. 'kare' partial fonksiyonu oluştur (us=2 sabit). 'sonuc' = kare(5) olsun.",
-    "hint": "from functools import partial kullan. partial(func, arg) ile bazı argümanları sabitle.",
-    "type": "code",
-    "xp": 25,
-    "tags": [
-        "partial",
-        "functools",
-        "fonksiyon"
-    ]
+  "id": "006_partial_fonksiyonlar",
+  "uuid": "42d23d52-a755-4d42-9409-ed64832bab52",
+  "category": "İleri Fonksiyonlar",
+  "title": "Partial Fonksiyonlar",
+  "description": "'us_al' fonksiyonu yaz: taban ve us alarak taban**us döndürsün. 'kare' partial fonksiyonu oluştur (us=2 sabit). 'sonuc' = kare(5) olsun.",
+  "hint": "from functools import partial kullan. partial(func, arg) ile bazı argümanları sabitle.",
+  "type": "code",
+  "tags": [
+    "partial",
+    "functools",
+    "fonksiyon"
+  ]
 }

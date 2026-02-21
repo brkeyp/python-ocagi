@@ -1,0 +1,14 @@
+{
+  "id": "005_sozluk_dongusu",
+  "uuid": "c26daadf-b3c9-42bb-b59d-d9c27455eb22",
+  "category": "Sözlükler",
+  "title": "Sözlük Döngüsü",
+  "description": "'fiyatlar' = {'elma': 5, 'armut': 7, 'muz': 10} sözlüğünü oluştur. Bir döngü ile tüm fiyatları topla ve 'toplam' değişkenine ata.",
+  "hint": "for deger in fiyatlar.values(): şeklinde değerler üzerinde gezebilirsin.",
+  "type": "code",
+  "tags": [
+    "dict",
+    "dongu",
+    "iteration"
+  ]
+}

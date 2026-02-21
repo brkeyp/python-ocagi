@@ -1,15 +1,14 @@
 {
-    "id": "004_ic_ice_kosul",
-    "uuid": "21daa498-1e4d-422a-96d3-c8cb097b1c0f",
-    "category": "Koşullar",
-    "title": "İç İçe Koşul",
-    "description": "'yas' = 25 ve 'ehliyet' = True olsun. Eğer yas >= 18 ise, ehliyeti varsa 'sonuc' = 'Araba kullanabilir', yoksa 'sonuc' = 'Ehliyeti yok' ata. Yas 18'den küçükse 'sonuc' = 'Reşit değil' ata.",
-    "hint": "if bloğunun içine başka bir if bloğu yazabilirsin. Her if için girintiye dikkat!",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "if",
-        "nested",
-        "ic_ice"
-    ]
+  "id": "004_ic_ice_kosul",
+  "uuid": "21daa498-1e4d-422a-96d3-c8cb097b1c0f",
+  "category": "Koşullar",
+  "title": "İç İçe Koşul",
+  "description": "'yas' = 25 ve 'ehliyet' = True olsun. Eğer yas >= 18 ise, ehliyeti varsa 'sonuc' = 'Araba kullanabilir', yoksa 'sonuc' = 'Ehliyeti yok' ata. Yas 18'den küçükse 'sonuc' = 'Reşit değil' ata.",
+  "hint": "if bloğunun içine başka bir if bloğu yazabilirsin. Her if için girintiye dikkat!",
+  "type": "code",
+  "tags": [
+    "if",
+    "nested",
+    "ic_ice"
+  ]
 }

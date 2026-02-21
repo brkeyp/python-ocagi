@@ -5,7 +5,6 @@
   "description": "'carp' isminde fonksiyon tanımla. a ve b parametrelerini alıp çarpımlarını döndürsün.",
   "hint": "def carp(a, b): şeklinde başla.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "fonksiyonlar"
   ],

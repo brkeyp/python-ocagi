@@ -5,7 +5,6 @@
   "description": "'yas' = 25 olsun. f-string kullanarak 'kisi_bilgisi' değişkenine 'Yaşım: 25' yazısını ata.",
   "hint": "f'...{degisken}...' yapısını kullan.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "stringler"
   ],

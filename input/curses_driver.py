@@ -94,6 +94,8 @@ class CursesInputDriver(InputDriver):
             return InputEvent(EventType.NEXT_TASK)
         elif char_code == config.Keys.CTRL_C:
             return InputEvent(EventType.EXIT)
+        elif char_code == config.Keys.CTRL_R:
+            return InputEvent(EventType.RESET_ALL)
             
         # 4. Windows Numpad Normalization
         if not is_char_str and char_code in self.numpad_map:
@@ -107,6 +109,8 @@ class CursesInputDriver(InputDriver):
         # 6. Standard Key Mapping
         if char_code == curses.KEY_RESIZE:
             return InputEvent(EventType.RESIZE)
+        elif char_code == curses.KEY_F1:
+            return InputEvent(EventType.SHOW_HINT)
             
         if char_code == curses.KEY_UP:
             return InputEvent(EventType.UP)
@@ -129,13 +133,9 @@ class CursesInputDriver(InputDriver):
         # 7. Character Input
         if is_char_str:
             if len(char) == 1 and ord(char) >= 32:
-                 if char == '?':
-                     return InputEvent(EventType.SHOW_HINT)
                  return InputEvent(EventType.CHAR, char)
         elif 32 <= char_code < 127:
              ch = chr(char_code)
-             if ch == '?':
-                 return InputEvent(EventType.SHOW_HINT)
              return InputEvent(EventType.CHAR, ch)
              
         return InputEvent(EventType.UNKNOWN, str(char_code))

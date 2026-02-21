@@ -5,7 +5,6 @@
   "description": "'alfabe' = 'ABCDEF' olsun. 'ilk_uc' değişkenine sadece 'ABC' kısmını alarak ata.",
   "hint": "Köşeli parantez kullan: degisken[baslangic:bitis]. Baştan başlamak için ilk kısmı boş bırak.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "stringler"
   ],

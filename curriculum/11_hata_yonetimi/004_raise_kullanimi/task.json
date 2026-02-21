@@ -1,15 +1,14 @@
 {
-    "id": "004_raise_kullanimi",
-    "uuid": "00d96bf0-3f7c-4e6a-9435-72ff9f1989a4",
-    "category": "Hata Yönetimi",
-    "title": "Raise Kullanımı",
-    "description": "'yas_kontrol' fonksiyonu yaz: yaş negatifse ValueError fırlatsın ('Yaş negatif olamaz!' mesajıyla). Aksi halde yaşı döndürsün.",
-    "hint": "raise ValueError('mesaj') ile manuel hata fırlatabilirsin.",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "hata",
-        "raise",
-        "exception"
-    ]
+  "id": "004_raise_kullanimi",
+  "uuid": "00d96bf0-3f7c-4e6a-9435-72ff9f1989a4",
+  "category": "Hata Yönetimi",
+  "title": "Raise Kullanımı",
+  "description": "'yas_kontrol' fonksiyonu yaz: yaş negatifse ValueError fırlatsın ('Yaş negatif olamaz!' mesajıyla). Aksi halde yaşı döndürsün.",
+  "hint": "raise ValueError('mesaj') ile manuel hata fırlatabilirsin.",
+  "type": "code",
+  "tags": [
+    "hata",
+    "raise",
+    "exception"
+  ]
 }

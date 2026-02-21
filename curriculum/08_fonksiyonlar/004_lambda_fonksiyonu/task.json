@@ -5,7 +5,6 @@
   "description": "'ikiye_bol' değişkenine bir lambda fonksiyonu ata. Verilen sayıyı 2'ye bölsün.",
   "hint": "lambda x: islem...",
   "type": "code",
-  "xp": 10,
   "tags": [
     "fonksiyonlar"
   ],

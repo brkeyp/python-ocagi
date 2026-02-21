@@ -6,7 +6,6 @@
   "description": "'test.txt' adında bir dosya oluştur ve içine bir şeyler yaz.",
   "hint": "open",
   "type": "code",
-  "xp": 20,
   "tags": [
     "dosya"
   ]

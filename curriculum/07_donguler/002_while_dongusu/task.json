@@ -5,7 +5,6 @@
   "description": "'sayac' = 5 olsun. While döngüsü ile sayac 0'dan büyük olduğu sürece sayacı her adımda 1 azalt.",
   "hint": "Döngü koşulu: while sayac > 0:",
   "type": "code",
-  "xp": 10,
   "tags": [
     "donguler"
   ],

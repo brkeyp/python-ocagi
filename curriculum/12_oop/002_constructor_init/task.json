@@ -5,7 +5,6 @@
   "description": "'Kedi' sınıfı oluştur. __init__ metodunda self.isim parametresini alıp nesne değişkenine kaydetsin.",
   "hint": "def __init__(self, isim): altında self.isim = isim yapmalısın.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "oop"
   ],

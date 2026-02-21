@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 import os
-import curses
 
 
 def get_user_data_dir() -> str:
@@ -128,6 +126,7 @@ class Timing:
     VAO_EXPIRE_SEC = 1.0
     ACTION_WAIT_SUCCESS = 1.5
     ACTION_WAIT_DEFAULT = 2.0
+    EXECUTION_TIMEOUT = 5.0
     
     # Milliseconds
     ESCDELAY_ENV = '25'
@@ -217,3 +216,4 @@ class Keys:
     BACKSPACE_2 = 127
     DELETE = 330
     CTRL_C = 3
+    CTRL_R = 18

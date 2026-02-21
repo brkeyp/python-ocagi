@@ -5,7 +5,6 @@
   "description": "'sonuc' değişkeni oluştur. 5 ile 2'yi toplayıp, sonucu 3 ile çarp. ((5+2)*3)",
   "hint": "Parantez kullanarak işlem önceliğini belirle.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "matematik"
   ],

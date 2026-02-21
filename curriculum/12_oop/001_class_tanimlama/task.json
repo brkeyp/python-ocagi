@@ -5,7 +5,6 @@
   "description": "'Araba' adında bir sınıf (class) oluştur. Henüz içi boş olabilir (pass kullan).",
   "hint": "class Araba: yazıp altına pass ekle.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "oop"
   ],

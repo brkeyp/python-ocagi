@@ -1,14 +1,13 @@
 {
-    "id": "004_os_sys",
-    "category": "Modüller",
-    "title": "Sistem Bilgisi (OS)",
-    "description": "'os' modülünü kullanarak çalışma dizinini (Current Working Directory) 'adres' değişkenine ata.",
-    "hint": "os.getcwd() metodunu kullan.",
-    "type": "code",
-    "xp": 10,
-    "tags": [
-        "moduller",
-        "os"
-    ],
-    "uuid": "9e2a1b9e-1f2e-4b4e-8c4e-5d1f2e2f3e4f"
+  "id": "004_os_sys",
+  "category": "Modüller",
+  "title": "Sistem Bilgisi (OS)",
+  "description": "'os' modülünü kullanarak çalışma dizinini (Current Working Directory) 'adres' değişkenine ata.",
+  "hint": "os.getcwd() metodunu kullan.",
+  "type": "code",
+  "tags": [
+    "moduller",
+    "os"
+  ],
+  "uuid": "9e2a1b9e-1f2e-4b4e-8c4e-5d1f2e2f3e4f"
 }

@@ -1,15 +1,14 @@
 {
-    "id": "007_coklu_except",
-    "uuid": "cae6c492-6e85-42b2-9b5d-b1961dab9630",
-    "category": "Hata Yönetimi",
-    "title": "Çoklu Except Blokları",
-    "description": "'hesapla' fonksiyonu yaz: a/b bölme yapsın. ZeroDivisionError için 'Sıfıra bölme!' TypeError için 'Tip hatası!' döndürsün.",
-    "hint": "Her hata türü için ayrı except bloğu yaz. except ZeroDivisionError: ... except TypeError: ...",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "hata",
-        "except",
-        "coklu"
-    ]
+  "id": "007_coklu_except",
+  "uuid": "cae6c492-6e85-42b2-9b5d-b1961dab9630",
+  "category": "Hata Yönetimi",
+  "title": "Çoklu Except Blokları",
+  "description": "'hesapla' fonksiyonu yaz: a/b bölme yapsın. ZeroDivisionError için 'Sıfıra bölme!' TypeError için 'Tip hatası!' döndürsün.",
+  "hint": "Her hata türü için ayrı except bloğu yaz. except ZeroDivisionError: ... except TypeError: ...",
+  "type": "code",
+  "tags": [
+    "hata",
+    "except",
+    "coklu"
+  ]
 }

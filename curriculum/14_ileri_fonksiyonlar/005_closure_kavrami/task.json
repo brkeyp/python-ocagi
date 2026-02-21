@@ -1,15 +1,14 @@
 {
-    "id": "005_closure_kavrami",
-    "uuid": "2d77339e-3608-49a2-a057-036a2ede9125",
-    "category": "İleri Fonksiyonlar",
-    "title": "Closure Kavramı",
-    "description": "'carpan_olustur' fonksiyonu yaz: parametre alıp, o sayıyla çarpan bir fonksiyon döndürsün. 'ikiyle_carp' = carpan_olustur(2) ve 'sonuc' = ikiyle_carp(5) olsun.",
-    "hint": "İç fonksiyon dış fonksiyonun değişkenlerini hatırlar. Bu closure'dur.",
-    "type": "code",
-    "xp": 30,
-    "tags": [
-        "closure",
-        "fonksiyon",
-        "scope"
-    ]
+  "id": "005_closure_kavrami",
+  "uuid": "2d77339e-3608-49a2-a057-036a2ede9125",
+  "category": "İleri Fonksiyonlar",
+  "title": "Closure Kavramı",
+  "description": "'carpan_olustur' fonksiyonu yaz: parametre alıp, o sayıyla çarpan bir fonksiyon döndürsün. 'ikiyle_carp' = carpan_olustur(2) ve 'sonuc' = ikiyle_carp(5) olsun.",
+  "hint": "İç fonksiyon dış fonksiyonun değişkenlerini hatırlar. Bu closure'dur.",
+  "type": "code",
+  "tags": [
+    "closure",
+    "fonksiyon",
+    "scope"
+  ]
 }

@@ -5,7 +5,6 @@
   "description": "'toplam' değişkeni oluştur, 10 ve 25 sayılarını toplayarak bu değişkene ata.",
   "hint": "Toplama operatörü (+) kullan.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "matematik"
   ],

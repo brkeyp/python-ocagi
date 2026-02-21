@@ -5,7 +5,6 @@
   "description": "'hazir_mi' değişkeni oluştur ve True değerini ata.",
   "hint": "True ve False kelimelerinin baş harfi büyük olmalıdır.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "temel"
   ],

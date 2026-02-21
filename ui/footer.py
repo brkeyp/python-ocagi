@@ -115,12 +115,12 @@ class FooterRenderer:
         draw_text(" Mesaj", DIM)
         draw_text(SEP, DIM)
         
-        # --- ? İpucu --- (celebration modunda gizle)
+        # --- F1 İpucu --- (celebration modunda gizle)
         if not is_celebration:
             if self.state.show_hint:
-                draw_text("?", HIGHLIGHT)
+                draw_text("F1", HIGHLIGHT)
             else:
-                draw_text("?", KEY)
+                draw_text("F1", KEY)
             draw_text(" İpucu", DIM)
             draw_text(SEP, DIM)
         
@@ -132,14 +132,13 @@ class FooterRenderer:
         draw_text(" Soru Geç", DIM)
         draw_text(SEP, DIM)
         
-        # --- Sıfırla (sadece boş buffer'da veya kilitli görevde veya celebration'da göster) ---
-        if is_buffer_empty or is_locked or is_celebration:
-            if sys.platform == 'darwin':
-                draw_text("fn+⌫", KEY)
-            else:
-                draw_text("Del", KEY)
-            draw_text(" Sıfırla", DIM)
-            draw_text(SEP, DIM)
+        # --- Sıfırla ---
+        if sys.platform == 'darwin':
+            draw_text("^R", KEY)
+        else:
+            draw_text("Ctrl+R", KEY)
+        draw_text(" Sıfırla", DIM)
+        draw_text(SEP, DIM)
         
         # --- Çıkış ---
         if sys.platform == 'darwin':

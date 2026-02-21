@@ -1,15 +1,14 @@
 {
-    "id": "004_set_comprehension",
-    "uuid": "5b61eabe-f2fa-4e54-93a5-94415decd2b4",
-    "category": "İleri Veri Yapıları",
-    "title": "Set Comprehension",
-    "description": "'harfler' kümesini tek satırda oluştur: 'merhaba' kelimesindeki benzersiz harfleri içersin.",
-    "hint": "Küme comprehension: {eleman for eleman in kaynak}. Kümeler tekrar eden elemanları otomatik eler.",
-    "type": "code",
-    "xp": 25,
-    "tags": [
-        "comprehension",
-        "set",
-        "kume"
-    ]
+  "id": "004_set_comprehension",
+  "uuid": "5b61eabe-f2fa-4e54-93a5-94415decd2b4",
+  "category": "İleri Veri Yapıları",
+  "title": "Set Comprehension",
+  "description": "'harfler' kümesini tek satırda oluştur: 'merhaba' kelimesindeki benzersiz harfleri içersin.",
+  "hint": "Küme comprehension: {eleman for eleman in kaynak}. Kümeler tekrar eden elemanları otomatik eler.",
+  "type": "code",
+  "tags": [
+    "comprehension",
+    "set",
+    "kume"
+  ]
 }

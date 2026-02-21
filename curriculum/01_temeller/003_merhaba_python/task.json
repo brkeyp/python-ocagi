@@ -5,7 +5,6 @@
   "description": "'mesaj' adında bir değişken oluştur ve içeriğine 'Merhaba Dünya' stringini ata.",
   "hint": "Stringleri tanımlamak için tırnak işareti kullanmalısın. Örn: x = 'y'",
   "type": "code",
-  "xp": 10,
   "tags": [
     "temel"
   ],

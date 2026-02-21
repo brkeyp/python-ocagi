@@ -1,15 +1,14 @@
 {
-    "id": "002_kosullu_comprehension",
-    "uuid": "2556b79c-2fc5-44ee-b63f-fc4282e869f3",
-    "category": "İleri Veri Yapıları",
-    "title": "Koşullu Comprehension",
-    "description": "'ciftler' listesini tek satırda oluştur: 1'den 10'a kadar sadece çift sayıları içersin. Sonuç: [2, 4, 6, 8, 10]",
-    "hint": "Koşul eklemek için: [x for x in range(1, 11) if x % 2 == 0]",
-    "type": "code",
-    "xp": 25,
-    "tags": [
-        "comprehension",
-        "kosul",
-        "filter"
-    ]
+  "id": "002_kosullu_comprehension",
+  "uuid": "2556b79c-2fc5-44ee-b63f-fc4282e869f3",
+  "category": "İleri Veri Yapıları",
+  "title": "Koşullu Comprehension",
+  "description": "'ciftler' listesini tek satırda oluştur: 1'den 10'a kadar sadece çift sayıları içersin. Sonuç: [2, 4, 6, 8, 10]",
+  "hint": "Koşul eklemek için: [x for x in range(1, 11) if x % 2 == 0]",
+  "type": "code",
+  "tags": [
+    "comprehension",
+    "kosul",
+    "filter"
+  ]
 }

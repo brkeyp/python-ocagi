@@ -1,14 +1,13 @@
 {
-    "id": "003_demet_unpack",
-    "uuid": "76370d3c-529e-4a7e-bed1-199fd7904cf5",
-    "category": "Demetler ve Kümeler",
-    "title": "Demet Açma (Unpacking)",
-    "description": "'koordinatlar = (35.6762, 139.6503)' demeti ver. Bu demeti 'enlem' ve 'boylam' değişkenlerine aç (unpack et).",
-    "hint": "enlem, boylam = koordinatlar şeklinde tek satırda aç. Bu 'tuple unpacking' olarak adlandırılır.",
-    "type": "code",
-    "xp": 10,
-    "tags": [
-        "demetler",
-        "unpacking"
-    ]
+  "id": "003_demet_unpack",
+  "uuid": "76370d3c-529e-4a7e-bed1-199fd7904cf5",
+  "category": "Demetler ve Kümeler",
+  "title": "Demet Açma (Unpacking)",
+  "description": "'koordinatlar = (35.6762, 139.6503)' demeti ver. Bu demeti 'enlem' ve 'boylam' değişkenlerine aç (unpack et).",
+  "hint": "enlem, boylam = koordinatlar şeklinde tek satırda aç. Bu 'tuple unpacking' olarak adlandırılır.",
+  "type": "code",
+  "tags": [
+    "demetler",
+    "unpacking"
+  ]
 }

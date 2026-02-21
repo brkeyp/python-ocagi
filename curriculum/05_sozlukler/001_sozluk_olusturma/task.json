@@ -5,7 +5,6 @@
   "description": "'kimlik' adında bir sözlük oluştur. 'ad': 'Ali', 'yas': 30 anahtar-değer çiftlerini içersin.",
   "hint": "Sözlükler süslü parantez {} ve key:value yapısı kullanır.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "sozlukler"
   ],

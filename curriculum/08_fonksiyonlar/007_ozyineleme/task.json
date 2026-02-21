@@ -1,15 +1,14 @@
 {
-    "id": "007_ozyineleme",
-    "uuid": "74d22891-81f8-402e-b749-1f76e7240a82",
-    "category": "Fonksiyonlar",
-    "title": "Özyineleme (Recursion)",
-    "description": "'faktoriyel' fonksiyonu yaz: n sayısının faktöriyelini özyineleme ile hesaplasın. 'sonuc' = faktoriyel(5) olsun.",
-    "hint": "Temel durum: n <= 1 ise 1 döndür. Özyineleme: n * faktoriyel(n-1) döndür.",
-    "type": "code",
-    "xp": 25,
-    "tags": [
-        "fonksiyonlar",
-        "recursion",
-        "ozyineleme"
-    ]
+  "id": "007_ozyineleme",
+  "uuid": "74d22891-81f8-402e-b749-1f76e7240a82",
+  "category": "Fonksiyonlar",
+  "title": "Özyineleme (Recursion)",
+  "description": "'faktoriyel' fonksiyonu yaz: n sayısının faktöriyelini özyineleme ile hesaplasın. 'sonuc' = faktoriyel(5) olsun.",
+  "hint": "Temel durum: n <= 1 ise 1 döndür. Özyineleme: n * faktoriyel(n-1) döndür.",
+  "type": "code",
+  "tags": [
+    "fonksiyonlar",
+    "recursion",
+    "ozyineleme"
+  ]
 }

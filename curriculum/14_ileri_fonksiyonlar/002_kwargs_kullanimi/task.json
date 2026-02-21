@@ -1,15 +1,14 @@
 {
-    "id": "002_kwargs_kullanimi",
-    "uuid": "78c52743-6e61-4d2a-b226-25810fdbd9a1",
-    "category": "İleri Fonksiyonlar",
-    "title": "**kwargs Kullanımı",
-    "description": "'bilgi_yazdir' fonksiyonu yaz: anahtar-değer çiftlerini alıp 'ad: Ali' formatında birleştirsin. 'sonuc' değişkenine bilgi_yazdir(ad='Ali', yas=25) çağrısının sonucunu ata.",
-    "hint": "**kwargs ile isimli argümanlar sözlük olarak gelir. kwargs.items() ile gezebilirsin.",
-    "type": "code",
-    "xp": 25,
-    "tags": [
-        "kwargs",
-        "fonksiyon",
-        "variadic"
-    ]
+  "id": "002_kwargs_kullanimi",
+  "uuid": "78c52743-6e61-4d2a-b226-25810fdbd9a1",
+  "category": "İleri Fonksiyonlar",
+  "title": "**kwargs Kullanımı",
+  "description": "'bilgi_yazdir' fonksiyonu yaz: anahtar-değer çiftlerini alıp 'ad: Ali' formatında birleştirsin. 'sonuc' değişkenine bilgi_yazdir(ad='Ali', yas=25) çağrısının sonucunu ata.",
+  "hint": "**kwargs ile isimli argümanlar sözlük olarak gelir. kwargs.items() ile gezebilirsin.",
+  "type": "code",
+  "tags": [
+    "kwargs",
+    "fonksiyon",
+    "variadic"
+  ]
 }

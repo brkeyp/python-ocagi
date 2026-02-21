@@ -5,7 +5,6 @@
   "description": "'sayi' = 7 olsun. Sayı çift ise 'sonuc' = 'Çift', tek ise 'sonuc' = 'Tek' olsun. Mod (%) kullan.",
   "hint": "Bir sayının 2'ye bölümünden kalan 0 ise çifttir.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "kosullar"
   ],

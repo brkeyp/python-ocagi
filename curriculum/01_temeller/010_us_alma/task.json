@@ -5,7 +5,6 @@
   "description": "'kup' değişkeni oluştur ve 5'in 3. kuvvetini (küpünü) hesapla.",
   "hint": "Üs alma işlemi için çift yıldız (**) kullanılır.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "matematik"
   ],

@@ -5,7 +5,6 @@
   "description": "'puan' = 85 olsun. Eğer puan 50'den büyükse 'durum' değişkenine 'Geçti' ata.",
   "hint": "if bloğundan sonra girintiye (indentation) dikkat et. Alt satıra geçmek için Enter'a bas.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "kosullar"
   ],

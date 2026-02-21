@@ -1,15 +1,14 @@
 {
-    "id": "002_json_yazma",
-    "uuid": "a6cd519a-15f4-4e19-a4ac-56b716ccf4b9",
-    "category": "JSON ve API",
-    "title": "JSON Yazma",
-    "description": "'kisi' = {'ad': 'Ayşe', 'yas': 30} sözlüğünü oluştur. json.dumps() ile JSON string'e çevir ve 'json_str' değişkenine ata.",
-    "hint": "json.dumps(sozluk) Python nesnesini JSON string'e çevirir.",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "json",
-        "dumps",
-        "serialize"
-    ]
+  "id": "002_json_yazma",
+  "uuid": "a6cd519a-15f4-4e19-a4ac-56b716ccf4b9",
+  "category": "JSON ve API",
+  "title": "JSON Yazma",
+  "description": "'kisi' = {'ad': 'Ayşe', 'yas': 30} sözlüğünü oluştur. json.dumps() ile JSON string'e çevir ve 'json_str' değişkenine ata.",
+  "hint": "json.dumps(sozluk) Python nesnesini JSON string'e çevirir.",
+  "type": "code",
+  "tags": [
+    "json",
+    "dumps",
+    "serialize"
+  ]
 }

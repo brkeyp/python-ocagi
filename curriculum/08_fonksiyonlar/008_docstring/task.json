@@ -1,15 +1,14 @@
 {
-    "id": "008_docstring",
-    "uuid": "b6361878-3ece-41f8-92c8-b93f64cc4714",
-    "category": "Fonksiyonlar",
-    "title": "Docstring (Dokümantasyon)",
-    "description": "'topla' fonksiyonu yaz: iki sayıyı toplasın. Fonksiyona üçlü tırnak ile docstring ekle: 'İki sayıyı toplar ve sonucu döndürür.'",
-    "hint": "Fonksiyon tanımından hemen sonra \\\"\\\"\\\"docstring\\\"\\\"\\\" yaz. Bu, fonksiyonun ne yaptığını açıklar.",
-    "type": "code",
-    "xp": 15,
-    "tags": [
-        "fonksiyonlar",
-        "docstring",
-        "dokumantasyon"
-    ]
+  "id": "008_docstring",
+  "uuid": "b6361878-3ece-41f8-92c8-b93f64cc4714",
+  "category": "Fonksiyonlar",
+  "title": "Docstring (Dokümantasyon)",
+  "description": "'topla' fonksiyonu yaz: iki sayıyı toplasın. Fonksiyona üçlü tırnak ile docstring ekle: 'İki sayıyı toplar ve sonucu döndürür.'",
+  "hint": "Fonksiyon tanımından hemen sonra \\\"\\\"\\\"docstring\\\"\\\"\\\" yaz. Bu, fonksiyonun ne yaptığını açıklar.",
+  "type": "code",
+  "tags": [
+    "fonksiyonlar",
+    "docstring",
+    "dokumantasyon"
+  ]
 }

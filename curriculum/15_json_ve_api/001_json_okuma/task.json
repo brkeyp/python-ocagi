@@ -1,15 +1,14 @@
 {
-    "id": "001_json_okuma",
-    "uuid": "22d5e5d2-caae-45b1-920e-76548d5dcef1",
-    "category": "JSON ve API",
-    "title": "JSON Okuma",
-    "description": "'veri_str' = '{\"ad\": \"Ali\", \"yas\": 25}' JSON string'i olsun. json.loads() ile Python sözlüğüne çevir ve 'veri' değişkenine ata.",
-    "hint": "import json yap. json.loads(metin) string'i Python nesnesine çevirir.",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "json",
-        "loads",
-        "parse"
-    ]
+  "id": "001_json_okuma",
+  "uuid": "22d5e5d2-caae-45b1-920e-76548d5dcef1",
+  "category": "JSON ve API",
+  "title": "JSON Okuma",
+  "description": "'veri_str' = '{\"ad\": \"Ali\", \"yas\": 25}' JSON string'i olsun. json.loads() ile Python sözlüğüne çevir ve 'veri' değişkenine ata.",
+  "hint": "import json yap. json.loads(metin) string'i Python nesnesine çevirir.",
+  "type": "code",
+  "tags": [
+    "json",
+    "loads",
+    "parse"
+  ]
 }

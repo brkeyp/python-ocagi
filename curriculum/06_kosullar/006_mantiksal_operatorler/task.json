@@ -1,16 +1,15 @@
 {
-    "id": "006_mantiksal_operatorler",
-    "uuid": "a1ba51d2-c037-47f9-9fbf-863a80835a0d",
-    "category": "Koşullar",
-    "title": "Mantıksal Operatörler",
-    "description": "'sicaklik' = 25 ve 'yagmurlu' = False olsun. Eğer sıcaklık 20-30 arasında VE yağmurlu değilse 'hava' = 'Piknik zamanı!' ata, değilse 'hava' = 'Evde kal' ata.",
-    "hint": "'and' iki koşulun birlikte doğru olmasını, 'not' tersini kontrol eder.",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "and",
-        "or",
-        "not",
-        "mantiksal"
-    ]
+  "id": "006_mantiksal_operatorler",
+  "uuid": "a1ba51d2-c037-47f9-9fbf-863a80835a0d",
+  "category": "Koşullar",
+  "title": "Mantıksal Operatörler",
+  "description": "'sicaklik' = 25 ve 'yagmurlu' = False olsun. Eğer sıcaklık 20-30 arasında VE yağmurlu değilse 'hava' = 'Piknik zamanı!' ata, değilse 'hava' = 'Evde kal' ata.",
+  "hint": "'and' iki koşulun birlikte doğru olmasını, 'not' tersini kontrol eder.",
+  "type": "code",
+  "tags": [
+    "and",
+    "or",
+    "not",
+    "mantiksal"
+  ]
 }

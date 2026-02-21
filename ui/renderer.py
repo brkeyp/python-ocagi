@@ -350,6 +350,7 @@ class EditorRenderer:
         tokens, _ = self.tokenizer.tokenize(line)
         
         col = col_start
+        prev_value = ""
         for token_type, value in tokens:
             if col >= max_width - 1:
                 break
@@ -363,6 +364,24 @@ class EditorRenderer:
             attr = curses.A_NORMAL
             
             try:
+                # --- YAMA: F-String ---
+                if token_type == self.TokenType.STRING and prev_value.lower() == 'f':
+                    in_bracket = False
+                    for char in display_part:
+                        if char == '{':
+                            in_bracket = True
+                            self.stdscr.addstr(row, col, char, curses.color_pair(config.Colors.YELLOW) | curses.A_BOLD)
+                        elif char == '}':
+                            in_bracket = False
+                            self.stdscr.addstr(row, col, char, curses.color_pair(config.Colors.YELLOW) | curses.A_BOLD)
+                        else:
+                            c_attr = curses.A_NORMAL if in_bracket else curses.color_pair(config.Colors.GREEN)
+                            self.stdscr.addstr(row, col, char, c_attr)
+                        col += 1
+                    prev_value = value
+                    continue
+                # --- YAMA SONU ---
+                
                 if token_type == self.TokenType.KEYWORD:
                     attr = curses.color_pair(config.Colors.MAGENTA) | curses.A_BOLD
                 elif token_type == self.TokenType.BUILTIN:
@@ -382,6 +401,7 @@ class EditorRenderer:
                 pass
             
             col += len(display_part)
+            prev_value = value
     
     def _draw_celebration_screen(self, row, width, height, header_line):
         """Tebrikler ekranını çizer."""

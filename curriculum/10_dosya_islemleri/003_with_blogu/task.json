@@ -1,14 +1,13 @@
 {
-    "id": "003_with_blogu",
-    "uuid": "a3fa02aa-0ed4-44d2-8243-0ecbdeaa8cc1",
-    "category": "Dosya İşlemleri",
-    "title": "With Bloğu (Context Manager)",
-    "description": "'with' bloğu kullanarak 'rapor.txt' dosyasına 'Tamamlandı' yaz. Dosya otomatik kapansın.",
-    "hint": "with open('dosya.txt', 'w') as f: şeklinde kullan. f.write() ile yaz. Dosya blok bitince otomatik kapanır.",
-    "type": "code",
-    "xp": 15,
-    "tags": [
-        "dosya_islemleri",
-        "context_manager"
-    ]
+  "id": "003_with_blogu",
+  "uuid": "a3fa02aa-0ed4-44d2-8243-0ecbdeaa8cc1",
+  "category": "Dosya İşlemleri",
+  "title": "With Bloğu (Context Manager)",
+  "description": "'with' bloğu kullanarak 'rapor.txt' dosyasına 'Tamamlandı' yaz. Dosya otomatik kapansın.",
+  "hint": "with open('dosya.txt', 'w') as f: şeklinde kullan. f.write() ile yaz. Dosya blok bitince otomatik kapanır.",
+  "type": "code",
+  "tags": [
+    "dosya_islemleri",
+    "context_manager"
+  ]
 }

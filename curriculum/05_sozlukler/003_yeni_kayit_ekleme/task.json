@@ -5,7 +5,6 @@
   "description": "'kimlik' sözlüğüne 'meslek': 'Mühendis' çiftini ekle.",
   "hint": "sozluk['yeni_anahtar'] = 'deger' şeklinde atama yap.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "sozlukler"
   ],

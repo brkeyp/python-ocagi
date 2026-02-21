@@ -1,15 +1,14 @@
 {
-    "id": "008_liste_kopyalama",
-    "uuid": "532d8128-8751-4ba3-975d-fa03555f1a1e",
-    "category": "Listeler",
-    "title": "Liste Kopyalama",
-    "description": "'orijinal' = [1, 2, 3] listesinden 'kopya' adında bağımsız bir kopya oluştur (copy metodu kullan).",
-    "hint": "kopya = orijinal yaparsan aynı listeyi referans edersin! copy() veya [:] kullan.",
-    "type": "code",
-    "xp": 15,
-    "tags": [
-        "listeler",
-        "copy",
-        "kopyalama"
-    ]
+  "id": "008_liste_kopyalama",
+  "uuid": "532d8128-8751-4ba3-975d-fa03555f1a1e",
+  "category": "Listeler",
+  "title": "Liste Kopyalama",
+  "description": "'orijinal' = [1, 2, 3] listesinden 'kopya' adında bağımsız bir kopya oluştur (copy metodu kullan).",
+  "hint": "kopya = orijinal yaparsan aynı listeyi referans edersin! copy() veya [:] kullan.",
+  "type": "code",
+  "tags": [
+    "listeler",
+    "copy",
+    "kopyalama"
+  ]
 }

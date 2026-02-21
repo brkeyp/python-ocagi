@@ -36,7 +36,7 @@ class Lesson:
              try:
                  with open(self.solution_script, 'r', encoding='utf-8') as f:
                      self.solution_code = f.read()
-             except: pass
+             except OSError: pass
              
     def has_custom_validator(self):
         return os.path.exists(self.validator_script)

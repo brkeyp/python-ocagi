@@ -5,7 +5,6 @@
   "description": "'selamla' fonksiyonu tanımla. 'isim' alsın, varsayılanı 'Misafir' olsun. 'Merhaba {isim}' döndürsün.",
   "hint": "def selamla(isim='Misafir'):",
   "type": "code",
-  "xp": 10,
   "tags": [
     "fonksiyonlar"
   ],

@@ -1,15 +1,14 @@
 {
-    "id": "005_ic_ice_dongu",
-    "uuid": "916e760f-2090-4b84-9d89-ff25193a5fdd",
-    "category": "Döngüler",
-    "title": "İç İçe Döngü",
-    "description": "2x3'lük çarpım tablosu oluştur. 'carpim' listesine 1-2 satır ve 1-3 sütun için çarpımları ekle. Sonuç: [1, 2, 3, 2, 4, 6]",
-    "hint": "İç içe for döngüsü kullan: for i in range(1, 3): for j in range(1, 4): liste.append(i*j)",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "nested",
-        "ic_ice",
-        "dongu"
-    ]
+  "id": "005_ic_ice_dongu",
+  "uuid": "916e760f-2090-4b84-9d89-ff25193a5fdd",
+  "category": "Döngüler",
+  "title": "İç İçe Döngü",
+  "description": "2x3'lük çarpım tablosu oluştur. 'carpim' listesine 1-2 satır ve 1-3 sütun için çarpımları ekle. Sonuç: [1, 2, 3, 2, 4, 6]",
+  "hint": "İç içe for döngüsü kullan: for i in range(1, 3): for j in range(1, 4): liste.append(i*j)",
+  "type": "code",
+  "tags": [
+    "nested",
+    "ic_ice",
+    "dongu"
+  ]
 }

@@ -5,7 +5,6 @@
   "description": "'meyveler' = ['Elma', 'Armut', 'Muz'] olsun. 'ortadaki' değişkenine 'Armut' değerini listeden çekerek ata.",
   "hint": "Python'da indeksler 0'dan başlar. İkinci eleman 1. indekstir.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "listeler"
   ],

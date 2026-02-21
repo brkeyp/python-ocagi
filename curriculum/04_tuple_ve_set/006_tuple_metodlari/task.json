@@ -1,16 +1,15 @@
 {
-    "id": "006_tuple_metodlari",
-    "uuid": "9f970a6a-bb47-4afe-a129-56f4dab4d40e",
-    "category": "Demetler ve Kümeler",
-    "title": "Tuple Metodları",
-    "description": "'notlar' = (85, 90, 85, 70, 85) tuple'ı oluştur. 'sayi' değişkenine 85 değerinin tuple içinde kaç kez geçtiğini ata. 'konum' değişkenine ise 90 değerinin indeksini ata.",
-    "hint": "tuple.count(deger) kaç kez geçtiğini, tuple.index(deger) ilk indeksi verir.",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "tuple",
-        "count",
-        "index",
-        "metodlar"
-    ]
+  "id": "006_tuple_metodlari",
+  "uuid": "9f970a6a-bb47-4afe-a129-56f4dab4d40e",
+  "category": "Demetler ve Kümeler",
+  "title": "Tuple Metodları",
+  "description": "'notlar' = (85, 90, 85, 70, 85) tuple'ı oluştur. 'sayi' değişkenine 85 değerinin tuple içinde kaç kez geçtiğini ata. 'konum' değişkenine ise 90 değerinin indeksini ata.",
+  "hint": "tuple.count(deger) kaç kez geçtiğini, tuple.index(deger) ilk indeksi verir.",
+  "type": "code",
+  "tags": [
+    "tuple",
+    "count",
+    "index",
+    "metodlar"
+  ]
 }

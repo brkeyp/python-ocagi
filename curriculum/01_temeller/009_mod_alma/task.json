@@ -5,7 +5,6 @@
   "description": "'kalan' değişkeni oluştur, 10'un 3'e bölümünden kalanı hesapla.",
   "hint": "Mod almak için yüzde (%) işaretini kullan.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "matematik"
   ],

@@ -1,15 +1,14 @@
 {
-    "id": "002_yorumlar",
-    "uuid": "546d1b88-d3ef-4f4a-beef-aa181851bae2",
-    "category": "Temel",
-    "title": "Yorumlar",
-    "description": "Koduna bir yorum satırı ekle. Yorum içeriği 'Bu benim ilk yorumum' olsun.",
-    "hint": "# işareti ile başlayan satırlar yorum olarak kabul edilir ve çalıştırılmaz.",
-    "type": "code",
-    "xp": 5,
-    "tags": [
-        "temel",
-        "yorum",
-        "comment"
-    ]
+  "id": "002_yorumlar",
+  "uuid": "546d1b88-d3ef-4f4a-beef-aa181851bae2",
+  "category": "Temel",
+  "title": "Yorumlar",
+  "description": "Koduna bir yorum satırı ekle. Yorum içeriği 'Bu benim ilk yorumum' olsun.",
+  "hint": "# işareti ile başlayan satırlar yorum olarak kabul edilir ve çalıştırılmaz.",
+  "type": "code",
+  "tags": [
+    "temel",
+    "yorum",
+    "comment"
+  ]
 }

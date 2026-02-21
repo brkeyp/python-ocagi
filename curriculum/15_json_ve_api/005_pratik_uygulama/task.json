@@ -1,15 +1,14 @@
 {
-    "id": "005_pratik_uygulama",
-    "uuid": "1a8afaa3-b980-495c-a6c9-34007a7369d8",
-    "category": "JSON ve API",
-    "title": "Pratik Uygulama",
-    "description": "'envanter' JSON string'i = '[{\"urun\": \"Kalem\", \"adet\": 50}, {\"urun\": \"Defter\", \"adet\": 30}]' olsun. Parse et ve 'toplam_adet' değişkenine tüm ürünlerin adet toplamını ata.",
-    "hint": "json.loads() ile parse et, sonra sum() ile topla: sum(x['adet'] for x in liste)",
-    "type": "code",
-    "xp": 25,
-    "tags": [
-        "json",
-        "pratik",
-        "toplama"
-    ]
+  "id": "005_pratik_uygulama",
+  "uuid": "1a8afaa3-b980-495c-a6c9-34007a7369d8",
+  "category": "JSON ve API",
+  "title": "Pratik Uygulama",
+  "description": "'envanter' JSON string'i = '[{\"urun\": \"Kalem\", \"adet\": 50}, {\"urun\": \"Defter\", \"adet\": 30}]' olsun. Parse et ve 'toplam_adet' değişkenine tüm ürünlerin adet toplamını ata.",
+  "hint": "json.loads() ile parse et, sonra sum() ile topla: sum(x['adet'] for x in liste)",
+  "type": "code",
+  "tags": [
+    "json",
+    "pratik",
+    "toplama"
+  ]
 }

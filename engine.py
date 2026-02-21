@@ -104,12 +104,12 @@ class SimulationEngine:
             try:
                 with open(self.progress_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
-            except:
+            except (FileNotFoundError, json.JSONDecodeError):
                 if os.path.exists(self.progress_backup):
                     try:
                         with open(self.progress_backup, 'r', encoding='utf-8') as f:
                             data = json.load(f)
-                    except: pass
+                    except (FileNotFoundError, json.JSONDecodeError): pass
         
         return validate_progress_data(data)
 
@@ -119,7 +119,7 @@ class SimulationEngine:
             try:
                 import shutil
                 shutil.copy2(self.progress_file, self.progress_backup)
-            except: pass
+            except OSError: pass
             
         try:
             with open(self.progress_file, 'w', encoding='utf-8') as f:

@@ -1,15 +1,14 @@
 {
-    "id": "004_decorator_uygulama",
-    "uuid": "a2970f3d-b2da-4d27-b6fe-599d924679b6",
-    "category": "İleri Fonksiyonlar",
-    "title": "Parametreli Decorator",
-    "description": "'tekrarla' decorator'ı yaz: fonksiyonu n kez çalıştırsın. 'merhaba' fonksiyonuna @tekrarla(3) uygula. 'sayac' değişkenine kaç kez çalıştığını ata.",
-    "hint": "Parametreli decorator üç katlı fonksiyon gerektirir: tekrarla(n) → decorator → wrapper",
-    "type": "code",
-    "xp": 30,
-    "tags": [
-        "decorator",
-        "parametre",
-        "ileri"
-    ]
+  "id": "004_decorator_uygulama",
+  "uuid": "a2970f3d-b2da-4d27-b6fe-599d924679b6",
+  "category": "İleri Fonksiyonlar",
+  "title": "Parametreli Decorator",
+  "description": "'tekrarla' decorator'ı yaz: fonksiyonu n kez çalıştırsın. 'merhaba' fonksiyonuna @tekrarla(3) uygula. 'sayac' değişkenine kaç kez çalıştığını ata.",
+  "hint": "Parametreli decorator üç katlı fonksiyon gerektirir: tekrarla(n) → decorator → wrapper",
+  "type": "code",
+  "tags": [
+    "decorator",
+    "parametre",
+    "ileri"
+  ]
 }

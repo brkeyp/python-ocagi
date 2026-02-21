@@ -5,7 +5,6 @@
   "description": "liste = [1, 2, 3, 4, 99]. Listenin son elemanını sil (pop kullan).",
   "hint": ".pop() metodu parametre verilmezse son elemanı siler.",
   "type": "code",
-  "xp": 10,
   "tags": [
     "listeler"
   ],

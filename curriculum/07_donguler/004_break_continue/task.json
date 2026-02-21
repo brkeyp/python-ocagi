@@ -1,15 +1,14 @@
 {
-    "id": "004_break_continue",
-    "uuid": "9503588b-d014-48f5-aa4b-c2e37eea5726",
-    "category": "Döngüler",
-    "title": "Break ve Continue",
-    "description": "1'den 10'a kadar döngü oluştur. 'ilk_cift' değişkenine döngüde bulduğun ilk çift sayıyı ata ve döngüyü sonlandır (break kullan).",
-    "hint": "break döngüyü tamamen bitirir. if sayi % 2 == 0 ile çift sayı kontrolü yapabilirsin.",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "break",
-        "continue",
-        "dongu"
-    ]
+  "id": "004_break_continue",
+  "uuid": "9503588b-d014-48f5-aa4b-c2e37eea5726",
+  "category": "Döngüler",
+  "title": "Break ve Continue",
+  "description": "1'den 10'a kadar döngü oluştur. 'ilk_cift' değişkenine döngüde bulduğun ilk çift sayıyı ata ve döngüyü sonlandır (break kullan).",
+  "hint": "break döngüyü tamamen bitirir. if sayi % 2 == 0 ile çift sayı kontrolü yapabilirsin.",
+  "type": "code",
+  "tags": [
+    "break",
+    "continue",
+    "dongu"
+  ]
 }

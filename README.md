@@ -4,7 +4,7 @@ Terminal tabanlı, interaktif Python öğrenme platformu.
 
 ## ✨ Özellikler
 
-- 🎓 **98 Ders** - 16 bölüm boyunca kapsamlı Python müfredatı
+- 🎓 **Kapsamlı İçerik** - Bölümler boyunca uzanan adım adım Python müfredatı
 - 🔒 **Güvenli Sandbox** - Kullanıcı kodu izole çalışır
 - 🎨 **Syntax Highlighting** - Gerçek zamanlı renklendirme
 - 📊 **İlerleme Takibi** - Tamamlanan ve atlanan görevler kaydedilir
@@ -104,13 +104,20 @@ python3 tools/scaffold_lesson.py <bölüm> <ders_adı>
 ## 📁 Proje Yapısı
 
 ```
-├── main.py              # Giriş noktası
-├── engine.py            # Simülasyon motoru
-├── controller.py        # Ana döngü
-├── ui.py                # Kod editörü
-├── ui_renderer.py       # Görsel rendering
-├── sandbox.py           # Güvenlik katmanı
-├── safe_runner.py       # Kod çalıştırıcı
+├── main.py              # Bootstrapper ve ortam hazırlığı
+├── config.py            # Merkezi konfigürasyon ve sabitler
+├── controller.py        # Ana uygulama döngüsü
+├── engine.py            # Öğrenme simülasyon motoru
+├── curriculum_manager.py# Ders klasörü yönetimi
+├── ui/                  # Kullanıcı Arayüzü
+│   ├── editor.py        # Curses tabanlı kod editörü
+│   ├── renderer.py      # Ekran çizim motoru
+│   └── ...              # Diğer ui bileşenleri
+├── sandbox/             # Güvenli Çalıştırma Ortamı
+│   ├── executor.py      # İzolasyon işlemleri
+│   ├── guards.py        # Kaynak korumaları
+│   └── ...              # Diğer sandbox bileşenleri
+├── input/               # Girdi Yönetim Sistemi
 ├── curriculum/          # Ders içerikleri
 └── tests/               # Test dosyaları
 ```

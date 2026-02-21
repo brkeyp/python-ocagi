@@ -1,15 +1,14 @@
 {
-    "id": "005_frozenset",
-    "uuid": "3f9aa762-bbb5-473f-861e-9ebe9798c802",
-    "category": "Demetler ve Kümeler",
-    "title": "Frozenset (Değişmez Küme)",
-    "description": "'gunler' adında bir frozenset oluştur. İçinde 'pazartesi', 'sali' ve 'carsamba' değerleri olsun. Frozenset'ler değiştirilemez (immutable) kümelerdir.",
-    "hint": "frozenset({'eleman1', 'eleman2'}) şeklinde oluşturabilirsin. Normal kümeden farkı: eleman ekleyip çıkaramazsın.",
-    "type": "code",
-    "xp": 20,
-    "tags": [
-        "frozenset",
-        "immutable",
-        "kume"
-    ]
+  "id": "005_frozenset",
+  "uuid": "3f9aa762-bbb5-473f-861e-9ebe9798c802",
+  "category": "Demetler ve Kümeler",
+  "title": "Frozenset (Değişmez Küme)",
+  "description": "'gunler' adında bir frozenset oluştur. İçinde 'pazartesi', 'sali' ve 'carsamba' değerleri olsun. Frozenset'ler değiştirilemez (immutable) kümelerdir.",
+  "hint": "frozenset({'eleman1', 'eleman2'}) şeklinde oluşturabilirsin. Normal kümeden farkı: eleman ekleyip çıkaramazsın.",
+  "type": "code",
+  "tags": [
+    "frozenset",
+    "immutable",
+    "kume"
+  ]
 }

@@ -189,8 +189,15 @@ class Tokenizer:
             # --- Numbers ---
             if char.isdigit():
                 start = i
-                while i < length and text[i].isdigit():
-                    i += 1
+                has_dot = False
+                while i < length:
+                    if text[i].isdigit():
+                        i += 1
+                    elif text[i] == '.' and not has_dot and i + 1 < length and text[i+1].isdigit():
+                        has_dot = True
+                        i += 1
+                    else:
+                        break
                 tokens.append((TokenType.NUMBER, text[start:i]))
                 continue
 

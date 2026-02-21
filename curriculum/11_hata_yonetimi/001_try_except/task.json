@@ -6,7 +6,6 @@
   "description": "'sayi = int(\"abc\")' satırını try-except bloğu içine al. Hata yakalandığında 'hata_olustu' değişkenine True ata.",
   "hint": "try: bloğu hata verebilecek kodu içerir. except: bloğu hata durumunda çalışır. Önce hata_olustu = False tanımla, except içinde True yap.",
   "type": "code",
-  "xp": 15,
   "tags": [
     "hata_yonetimi",
     "try_except"

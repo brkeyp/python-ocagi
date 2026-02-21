@@ -1,15 +1,14 @@
 {
-    "id": "005_liste_dilimleme",
-    "uuid": "74b6bd8e-9198-4b19-a173-d8ec464acb6a",
-    "category": "Listeler",
-    "title": "Liste Dilimleme (Slicing)",
-    "description": "'harfler' = ['A', 'B', 'C', 'D', 'E'] listesinden 'orta' değişkenine sadece ['B', 'C', 'D'] kısmını dilimleme ile al.",
-    "hint": "liste[başlangıç:bitiş] şeklinde dilimle. Bitiş indeksi dahil değildir.",
-    "type": "code",
-    "xp": 15,
-    "tags": [
-        "listeler",
-        "slicing",
-        "dilimleme"
-    ]
+  "id": "005_liste_dilimleme",
+  "uuid": "74b6bd8e-9198-4b19-a173-d8ec464acb6a",
+  "category": "Listeler",
+  "title": "Liste Dilimleme (Slicing)",
+  "description": "'harfler' = ['A', 'B', 'C', 'D', 'E'] listesinden 'orta' değişkenine sadece ['B', 'C', 'D'] kısmını dilimleme ile al.",
+  "hint": "liste[başlangıç:bitiş] şeklinde dilimle. Bitiş indeksi dahil değildir.",
+  "type": "code",
+  "tags": [
+    "listeler",
+    "slicing",
+    "dilimleme"
+  ]
 }

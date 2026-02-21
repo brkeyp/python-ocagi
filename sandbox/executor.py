@@ -69,8 +69,9 @@ def _worker_process(user_code, validator_script_path, result_queue):
                 success = False
                 error_message = f"Kontrol sırasında hata oluştu: {e}"
         else:
-            # Validator yoksa, kod çalıştıysa başarılı say (Configurable)
-            is_valid = True 
+            # Validator yoksa hata ver
+            is_valid = False
+            error_message = "SİSTEM HATASI: Doğrulama (validation.py) dosyası bulunamadı."
 
     # Sonucu kuyruğa at
     result_queue.put({
@@ -81,12 +82,15 @@ def _worker_process(user_code, validator_script_path, result_queue):
     })
 
 
-def run_safe(user_code, validator_script_path, timeout=2.0):
+def run_safe(user_code, validator_script_path, timeout=None):
     """
     Args:
         user_code: Kod stringi
         validator_script_path: Validator dosyasının tam yolu (str)
     """
+    import config
+    if timeout is None:
+        timeout = config.Timing.EXECUTION_TIMEOUT
     import multiprocessing
     queue = multiprocessing.Queue()
     
