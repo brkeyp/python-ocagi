@@ -198,46 +198,74 @@ class DeveloperMessageScreen:
         
         # Girdi döngüsü
         self.stdscr.nodelay(False)
-        while True:
-            key = self.stdscr.getch()
+        
+        # Mouse dinlemeyi aktif et (Windows Fare Tekerleği Desteği)
+        try:
+            print("\033[?1003h\033[?1015h\033[?1006h", end="")
+            curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
+        except curses.error:
+            pass
             
-            if key in (27, ord('q'), ord('Q'), 10, 13):
-                break
-            
-            elif key == curses.KEY_UP:
-                if self.scroll_offset > 0:
-                    self.scroll_offset -= 1
+        try:
+            while True:
+                key = self.stdscr.getch()
+                
+                # Fare Tekerleğini Ok Tuşlarına (UP/DOWN) çevir
+                if key == curses.KEY_MOUSE:
+                    try:
+                        _, _, _, _, bstate = curses.getmouse()
+                        if (getattr(curses, 'BUTTON4_PRESSED', 0) and (bstate & curses.BUTTON4_PRESSED)) or (bstate & 134217728):
+                            key = curses.KEY_UP
+                        elif (getattr(curses, 'BUTTON5_PRESSED', 0) and (bstate & curses.BUTTON5_PRESSED)) or (bstate & 268435456):
+                            key = curses.KEY_DOWN
+                    except curses.error:
+                        pass
+                
+                if key in (27, ord('q'), ord('Q'), 10, 13):
+                    break
+                
+                elif key == curses.KEY_UP:
+                    if self.scroll_offset > 0:
+                        self.scroll_offset -= 1
+                        self.draw_screen(lines, box_y, box_x, box_height, box_width,
+                                         content_x, content_width, visible_height)
+                
+                elif key == curses.KEY_DOWN:
+                    max_offset = max(0, len(lines) - visible_height)
+                    if self.scroll_offset < max_offset:
+                        self.scroll_offset += 1
+                        self.draw_screen(lines, box_y, box_x, box_height, box_width,
+                                         content_x, content_width, visible_height)
+                
+                elif key == curses.KEY_PPAGE:
+                    self.scroll_offset = max(0, self.scroll_offset - visible_height)
                     self.draw_screen(lines, box_y, box_x, box_height, box_width,
                                      content_x, content_width, visible_height)
-            
-            elif key == curses.KEY_DOWN:
-                max_offset = max(0, len(lines) - visible_height)
-                if self.scroll_offset < max_offset:
-                    self.scroll_offset += 1
+                
+                elif key == curses.KEY_NPAGE:
+                    max_offset = max(0, len(lines) - visible_height)
+                    self.scroll_offset = min(max_offset, self.scroll_offset + visible_height)
                     self.draw_screen(lines, box_y, box_x, box_height, box_width,
                                      content_x, content_width, visible_height)
-            
-            elif key == curses.KEY_PPAGE:
-                self.scroll_offset = max(0, self.scroll_offset - visible_height)
-                self.draw_screen(lines, box_y, box_x, box_height, box_width,
-                                 content_x, content_width, visible_height)
-            
-            elif key == curses.KEY_NPAGE:
-                max_offset = max(0, len(lines) - visible_height)
-                self.scroll_offset = min(max_offset, self.scroll_offset + visible_height)
-                self.draw_screen(lines, box_y, box_x, box_height, box_width,
-                                 content_x, content_width, visible_height)
-            
-            elif key == curses.KEY_HOME:
-                self.scroll_offset = 0
-                self.draw_screen(lines, box_y, box_x, box_height, box_width,
-                                 content_x, content_width, visible_height)
-            
-            elif key == curses.KEY_END:
-                max_offset = max(0, len(lines) - visible_height)
-                self.scroll_offset = max_offset
-                self.draw_screen(lines, box_y, box_x, box_height, box_width,
-                                 content_x, content_width, visible_height)
+                
+                elif key == curses.KEY_HOME:
+                    self.scroll_offset = 0
+                    self.draw_screen(lines, box_y, box_x, box_height, box_width,
+                                     content_x, content_width, visible_height)
+                
+                elif key == curses.KEY_END:
+                    max_offset = max(0, len(lines) - visible_height)
+                    self.scroll_offset = max_offset
+                    self.draw_screen(lines, box_y, box_x, box_height, box_width,
+                                     content_x, content_width, visible_height)
+
+        finally:
+            # Fare dinlemeyi kapat (Diğer ekranlarda sorun yaratmaması için)
+            try:
+                curses.mousemask(0)
+                print("\033[?1003l\033[?1015l\033[?1006l", end="") # Gelişmiş fare raporlamasını kapat
+            except curses.error:
+                pass
 
 
 def show_developer_message(stdscr):

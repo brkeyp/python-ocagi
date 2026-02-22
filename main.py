@@ -308,7 +308,8 @@ def handle_python_version_fallback():
         except Exception as e:
             logging.debug(f"Screen clear failed during restart: {e}")
         print("\nProgramdan çıkıldı. İyi günler dilerim. ❄︎\n\n")
-        sys.exit(0)
+        # 130 çıkış kodu, Terminal.app'in temiz kapandığını sanıp anında kapanmasını önler
+        sys.exit(130)
     except Exception as e:
         print(f"❌ Yeniden başlatma hatası: {e}")
         input(f"\n{config.UI.PROMPT_EXIT}")
@@ -416,7 +417,7 @@ def main():
         except Exception as e:
             logging.debug(f"Screen clear failed during exit: {e}")
         print(f"\n{config.UI.MSG_EXIT}\n\n")
-        sys.exit(0)
+        sys.exit(130)
     except Exception as e:
         print(f"\nBeklenmeyen bir hata oluştu: {e}")
         input(f"{config.UI.PROMPT_EXIT}")

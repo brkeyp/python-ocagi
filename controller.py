@@ -145,7 +145,8 @@ def run_controller():
         # Ctrl+C Clean exit
         OSUtils.clear_screen()
         print(f"\n{config.UI.MSG_EXIT}\n\n")
-        sys.exit(0)
+        # 130 çıkış kodu, terminalin anında kapanmasını engelleyerek mesajın okunmasını sağlar
+        sys.exit(130)
     except Exception as e:
         OSUtils.clear_screen()
         print("\n❌ BEKLENMEYEN UYGULAMA HATASI")
