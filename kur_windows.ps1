@@ -2,6 +2,9 @@
 # Python Ocağı - Windows Otomatik Kurulum ve Başlatma Betiği
 #=======================================================
 
+# TLS 1.2 Zorunlulugu (Geriye Donuk Uyumluluk)
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 # NOT: Bu dosyayı GitHub'a yüklemeden önce kendi GitHub bilgilerinizi aşağıya giriniz.
 $REPO_OWNER = "brkeyp"  # <-- KENDI KULLANICI ADINIZI BURAYA YAZIN
 $REPO_NAME = "python-ocagi"   # <-- GITHUB REPO ADINIZ
@@ -24,6 +27,12 @@ if (-not (Test-Path -Path $AppFolder)) {
     New-Item -ItemType Directory -Force -Path $AppFolder | Out-Null
     Write-Host "Masaustunde 'Python Ocagi' klasoru olusturuldu." -ForegroundColor Green
 }
+
+# Baslatma motorunu (baslat.ps1) indir (Ilk calistirma icin sart)
+Write-Host "Baslatma motoru indiriliyor..." -ForegroundColor Cyan
+$BaslatUrl = "https://raw.githubusercontent.com/$REPO_OWNER/$REPO_NAME/$BRANCH/baslat.ps1"
+$BaslatPath = Join-Path $AppFolder "baslat.ps1"
+Invoke-WebRequest -Uri $BaslatUrl -OutFile $BaslatPath -UseBasicParsing
 
 # 2. Python Kontrolu
 $PythonExists = Get-Command "py" -ErrorAction SilentlyContinue

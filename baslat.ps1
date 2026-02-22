@@ -3,6 +3,9 @@
 # Her çift tıklamada çalışır: günceller + uygulamayı başlatır
 #=======================================================
 
+# TLS 1.2 Zorunlulugu (Geriye Donuk Uyumluluk)
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 # Pencere başlığı
 $Host.UI.RawUI.WindowTitle = "PYTHON OCAGI - YAZARAK OGRENME"
 
@@ -31,6 +34,10 @@ try {
     }
 
     Expand-Archive -Path $TempZip -DestinationPath $TempExtract -Force
+    
+    # File Lock (Kilit) hatasini onlemek icin calisan baslat.ps1'in uzerine yazmayi engelle
+    Remove-Item -Path (Join-Path $TempExtract "$REPO_NAME-$BRANCH\baslat.ps1") -Force -ErrorAction SilentlyContinue
+    
     Copy-Item -Path (Join-Path $TempExtract "$REPO_NAME-$BRANCH\*") -Destination $AppFolder -Recurse -Force | Out-Null
 
     Write-Host ""
