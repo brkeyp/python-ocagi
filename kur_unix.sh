@@ -69,7 +69,7 @@ install_python_macos() {
     echo -e "${C_YELLOW}⏳ Apple kurulum penceresi açıldı.${C_RESET}"
     echo -e "${C_YELLOW}   Kurulum tamamlandıktan sonra bu komutu tekrar çalıştırın.${C_RESET}"
     echo ""
-    read -n 1 -s -r -p "Çıkmak için herhangi bir tuşa basın..."
+    read -n 1 -s -r -p "Çıkmak için herhangi bir tuşa basın..." < /dev/tty
     echo ""
     exit 0
 }
@@ -146,7 +146,7 @@ check_python() {
     echo -e "  ${C_RED}[H]${C_RESET}  Hayır, kendim yükleyeceğim"
     echo ""
     echo -ne "${C_CYAN}Seçiminiz: ${C_RESET}"
-    read -n 1 -r REPLY
+    read -n 1 -r REPLY < /dev/tty
     echo ""
 
     if [[ "$REPLY" =~ ^[EeYy]$ ]] || [[ -z "$REPLY" ]]; then
@@ -245,12 +245,7 @@ direkt_kullan() {
     sleep 1
     clear
     cd "$HIDDEN_APP_DIR"
-    $PYTHON_CMD main.py
-
-    # macOS terminal cleanup
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        osascript -e 'tell application "Terminal" to close front window' & exit
-    fi
+    $PYTHON_CMD main.py < /dev/tty
 }
 
 kur() {
@@ -350,7 +345,7 @@ kaldir() {
     echo -e "${C_RED}═══════════════════════════════════════════${C_RESET}"
     echo ""
     echo -e "İptal etmek için ${C_WHITE}Ctrl+C${C_RESET} yapın."
-    read -p "Devam etmek için ENTER'a basın... "
+    read -p "Devam etmek için ENTER'a basın... " < /dev/tty
 
     rm -rf "$APP_DIR"
     rm -f "$SHORTCUT_FILE"
@@ -369,12 +364,7 @@ guncelle_ve_baslat() {
     sleep 1
     clear
     cd "$APP_DIR"
-    $PYTHON_CMD main.py
-
-    # macOS terminal cleanup
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        osascript -e 'tell application "Terminal" to close front window' & exit
-    fi
+    $PYTHON_CMD main.py < /dev/tty
 }
 
 #=======================================================
@@ -388,7 +378,7 @@ check_python
 if [ -f "$SHORTCUT_FILE" ]; then
     # Daha önce kurulmuş — "Zaten Kurulu" menüsü
     show_installed_menu
-    read -n 1 -s -r CHOICE
+    read -n 1 -s -r CHOICE < /dev/tty
     echo ""
 
     case "$CHOICE" in
@@ -408,7 +398,7 @@ if [ -f "$SHORTCUT_FILE" ]; then
 else
     # İlk kullanım veya kurulum yapılmamış — Karşılama menüsü
     show_welcome
-    read -n 1 -s -r CHOICE
+    read -n 1 -s -r CHOICE < /dev/tty
     echo ""
 
     case "$CHOICE" in
