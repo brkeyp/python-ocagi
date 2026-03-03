@@ -11,6 +11,28 @@ BRANCH="main"
 
 ZIP_URL="https://github.com/$REPO_OWNER/$REPO_NAME/archive/refs/heads/$BRANCH.zip"
 
+#=======================================================
+# PIPE UYUMLULUK — curl | bash desteği
+#=======================================================
+# curl | bash ile çalıştırıldığında stdin pipe olur (terminal değil).
+# Bu durumda script kendini temp dosyaya kaydedip terminal stdin ile
+# yeniden çalıştırır. Homebrew ve rustup aynı kalıbı kullanır.
+
+SCRIPT_URL="https://raw.githubusercontent.com/$REPO_OWNER/$REPO_NAME/$BRANCH/kur_unix.sh"
+
+if [ ! -t 0 ]; then
+    _KUR_TMP=$(mktemp /tmp/python_ocagi_kur.XXXXXX.sh)
+    curl -sL "$SCRIPT_URL" -o "$_KUR_TMP"
+    export _KUR_CLEANUP="$_KUR_TMP"
+    exec bash "$_KUR_TMP" < /dev/tty
+fi
+
+# Pipe'dan yeniden çalıştırıldıysa, çıkışta temp dosyayı temizle
+if [ -n "$_KUR_CLEANUP" ]; then
+    trap 'rm -f "$_KUR_CLEANUP" 2>/dev/null' EXIT
+    unset _KUR_CLEANUP
+fi
+
 # Dizin Tanımları
 DESKTOP_DIR="$HOME/Desktop"
 APP_DIR="$DESKTOP_DIR/Python Ocağı"
