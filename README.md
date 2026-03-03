@@ -1,25 +1,26 @@
 # 🐍 Python Ocağı
 
-Terminal tabanlı, interaktif Python öğrenme platformu.
+Terminal tabanlı, interaktif Python öğrenme platformu
+Veri Analizi Okulu - VAO Etkisi 💜
 
 ## ✨ Özellikler
 
 - 🎓 **Kapsamlı İçerik** - Bölümler boyunca uzanan adım adım Python müfredatı
-- 🔒 **Güvenli Sandbox** - Kullanıcı kodu izole çalışır
-- 🎨 **Syntax Highlighting** - Gerçek zamanlı renklendirme
-- 📊 **İlerleme Takibi** - Tamamlanan ve atlanan görevler kaydedilir
+- 🔒 **Güvenli Sandbox** - Kullanıcı kodu izole bir ortamda çalışır
+- 🎨 **Syntax Highlighting** - Gerçek zamanlı renklendirme ile kod yazma keyfi  
+- 📊 **İlerleme Takibi** - Tamamlanan ve atlanan görevler kaydedilir, kaybetmek yoktur deneyim vardır.
 - 🌈 **Türkçe Arayüz** - Tamamen Türkçe kullanıcı deneyimi
 
 ## 🚀 Hızlı Kurulum (Sıfır Zahmet)
 
-Uygulamayı kurmak ve otomatik olarak her zaman güncel kalmasını sağlamak için, işletim sisteminize uygun olan aşağıdaki **tek satırlık sihirli komutu** kopyalayıp bilgisayarınızın siyah ekranına (Terminal/PowerShell) yapıştırıp ENTER'a basmanız yeterlidir.
+Uygulamayı kurmak ve otomatik olarak her zaman güncel kalmasını sağlamak için, işletim sisteminize uygun olan aşağıdaki **tek satırlık sihirli komutu** kopyalayıp bilgisayarınızın siyah/mavi ekranına (Terminal/PowerShell) yapıştırıp ENTER'a basmanız yeterlidir.
 
 ### 🪟 Windows İçin
 PowerShell programını açın (Başlat menüsüne "powershell" yazabilirsiniz) ve şu komutu yapıştırın:
 ```powershell
 iex (iwr -useb https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_windows.ps1)
 ```
-*(Eğer sisteminizde Python yoksa sizin için otomatik olarak indirip kuracaktır. Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
+*(Eğer sisteminizde Python yoksa sizin için otomatik olarak 3.13 versiyonunu indirip kuracaktır. Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
 
 ### 🍎 Mac ve 🐧 Linux İçin
 Terminal programını açın ve şu komutu yapıştırın:
@@ -45,7 +46,7 @@ curl -sL https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_unix.sh 
 
 ```
 ┌─────────────────────────────────────┐
-│  🐍 Python Ocağı          │
+│  🐍 Python Ocağı                    │
 ├─────────────────────────────────────┤
 │  BÖLÜM:     Temeller                │
 │  GÖREV 1:   Print Fonksiyonu        │
@@ -135,7 +136,3 @@ Kullanıcı kodu şu korumalarla çalıştırılır:
 ## 📄 Lisans
 
 MIT License - Detaylar için [LICENSE](LICENSE) dosyasına bakın.
-
-## 🤝 Katkı
-
-Katkıda bulunmak için [CONTRIBUTING.md](CONTRIBUTING.md) dosyasını okuyun.
