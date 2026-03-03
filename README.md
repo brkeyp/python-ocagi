@@ -11,23 +11,33 @@ Veri Analizi Okulu - VAO Etkisi 💜
 - 📊 **İlerleme Takibi** - Tamamlanan ve atlanan görevler kaydedilir, kaybetmek yoktur deneyim vardır.
 - 🌈 **Türkçe Arayüz** - Tamamen Türkçe kullanıcı deneyimi
 
-## 🚀 Hızlı Kurulum (Sıfır Zahmet)
+## 🚀 Hızlı Başlangıç
 
-Uygulamayı kurmak ve otomatik olarak her zaman güncel kalmasını sağlamak için, işletim sisteminize uygun olan aşağıdaki **tek satırlık sihirli komutu** kopyalayıp bilgisayarınızın siyah/mavi ekranına (Terminal/PowerShell) yapıştırıp ENTER'a basmanız yeterlidir.
+Aşağıdaki komutu bilgisayarınızın terminaline yapıştırıp ENTER'a basın — karşınıza interaktif bir karşılama ekranı çıkacak:
 
 ### 🪟 Windows İçin
 PowerShell programını açın (Başlat menüsüne "powershell" yazabilirsiniz) ve şu komutu yapıştırın:
 ```powershell
 iex (iwr -useb https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_windows.ps1)
 ```
-*(Eğer sisteminizde Python yoksa sizin için otomatik olarak 3.13 versiyonunu indirip kuracaktır. Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
 
 ### 🍎 Mac ve 🐧 Linux İçin
 Terminal programını açın ve şu komutu yapıştırın:
 ```bash
 curl -sL https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_unix.sh | bash
 ```
-*(Masaüstünüze oluşturulan "PYTHON OCAĞINA GİR" dosyası ile programı dilediğiniz zaman başlatabilirsiniz).*
+
+### 📋 Menü Seçenekleri
+
+| Tuş | Seçenek | Açıklama |
+|-----|---------|----------|
+| `Enter` | 🚀 Hemen Başla | Kurulum yapmadan direkt dene |
+| `K` | 🔧 Bilgisayarıma Kur | Masaüstü kısayolu oluşturur, her açılışta güncellenir |
+| `Q` | ❌ Çıkış | — |
+
+> 💾 **Hangi seçeneği seçerseniz seçin**, ilerlemeniz bilgisayarınızda güvenle saklanır. Silmediğiniz veya uygulama içinden sıfırlamadığınız sürece kaldığınız yerden devam edersiniz.
+>
+> ⚠️ Sisteminizde Python yoksa, izniniz alınarak otomatik olarak yüklenir.
 
 ## 🎮 Kullanım
 
