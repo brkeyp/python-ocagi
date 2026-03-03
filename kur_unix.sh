@@ -245,7 +245,13 @@ direkt_kullan() {
     sleep 1
     clear
     cd "$HIDDEN_APP_DIR"
+
+    # Ctrl+C'yi bash'te yoksay — Python kendi SIGINT'ini yakalayıp
+    # çıkış mesajını gösterecek. Bash'in cooperative SIGINT exit
+    # mekanizması devre dışı bırakılıyor.
+    trap '' INT
     $PYTHON_CMD main.py < /dev/tty
+    trap - INT
 }
 
 kur() {
@@ -364,7 +370,11 @@ guncelle_ve_baslat() {
     sleep 1
     clear
     cd "$APP_DIR"
+
+    # Ctrl+C'yi bash'te yoksay — Python kendi halledecek
+    trap '' INT
     $PYTHON_CMD main.py < /dev/tty
+    trap - INT
 }
 
 #=======================================================
