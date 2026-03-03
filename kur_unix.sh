@@ -21,7 +21,7 @@ ZIP_URL="https://github.com/$REPO_OWNER/$REPO_NAME/archive/refs/heads/$BRANCH.zi
 SCRIPT_URL="https://raw.githubusercontent.com/$REPO_OWNER/$REPO_NAME/$BRANCH/kur_unix.sh"
 
 if [ ! -t 0 ]; then
-    _KUR_TMP=$(mktemp /tmp/python_ocagi_kur.XXXXXX.sh)
+    _KUR_TMP=$(mktemp /tmp/python_ocagi_kur_XXXXXX)
     curl -sL "$SCRIPT_URL" -o "$_KUR_TMP"
     export _KUR_CLEANUP="$_KUR_TMP"
     exec bash "$_KUR_TMP" < /dev/tty
