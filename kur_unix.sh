@@ -35,6 +35,41 @@ fi
 
 # Dizin Tanımları
 DESKTOP_DIR="$HOME/Desktop"
+
+# MacOS Arkaplan Temizlik Botu (Daemon)
+cleanup_mac_daemon() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        local target_pid=$$
+        local win_id=$(osascript -e 'tell application "Terminal" to id of front window' 2>/dev/null)
+        
+        nohup bash -c "
+            while kill -0 $target_pid 2>/dev/null; do
+                sleep 0.5
+            done
+            osascript -e '
+                tell application \"Terminal\"
+                    try
+                        if \"$win_id\" is not \"\" then
+                            close (every window whose id is $win_id)
+                        end if
+                    end try
+                    repeat with w in windows
+                        try
+                            set t to selected tab of w
+                            if not busy of t then
+                                if (count of paragraphs of (history of t as string)) ≤ 5 then close w
+                            end if
+                        end try
+                    end repeat
+                    if (count of windows) is 0 then quit
+                end tell
+            ' >/dev/null 2>&1
+        " >/dev/null 2>&1 &
+        disown
+    fi
+}
+# Ana script kapandığında Terminal temizliği yapmak için daimonu başlat
+cleanup_mac_daemon
 APP_DIR="$DESKTOP_DIR/Python Ocağı"
 SHORTCUT_FILE="$DESKTOP_DIR/PYTHON OCAĞINA GİR.command"
 UNINSTALL_FILE="$APP_DIR/Uygulamayı Kaldır.command"
@@ -286,27 +321,39 @@ kur() {
     cat << 'EOF' > "$SHORTCUT_FILE"
 #!/bin/bash
 
-# Temizlik botu: Terminal kapandığında veya bittiğinde devreye girer
-cleanup_mac() {
+# MacOS Arkaplan Temizlik Botu (Daemon)
+cleanup_mac_daemon() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        nohup osascript -e '
-        tell application "Terminal"
-            try
-                close front window
-            end try
-            repeat with w in windows
-                try
-                    set t to selected tab of w
-                    if not busy of t then
-                        if (count of paragraphs of (history of t as string)) ≤ 5 then close w
-                    end if
-                end try
-            end repeat
-            if (count of windows) is 0 then quit
-        end tell' >/dev/null 2>&1 &
+        local target_pid=$$
+        local win_id=$(osascript -e 'tell application "Terminal" to id of front window' 2>/dev/null)
+        
+        nohup bash -c "
+            while kill -0 $target_pid 2>/dev/null; do
+                sleep 0.5
+            done
+            osascript -e '
+                tell application \"Terminal\"
+                    try
+                        if \"$win_id\" is not \"\" then
+                            close (every window whose id is $win_id)
+                        end if
+                    end try
+                    repeat with w in windows
+                        try
+                            set t to selected tab of w
+                            if not busy of t then
+                                if (count of paragraphs of (history of t as string)) ≤ 5 then close w
+                            end if
+                        end try
+                    end repeat
+                    if (count of windows) is 0 then quit
+                end tell
+            ' >/dev/null 2>&1
+        " >/dev/null 2>&1 &
+        disown
     fi
 }
-trap cleanup_mac EXIT SIGHUP SIGINT SIGTERM
+cleanup_mac_daemon
 echo -e "\033[0;36m=========================================\033[0m"
 echo -e "\033[0;36mPython Ocağı Güncelleniyor...\033[0m"
 echo -e "\033[0;36mLütfen bekleyin (İnternet hızınıza göre değişir)\033[0m"
@@ -341,26 +388,39 @@ EOF
     cat << 'EOF' > "$UNINSTALL_FILE"
 #!/bin/bash
 
-cleanup_mac() {
+# MacOS Arkaplan Temizlik Botu (Daemon)
+cleanup_mac_daemon() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        nohup osascript -e '
-        tell application "Terminal"
-            try
-                close front window
-            end try
-            repeat with w in windows
-                try
-                    set t to selected tab of w
-                    if not busy of t then
-                        if (count of paragraphs of (history of t as string)) ≤ 5 then close w
-                    end if
-                end try
-            end repeat
-            if (count of windows) is 0 then quit
-        end tell' >/dev/null 2>&1 &
+        local target_pid=$$
+        local win_id=$(osascript -e 'tell application "Terminal" to id of front window' 2>/dev/null)
+        
+        nohup bash -c "
+            while kill -0 $target_pid 2>/dev/null; do
+                sleep 0.5
+            done
+            osascript -e '
+                tell application \"Terminal\"
+                    try
+                        if \"$win_id\" is not \"\" then
+                            close (every window whose id is $win_id)
+                        end if
+                    end try
+                    repeat with w in windows
+                        try
+                            set t to selected tab of w
+                            if not busy of t then
+                                if (count of paragraphs of (history of t as string)) ≤ 5 then close w
+                            end if
+                        end try
+                    end repeat
+                    if (count of windows) is 0 then quit
+                end tell
+            ' >/dev/null 2>&1
+        " >/dev/null 2>&1 &
+        disown
     fi
 }
-trap cleanup_mac EXIT SIGHUP SIGINT SIGTERM
+cleanup_mac_daemon
 
 echo -e "\033[0;31m=======================================================\033[0m"
 echo -e "\033[0;31mDİKKAT: Python Ocağı sisteminizden kaldırılacaktır.\033[0m"
