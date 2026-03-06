@@ -10,6 +10,7 @@ Veri Analizi Okulu - VAO Etkisi 💜
 - 🎨 **Syntax Highlighting** - Gerçek zamanlı renklendirme ile kod yazma keyfi  
 - 📊 **İlerleme Takibi** - Tamamlanan ve atlanan görevler kaydedilir, kaybetmek yoktur deneyim vardır.
 - 🌈 **Türkçe Arayüz** - Tamamen Türkçe kullanıcı deneyimi
+- 🔌 **Çevrimdışı (Offline) Destek** - İnternetiniz olmasa bile bilgisayarınıza kurduktan sonra öğrenmeye devam edebilirsiniz.
 
 ## 🚀 Hızlı Başlangıç
 
@@ -32,12 +33,16 @@ curl -sL https://raw.githubusercontent.com/brkeyp/python-ocagi/main/kur_unix.sh 
 | Tuş | Seçenek | Açıklama |
 |-----|---------|----------|
 | `Enter` | 🚀 Hemen Başla | Kurulum yapmadan direkt dene |
-| `K` | 🔧 Bilgisayarıma Kur | Masaüstü kısayolu oluşturur, her açılışta güncellenir |
+| `K` | 🔧 Bilgisayarıma Kur | Masaüstü kısayolu oluşturur. İnternet varsa güncellenir, yoksa çevrimdışı (offline) çalışır. |
 | `Q` | ❌ Çıkış | — |
 
 > 💾 **Hangi seçeneği seçerseniz seçin**, ilerlemeniz bilgisayarınızda güvenle saklanır. Silmediğiniz veya uygulama içinden sıfırlamadığınız sürece kaldığınız yerden devam edersiniz.
 >
-> ⚠️ Sisteminizde Python yoksa, izniniz alınarak otomatik olarak yüklenir.
+> ⚠️ Sisteminizde Python yoksa, sorun değil! İzniniz alınarak izole ve stabil bir sürüm (Python 3.13) sizin için otomatik olarak yüklenir.
+
+### 🗑️ Uygulamayı Kaldırma (Uninstall)
+
+"Hemen Başla" seçeneği ile çalışıyorsanız kaldırmanıza gerek yok. "Bilgisayarıma Kur" seçeneği ile çalıştıysanız eğer masaüstünüzde oluşturulan "Python Ocagi" klasörünü açıp, içindeki "Uygulamayı Kaldır" seçeneğini kullanarak uygulamayı sisteminizden tek tuşla, tamamen ve iz bırakmadan silebilirsiniz. Bu aşamada ilerlemenizi silmek isteyip istemediğiniz sorulacaktır. Silmezseniz eğer tekrar yukarıdaki iex komutlarını kullanarak "Hemen Başla" özelliğini (kaldığınız yerden) kullanmaya devam edebilirsiniz.
 
 ## 🎮 Kullanım
 

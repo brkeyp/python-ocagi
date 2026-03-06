@@ -392,15 +392,16 @@ function Invoke-Install {
 title Python Ocagi - Kaldirma
 color 4F
 echo =======================================================
-echo DIKKAT: Python Ocagi tamamen siliniyor!
-echo Ilerlemeniz, skorlariniz ve projenin butun dosyalari yok olacak.
+echo DIKKAT: Python Ocagi sisteminizden kaldirilacaktir.
 echo.
-echo IPTAL ETMEK ICIN SU AN BU PENCEREYI KAPATIN.
-echo DEVAM ETMEK ICIN:
-pause
+set /p DEL_PROG="Ilerlemenizi (cozdugunuz sorular ve puanlar) silmek istiyor musunuz? (E/H): "
 echo =======================================================
 echo Kaldirma islemi baslatildi...
-start "" powershell -NoProfile -ExecutionPolicy Bypass -Command "Start-Sleep -Seconds 1; Write-Host 'Dosyalar siliniyor...' -ForegroundColor Red; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Python Ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) '$LnkName') -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path `$env:APPDATA 'python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path `$HOME '.python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Write-Host '' ; Write-Host 'Kaldirma tamamlandi! Bu pencere kapanacak.' -ForegroundColor Green; Start-Sleep -Seconds 3"
+
+:: Klasor kilidini kirmak icin dizini ev dizinine (USERPROFILE) degistir
+cd /d "%USERPROFILE%"
+
+start "" powershell -NoProfile -ExecutionPolicy Bypass -Command "`$del_prog='%DEL_PROG%'; Start-Sleep -Seconds 2; Write-Host 'Uygulama dosyalari siliniyor...' -ForegroundColor Red; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Python Ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) '$LnkName') -Force -ErrorAction SilentlyContinue; if (`$del_prog -match '^[EeYy]') { Write-Host 'Ilerleme verileri siliniyor...' -ForegroundColor Red; Remove-Item -Path (Join-Path `$env:APPDATA 'python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path `$HOME '.python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Write-Host 'Her sey silindi.' -ForegroundColor DarkGray } else { Write-Host 'Ilerleme verileri SAKLANDI.' -ForegroundColor Green }; Write-Host ''; Write-Host 'Kaldirma tamamlandi! Bu pencere kapanacak.' -ForegroundColor Green; Start-Sleep -Seconds 3"
 exit
 "@
     # BOM'suz yaz (kritik! BOM .bat dosyalarini bozar)
@@ -424,22 +425,39 @@ exit
 function Invoke-Uninstall {
     Write-Host ""
     Write-Host "=========================================" -ForegroundColor Red
-    Write-Host "DIKKAT: Python Ocagi tamamen kaldirilacak!" -ForegroundColor Red
-    Write-Host "Ilerlemeniz ve tum dosyalar silinecek." -ForegroundColor Red
+    Write-Host "DIKKAT: Python Ocagi kaldirilacak!" -ForegroundColor Red
+    Write-Host "Uygulama dosyalari silinecek." -ForegroundColor Red
     Write-Host "=========================================" -ForegroundColor Red
     Write-Host ""
     Write-Host "Iptal etmek icin bu pencereyi kapatin." -ForegroundColor White
     Write-Host -NoNewline "Devam etmek icin ENTER'a basin... " -ForegroundColor White
     Read-Host
 
+    Write-Host ""
+    Write-Host "Ilerlemeniz (cozdugunuz sorular ve puanlar) silinsin mi?" -ForegroundColor Yellow
+    Write-Host "  [E] Evet, her seyi sil" -ForegroundColor Red
+    Write-Host "  [H] Hayir, ilerlememi sakla (Hemen Basla ile devam edilebilir)" -ForegroundColor Green
+    Write-Host ""
+    Write-Host -NoNewline "Seciminiz: " -ForegroundColor Cyan
+    $key = Read-SingleKey
+    Write-Host ""
+
+    # Klasor kilidini kirmak icin dizini ev dizinine degistir
+    Set-Location -Path $env:USERPROFILE
+
     # Her seyi sil
     Remove-Item -Path $AppFolder -Recurse -Force -ErrorAction SilentlyContinue
     Remove-Item -Path $ShortcutPath -Force -ErrorAction SilentlyContinue
-    Remove-Item -Path (Join-Path $env:APPDATA "python_ocagi") -Recurse -Force -ErrorAction SilentlyContinue
-    Remove-Item -Path (Join-Path $HOME ".python_ocagi") -Recurse -Force -ErrorAction SilentlyContinue
-
-    Write-Host ""
-    Write-Host "Uygulama basariyla kaldirildi. Tum izler silindi." -ForegroundColor Green
+    
+    if ($key.Character -match '[EeYy]') {
+        Remove-Item -Path (Join-Path $env:APPDATA "python_ocagi") -Recurse -Force -ErrorAction SilentlyContinue
+        Remove-Item -Path (Join-Path $HOME ".python_ocagi") -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Host ""
+        Write-Host "Uygulama ve ilerleme verileriniz tamamen silindi." -ForegroundColor Green
+    } else {
+        Write-Host ""
+        Write-Host "Uygulama verileri silindi. Ilerleme verileriniz SAKLANDI." -ForegroundColor Green
+    }
     Write-Host ""
     pause
 }

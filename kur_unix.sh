@@ -326,17 +326,25 @@ EOF
     cat << 'EOF' > "$UNINSTALL_FILE"
 #!/bin/bash
 echo -e "\033[0;31m=======================================================\033[0m"
-echo -e "\033[0;31mDİKKAT: Python Ocağı tamamen siliniyor!\033[0m"
-echo -e "\033[0;31mİlerlemeniz, skorlarınız ve projenin bütün dosyaları yok olacak.\033[0m"
+echo -e "\033[0;31mDİKKAT: Python Ocağı sisteminizden kaldırılacaktır.\033[0m"
+echo -e ""
+read -p "İlerlemeyi (çözdüğünüz sorular ve puanlar) silmek istiyor musunuz? (E/H): " DEL_PROG
 echo -e "\033[0;31m=======================================================\033[0m"
-read -p "İptal etmek için 'Ctrl+C' yapın. Devam etmek için ENTER'a basın... "
 
+echo -e "\033[0;31mUygulama dosyaları siliniyor...\033[0m"
 rm -rf "$HOME/Desktop/Python Ocağı"
 rm -f "$HOME/Desktop/PYTHON OCAĞINA GİR.command"
-rm -rf "$HOME/.python_ocagi"
 
-echo -e ""
-echo -e "\033[0;32mUygulama başarıyla kaldırıldı. Bilgisayarınızdan tüm izler silindi.\033[0m"
+if [[ "$DEL_PROG" =~ ^[EeYy] ]]; then
+    echo -e "\033[0;31mİlerleme verileri siliniyor...\033[0m"
+    rm -rf "$HOME/.python_ocagi"
+    echo -e ""
+    echo -e "\033[0;32mUygulama ve ilerleme verileriniz tamamen silindi.\033[0m"
+else
+    echo -e ""
+    echo -e "\033[0;32mUygulama dosyaları silindi. İlerleme verileriniz SAKLANDI.\033[0m"
+fi
+
 echo -e ""
 read -n 1 -s -r -p "Bu ekranı kapatmak için herhangi bir tuşa basın..."
 echo -e ""
@@ -368,19 +376,31 @@ EOF
 kaldir() {
     echo ""
     echo -e "${C_RED}═══════════════════════════════════════════${C_RESET}"
-    echo -e "${C_RED}⚠️  DİKKAT: Python Ocağı tamamen kaldırılacak!${C_RESET}"
-    echo -e "${C_RED}   İlerlemeniz ve tüm dosyalar silinecek.${C_RESET}"
+    echo -e "${C_RED}⚠️  DİKKAT: Python Ocağı kaldırılacak!${C_RESET}"
+    echo -e "${C_RED}   Uygulama dosyaları silinecek.${C_RESET}"
     echo -e "${C_RED}═══════════════════════════════════════════${C_RESET}"
     echo ""
     echo -e "İptal etmek için ${C_WHITE}Ctrl+C${C_RESET} yapın."
-    read -p "Devam etmek için ENTER'a basın... " < /dev/tty
+    echo ""
+    echo -e "${C_YELLOW}İlerlemeniz (çözdüğünüz sorular ve puanlar) silinsin mi?${C_RESET}"
+    echo -e "  ${C_RED}[E] Evet, her şeyi sil${C_RESET}"
+    echo -e "  ${C_GREEN}[H] Hayır, ilerlememi sakla (Hemen Başla ile devam edilebilir)${C_RESET}"
+    echo ""
+    echo -ne "${C_CYAN}Seçiminiz: ${C_RESET}"
+    read -n 1 -r DEL_PROG < /dev/tty
+    echo ""
 
     rm -rf "$APP_DIR"
     rm -f "$SHORTCUT_FILE"
-    rm -rf "$HOME/.python_ocagi"
-
-    echo ""
-    echo -e "${C_GREEN}✅ Uygulama başarıyla kaldırıldı. Tüm izler silindi.${C_RESET}"
+    
+    if [[ "$DEL_PROG" =~ ^[EeYy] ]]; then
+        rm -rf "$HOME/.python_ocagi"
+        echo ""
+        echo -e "${C_GREEN}✅ Uygulama ve ilerleme verileriniz tamamen silindi.${C_RESET}"
+    else
+        echo ""
+        echo -e "${C_GREEN}✅ Uygulama silindi. İlerleme verileriniz SAKLANDI.${C_RESET}"
+    fi
     echo ""
 }
 
