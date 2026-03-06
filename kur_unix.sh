@@ -285,6 +285,28 @@ kur() {
     # 2. Kısa Yol Oluştur (.command)
     cat << 'EOF' > "$SHORTCUT_FILE"
 #!/bin/bash
+
+# Temizlik botu: Terminal kapandığında veya bittiğinde devreye girer
+cleanup_mac() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        nohup osascript -e '
+        tell application "Terminal"
+            try
+                close front window
+            end try
+            repeat with w in windows
+                try
+                    set t to selected tab of w
+                    if not busy of t then
+                        if (count of paragraphs of (history of t as string)) ≤ 5 then close w
+                    end if
+                end try
+            end repeat
+            if (count of windows) is 0 then quit
+        end tell' >/dev/null 2>&1 &
+    fi
+}
+trap cleanup_mac EXIT SIGHUP SIGINT SIGTERM
 echo -e "\033[0;36m=========================================\033[0m"
 echo -e "\033[0;36mPython Ocağı Güncelleniyor...\033[0m"
 echo -e "\033[0;36mLütfen bekleyin (İnternet hızınıza göre değişir)\033[0m"
@@ -304,10 +326,7 @@ clear
 cd "$HOME/Desktop/Python Ocağı"
 python3 main.py || python main.py
 
-# Mac'te iş bitince pencereyi otomatik kapat (kullanıcı çıkış yaptığında)
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    osascript -e 'tell application "Terminal" to close front window' & exit
-fi
+exit 0
 EOF
 
     # Placeholder'ları değiştir
@@ -321,6 +340,28 @@ EOF
     # 3. Kaldırma Dosyası Oluştur
     cat << 'EOF' > "$UNINSTALL_FILE"
 #!/bin/bash
+
+cleanup_mac() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        nohup osascript -e '
+        tell application "Terminal"
+            try
+                close front window
+            end try
+            repeat with w in windows
+                try
+                    set t to selected tab of w
+                    if not busy of t then
+                        if (count of paragraphs of (history of t as string)) ≤ 5 then close w
+                    end if
+                end try
+            end repeat
+            if (count of windows) is 0 then quit
+        end tell' >/dev/null 2>&1 &
+    fi
+}
+trap cleanup_mac EXIT SIGHUP SIGINT SIGTERM
+
 echo -e "\033[0;31m=======================================================\033[0m"
 echo -e "\033[0;31mDİKKAT: Python Ocağı sisteminizden kaldırılacaktır.\033[0m"
 echo -e ""
@@ -345,9 +386,7 @@ echo -e ""
 read -n 1 -s -r -p "Bu ekranı kapatmak için herhangi bir tuşa basın..."
 echo -e ""
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    osascript -e 'tell application "Terminal" to close front window' & exit
-fi
+exit 0
 EOF
     chmod +x "$UNINSTALL_FILE"
 
