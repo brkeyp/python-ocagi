@@ -8,19 +8,19 @@
 
 # GitHub Repo Bilgileri
 $REPO_OWNER = "brkeyp"
-$REPO_NAME  = "python-ocagi"
-$BRANCH     = "main"
+$REPO_NAME = "python-ocagi"
+$BRANCH = "main"
 
 # URL ve Dizin Tanimlari
-$ZIP_URL      = "https://github.com/$REPO_OWNER/$REPO_NAME/archive/refs/heads/$BRANCH.zip"
-$DesktopPath  = [Environment]::GetFolderPath("Desktop")
-$AppFolder    = Join-Path $DesktopPath "Python Ocagi"
+$ZIP_URL = "https://github.com/$REPO_OWNER/$REPO_NAME/archive/refs/heads/$BRANCH.zip"
+$DesktopPath = [Environment]::GetFolderPath("Desktop")
+$AppFolder = Join-Path $DesktopPath "Python Ocagi"
 $ShortcutPath = Join-Path $DesktopPath "PYTHON OCAGINA GIR.lnk"
 $UninstallPath = Join-Path $AppFolder "Uygulamayi Kaldir.bat"
-$HiddenAppDir = Join-Path $env:APPDATA "python_ocagi\app"
+$TempAppDir = Join-Path $env:TEMP "python_ocagi_hemenbasla"
 
 # Gecici dosya yollari
-$TempZip     = Join-Path $env:TEMP "python_ocagi_update.zip"
+$TempZip = Join-Path $env:TEMP "python_ocagi_update.zip"
 $TempExtract = Join-Path $env:TEMP "python_ocagi_extracted"
 
 # Script-scope Python komutu
@@ -33,6 +33,17 @@ $script:PythonCmd = ""
 function Read-SingleKey {
     $key = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
     return $key
+}
+
+function Refresh-SessionPath {
+    <# Registry'den guncel PATH degerlerini okuyup mevcut oturuma uygular.
+       Python kurulumu sonrasi py/python komutlarinin bulunabilmesi icin gereklidir. #>
+    try {
+        $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+        $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+        $env:Path = "$machinePath;$userPath"
+    }
+    catch {}
 }
 
 function Download-AppTo {
@@ -112,7 +123,8 @@ function Install-PythonWithPermission {
             if ($arch -eq 'Arm64') {
                 $InstallerUrl = "https://www.python.org/ftp/python/3.13.11/python-3.13.11-arm64.exe"
                 $InstallerFile = "python-3.13.11-arm64.exe"
-            } else {
+            }
+            else {
                 $InstallerUrl = "https://www.python.org/ftp/python/3.13.11/python-3.13.11-amd64.exe"
                 $InstallerFile = "python-3.13.11-amd64.exe"
             }
@@ -133,18 +145,42 @@ function Install-PythonWithPermission {
             Write-Host "Python sessizce kuruluyor. Lutfen pencereyi kapatmayin..." -ForegroundColor Yellow
             Start-Process -FilePath $InstallerPath -ArgumentList "/quiet InstallAllUsers=0 PrependPath=0 Include_launcher=1 Include_pip=1" -Wait
 
-            # Dogrulama
+            # PATH'i yenile (yeni kurulan Python'u bulsun)
+            Refresh-SessionPath
+
+            # Dogrulama — gercek calisip calismadigini kontrol et
             $PyCheck = Get-Command "py" -ErrorAction SilentlyContinue
             if ($PyCheck) {
-                $script:PythonCmd = "py"
-                Write-Host ""
-                Write-Host "Python basariyla yuklendi!" -ForegroundColor Green
-                return $true
+                try {
+                    $ver = & py --version 2>&1
+                    if ($ver -match "Python 3\.") {
+                        $script:PythonCmd = "py"
+                        Write-Host ""
+                        Write-Host "Python basariyla yuklendi!" -ForegroundColor Green
+                        return $true
+                    }
+                }
+                catch {}
             }
 
             $PyCheck = Get-Command "python" -ErrorAction SilentlyContinue
             if ($PyCheck) {
-                $script:PythonCmd = "python"
+                try {
+                    $ver = & python --version 2>&1
+                    if ($ver -match "Python 3\.") {
+                        $script:PythonCmd = "python"
+                        Write-Host ""
+                        Write-Host "Python basariyla yuklendi!" -ForegroundColor Green
+                        return $true
+                    }
+                }
+                catch {}
+            }
+
+            # Son care: varsayilan kurulum konumunu kontrol et
+            $defaultPyLauncher = Join-Path $env:LOCALAPPDATA "Programs\Python\Launcher\py.exe"
+            if (Test-Path $defaultPyLauncher) {
+                $script:PythonCmd = $defaultPyLauncher
                 Write-Host ""
                 Write-Host "Python basariyla yuklendi!" -ForegroundColor Green
                 return $true
@@ -170,18 +206,48 @@ function Install-PythonWithPermission {
 }
 
 function Test-PythonAvailable {
-    # py launcher ile dene
+    <# Python'un gercekten yuklu ve calisir durumda olduğunu dogrular.
+       Windows 10/11'deki Microsoft Store 'python.exe' alias'i
+       Get-Command ile bulunur ama gercek Python degildir.
+       Bu yuzden komut bulunduktan sonra --version ile dogrulama yapilir. #>
+
+    # 1. py launcher ile dene (en guvenilir)
     $PyLauncher = Get-Command "py" -ErrorAction SilentlyContinue
     if ($PyLauncher) {
-        $script:PythonCmd = "py"
-        return $true
+        try {
+            $ver = & py --version 2>&1
+            if ($ver -match "Python 3\.") {
+                $script:PythonCmd = "py"
+                return $true
+            }
+        }
+        catch {}
     }
 
-    # python komutu ile dene
+    # 2. python komutu ile dene (Store alias kontrollu)
     $PythonExe = Get-Command "python" -ErrorAction SilentlyContinue
     if ($PythonExe) {
-        $script:PythonCmd = "python"
-        return $true
+        try {
+            $ver = & python --version 2>&1
+            if ($ver -match "Python 3\.") {
+                $script:PythonCmd = "python"
+                return $true
+            }
+        }
+        catch {}
+    }
+
+    # 3. Son care: varsayilan kurulum konumunu kontrol et
+    $defaultPyLauncher = Join-Path $env:LOCALAPPDATA "Programs\Python\Launcher\py.exe"
+    if (Test-Path $defaultPyLauncher) {
+        try {
+            $ver = & $defaultPyLauncher --version 2>&1
+            if ($ver -match "Python 3\.") {
+                $script:PythonCmd = $defaultPyLauncher
+                return $true
+            }
+        }
+        catch {}
     }
 
     return $false
@@ -245,23 +311,46 @@ function Show-InstalledMenu {
 #=======================================================
 
 function Invoke-DirectRun {
-    Download-AppTo -TargetDir $HiddenAppDir
+    Download-AppTo -TargetDir $TempAppDir
 
     Write-Host ""
     Write-Host "Baslatiliyor..." -ForegroundColor Green
     Start-Sleep -Seconds 1
     Clear-Host
 
-    Set-Location $HiddenAppDir
+    Set-Location $TempAppDir
 
-    if ($script:PythonCmd -eq "py") {
-        & py -3.13 main.py
-        if ($LASTEXITCODE -ne 0) {
-            Write-Host "py -3.13 calismadi, python ile deneniyor..." -ForegroundColor Yellow
-            & python main.py
+    $launched = $false
+    try {
+        if ($script:PythonCmd -eq "py" -or $script:PythonCmd -like "*py.exe") {
+            & $script:PythonCmd -3.13 main.py
+            if ($LASTEXITCODE -eq 0) { $launched = $true }
+            if (-not $launched) {
+                Write-Host "py -3.13 calismadi, python ile deneniyor..." -ForegroundColor Yellow
+                & $script:PythonCmd main.py
+                if ($LASTEXITCODE -eq 0) { $launched = $true }
+            }
         }
-    } else {
-        & python main.py
+        else {
+            & $script:PythonCmd main.py
+            if ($LASTEXITCODE -eq 0) { $launched = $true }
+        }
+    }
+    catch {
+        Write-Host "Hata: $_" -ForegroundColor Red
+    }
+
+    if (-not $launched) {
+        Write-Host "" 
+        Write-Host "=========================================" -ForegroundColor Red
+        Write-Host "Uygulama baslatilirken bir sorun olustu." -ForegroundColor Red
+        Write-Host "=========================================" -ForegroundColor Red
+        Write-Host ""
+        Write-Host "Python 3.13 yuklu ve calisir durumda oldugundan" -ForegroundColor Yellow
+        Write-Host "emin olun. python.org/downloads adresinden" -ForegroundColor Yellow
+        Write-Host "Python 3.13 indirip kurabilirsiniz." -ForegroundColor Yellow
+        Write-Host ""
+        pause
     }
 }
 
@@ -365,14 +454,37 @@ function Invoke-UpdateAndLaunch {
 
     Set-Location $AppFolder
 
-    if ($script:PythonCmd -eq "py") {
-        & py -3.13 main.py
-        if ($LASTEXITCODE -ne 0) {
-            Write-Host "py -3.13 calismadi, python ile deneniyor..." -ForegroundColor Yellow
-            & python main.py
+    $launched = $false
+    try {
+        if ($script:PythonCmd -eq "py" -or $script:PythonCmd -like "*py.exe") {
+            & $script:PythonCmd -3.13 main.py
+            if ($LASTEXITCODE -eq 0) { $launched = $true }
+            if (-not $launched) {
+                Write-Host "py -3.13 calismadi, python ile deneniyor..." -ForegroundColor Yellow
+                & $script:PythonCmd main.py
+                if ($LASTEXITCODE -eq 0) { $launched = $true }
+            }
         }
-    } else {
-        & python main.py
+        else {
+            & $script:PythonCmd main.py
+            if ($LASTEXITCODE -eq 0) { $launched = $true }
+        }
+    }
+    catch {
+        Write-Host "Hata: $_" -ForegroundColor Red
+    }
+
+    if (-not $launched) {
+        Write-Host "" 
+        Write-Host "=========================================" -ForegroundColor Red
+        Write-Host "Uygulama baslatilirken bir sorun olustu." -ForegroundColor Red
+        Write-Host "=========================================" -ForegroundColor Red
+        Write-Host ""
+        Write-Host "Python 3.13 yuklu ve calisir durumda oldugundan" -ForegroundColor Yellow
+        Write-Host "emin olun. python.org/downloads adresinden" -ForegroundColor Yellow
+        Write-Host "Python 3.13 indirip kurabilirsiniz." -ForegroundColor Yellow
+        Write-Host ""
+        pause
     }
 }
 
