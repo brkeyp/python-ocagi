@@ -49,7 +49,7 @@ class DependencyManifest:
     # Value = SHA-256 Hash
     INSTALLER_HASHES = {
         "amd64": "30d4654b3eac7ddfdf2682db4c8dcb490f3055f4f33c6906d6b828f680152101",
-        # "arm64": "..." # Placeholder for future ARM64 support
+        "arm64": "7052eaa658b3cba0cd39afdb05a30e89ca84824ff37a4e4a78d4731ae62564aa"
     }
     
     @classmethod

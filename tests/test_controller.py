@@ -46,9 +46,8 @@ def test_handle_action_show_message(mock_curses):
 def test_handle_action_exit():
     """Should exit system."""
     action = engine.ActionExit(exit_code=5)
-    with pytest.raises(SystemExit) as excinfo:
+    with pytest.raises(KeyboardInterrupt):
         controller.handle_action(MagicMock(), action)
-    assert excinfo.value.code == 5
 
 def test_handle_action_none():
     """Should do nothing if action is None."""
@@ -79,6 +78,5 @@ def test_run_loop_exit(mock_curses):
         instance = MockEngine.return_value
         instance.get_next_action.return_value = engine.ActionExit()
         
-        controller.run_loop(stdscr)
-        
-        # verified it breaks loop
+        with pytest.raises(KeyboardInterrupt):
+            controller.run_loop(stdscr)

@@ -268,12 +268,8 @@ direkt_kullan() {
     clear
     cd "$HIDDEN_APP_DIR"
 
-    # Ctrl+C'yi bash'te yoksay — Python kendi SIGINT'ini yakalayıp
-    # çıkış mesajını gösterecek. Bash'in cooperative SIGINT exit
-    # mekanizması devre dışı bırakılıyor.
-    trap '' INT
+    # Bash'in cooperative SIGINT mekanizması iptal edilmiyor, hata düzeltildi
     $PYTHON_CMD main.py < /dev/tty
-    trap - INT
 }
 
 kur() {
@@ -363,14 +359,8 @@ EOF
     sleep 2
 
     # 4. İlk İndirme ve Başlatma
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        open "$SHORTCUT_FILE"
-        # Mac'te kurulum yapılan eski terminal penceresini kapatmak için üst kabuğu yokediyoruz
-        kill -9 $PPID 2>/dev/null
-    else
-        # Linux'ta yeni terminal açmak sisteme göre değiştiği için aynı ekranda başlat
-        exec "$SHORTCUT_FILE"
-    fi
+    # Çift terminal açılmasını önlemek için doğrudan mevcut terminalde çalıştırıyoruz.
+    exec "$SHORTCUT_FILE"
 }
 
 kaldir() {
@@ -413,10 +403,8 @@ guncelle_ve_baslat() {
     clear
     cd "$APP_DIR"
 
-    # Ctrl+C'yi bash'te yoksay — Python kendi halledecek
-    trap '' INT
+    # Ctrl+C Python'a ulaşıyor.
     $PYTHON_CMD main.py < /dev/tty
-    trap - INT
 }
 
 #=======================================================

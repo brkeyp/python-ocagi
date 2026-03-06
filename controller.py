@@ -57,7 +57,7 @@ def handle_action(stdscr, action):
                      pass
 
     elif isinstance(action, engine.ActionExit):
-        sys.exit(action.exit_code)
+        raise KeyboardInterrupt
 
 def validate_terminal_size():
     """Terminal boyutunun en az 20x10 olduğunu kontrol eder."""
@@ -86,7 +86,7 @@ def run_loop(stdscr):
         action = simulation.get_next_action()
         
         if isinstance(action, engine.ActionExit):
-            break
+            raise KeyboardInterrupt
             
         elif isinstance(action, engine.ActionRenderEditor):
              user_code = run_editor_session(
@@ -116,6 +116,27 @@ def run_loop(stdscr):
              result_action = simulation.process_input(user_code)
              handle_action(stdscr, result_action)
 
+def check_exit_key():
+    import os, sys
+    if os.name == 'nt':
+        import msvcrt
+        if msvcrt.kbhit():
+            key = msvcrt.getch()
+            if key in (b'\r', b'\n'):
+                return True
+        return False
+    else:
+        import select
+        i, _, _ = select.select([sys.stdin], [], [], 0.0)
+        if i:
+            try:
+                char = sys.stdin.read(1)
+                if char in ('\r', '\n'):
+                    return True
+            except Exception:
+                pass
+        return False
+
 def run_controller():
     # Terminal check
     if not validate_terminal_size():
@@ -144,8 +165,34 @@ def run_controller():
     except KeyboardInterrupt:
         # Ctrl+C Clean exit
         OSUtils.clear_screen()
-        print(f"\n{config.UI.MSG_EXIT}\n\n")
-        # 130 çıkış kodu, terminalin anında kapanmasını engelleyerek mesajın okunmasını sağlar
+        
+        # ANSI Renk Kodları
+        turquoise = "\033[38;2;64;224;208m"
+        reset = "\033[0m"
+        dark_gray = "\033[90m"
+        
+        print(f"\n{turquoise}{config.UI.MSG_EXIT}{reset}\n\n")
+        
+        # Geri sayım ve Enter tetikleyicisi
+        for i in range(10, 0, -1):
+            sys.stdout.write(f"\r\033[K{dark_gray}Terminal {i:02d} saniye içinde kapanacaktır...{reset}\n")
+            sys.stdout.write(f"\033[K{dark_gray}Hemen çıkmak için ENTER'a basın.{reset}")
+            sys.stdout.flush()
+            
+            interrupted = False
+            for _ in range(10):  # 1 saniyelik bekleyişi 0.1s'lik parçalarda kontrol et
+                if check_exit_key():
+                    interrupted = True
+                    break
+                time.sleep(0.1)
+                
+            if interrupted or i == 1:
+                break
+                
+            # Cursor'u 1 satır yukarı al ve satır başına çek
+            sys.stdout.write("\033[A\r")
+            
+        print("\n\n")
         sys.exit(130)
     except Exception as e:
         OSUtils.clear_screen()
