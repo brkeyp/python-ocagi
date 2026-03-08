@@ -136,6 +136,10 @@ class CursesInputDriver(InputDriver):
             return InputEvent(EventType.ENTER)
         elif is_char_str and char in ('\n', '\r'):
             return InputEvent(EventType.ENTER)
+        elif is_char_str and char == '\t':
+            return InputEvent(EventType.TAB)
+        elif char_code == 9: # ASCII TAB
+            return InputEvent(EventType.TAB)
             
         # 7. Character Input
         if is_char_str:

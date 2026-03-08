@@ -282,6 +282,14 @@ class Editor:
                     else:
                         self._handle_newline()
 
+            # --- TAB ---
+            elif event.type == EventType.TAB:
+                if self.is_locked:
+                    self.message = config.UI.MSG_TASK_COMPLETED
+                    self.message_timestamp = time.time()
+                else:
+                    self._handle_tab()
+
             # --- CHAR INPUT ---
             elif event.type == EventType.CHAR:
                 if self.is_locked:
@@ -293,7 +301,32 @@ class Editor:
                 self.message = ""
                 
                 line = self.buffer[self.cy]
-                self.buffer[self.cy] = line[:self.cx] + event.value + line[self.cx:]
+                char = event.value
+                
+                auto_close_map = {
+                    '(': ')',
+                    '[': ']',
+                    '{': '}',
+                    '"': '"',
+                    "'": "'"
+                }
+                
+                right_char = line[self.cx] if self.cx < len(line) else ""
+                
+                if char in auto_close_map.values() and right_char == char:
+                    self.cx += 1
+                    continue
+                
+                if char in auto_close_map:
+                    closing_char = auto_close_map[char]
+                    if char in ('"', "'") and right_char not in ('', ' ', ')', ']', '}', ':', ','):
+                        pass # Sadece tekli ekle
+                    else:
+                        self.buffer[self.cy] = line[:self.cx] + char + closing_char + right_char + line[self.cx+1:] if self.cx < len(line) else line[:self.cx] + char + closing_char
+                        self.cx += 1
+                        continue
+                
+                self.buffer[self.cy] = line[:self.cx] + char + line[self.cx:]
                 self.cx += 1
 
 
@@ -304,14 +337,42 @@ class Editor:
         
         if self.cx > 0:
             line = self.buffer[self.cy]
-            self.buffer[self.cy] = line[:self.cx-1] + line[self.cx:]
-            self.cx -= 1
+            left_part = line[:self.cx]
+            right_part = line[self.cx:]
+            
+            # Smart Pair Deletion: (), [], {}, "", ''
+            if len(left_part) > 0 and len(right_part) > 0:
+                pair = left_part[-1] + right_part[0]
+                if pair in ('()', '[]', '{}', '""', "''"):
+                    self.buffer[self.cy] = left_part[:-1] + right_part[1:]
+                    self.cx -= 1
+                    return
+            
+            # Smart Backspace Logic
+            if left_part.isspace() and len(left_part) > 0:
+                spaces_to_delete = (self.cx % 4) or 4
+                self.buffer[self.cy] = line[:self.cx - spaces_to_delete] + right_part
+                self.cx -= spaces_to_delete
+            else:
+                self.buffer[self.cy] = left_part[:-1] + right_part
+                self.cx -= 1
         elif self.cy > 0:
             current_line = self.buffer.pop(self.cy)
             prev_line_len = len(self.buffer[self.cy-1])
             self.buffer[self.cy-1] += current_line
             self.cy -= 1
             self.cx = prev_line_len
+
+    def _handle_tab(self):
+        self.waiting_for_submit = False
+        self.message = ""
+        
+        line = self.buffer[self.cy]
+        spaces_to_add = 4 - (self.cx % 4)
+        indent_str = " " * spaces_to_add
+        
+        self.buffer[self.cy] = line[:self.cx] + indent_str + line[self.cx:]
+        self.cx += spaces_to_add
 
     def _handle_delete(self):
         self.waiting_for_submit = False
@@ -329,16 +390,25 @@ class Editor:
         left_part = current_line[:self.cx]
         right_part = current_line[self.cx:]
         
-        # Auto-Indent Mantığı
-        indent = ""
-        if left_part.strip().endswith(':'):
-            indent = "    "
+        # Mevcut satırın girintisini bul
+        current_indent = ""
+        for char in left_part:
+            if char == ' ' or char == '\t':
+                current_indent += char
+            else:
+                break
+                
+        # Satır iki nokta üst üste ile bitiyorsa ekstra girinti ekle
+        extra_indent = "    " if left_part.strip().endswith(':') else ""
+        
+        # Yeni satırın toplam girintisi
+        total_indent = current_indent + extra_indent
         
         self.buffer[self.cy] = left_part
-        self.buffer.insert(self.cy + 1, indent + right_part)
+        self.buffer.insert(self.cy + 1, total_indent + right_part)
         
         self.cy += 1
-        self.cx = len(indent)
+        self.cx = len(total_indent)
         
         self.waiting_for_submit = True
         

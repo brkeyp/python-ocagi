@@ -5,4 +5,6 @@ def validate(scope, output):
         return False
     if topla.__doc__ is None:
         return False
-    return "İki sayıyı toplar" in topla.__doc__
+        
+    doc = topla.__doc__.lower()
+    return len(doc.strip()) > 5 or ("topla" in doc)

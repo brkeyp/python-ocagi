@@ -2,8 +2,8 @@
   "id": "001_todo_app",
   "category": "Final Projesi",
   "title": "Todo App: Sınıf Tasarımı",
-  "description": "Bir 'Gorev' sınıfı oluştur. __init__ metodunda 'baslik' (str) ve 'durum' (varsayılan False) özelliklerini al. Sonra 'gorevler' adında boş bir liste oluştur ve içine 2 adet Gorev nesnesi ekle.",
-  "hint": "class Gorev: def __init__(self, baslik): ...",
+  "description": "Artık öğrendiklerimizi birleştirme vakti! Bir yapılacaklar listesi (Todo App) tasarlıyoruz. Öncelikle temel yapı taşımız olan 'Gorev' sınıfını (class) oluştur. __init__ metodunda 'baslik' (str) ve 'durum' (varsayılan False) özelliklerini al. Sonra 'gorevler' adında boş bir liste yaratıp içine 2 adet rastgele Gorev nesnesi ekle.",
+  "hint": "class Gorev: altında def __init__(self, baslik): tanımla ve self.baslik = baslik, self.durum = False yap. Dışarıda gorevler = [] oluşturup gorevler.append(Gorev('Spor yap')) diyebilirsin.",
   "type": "code",
   "tags": [
     "final",

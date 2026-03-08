@@ -14,6 +14,7 @@ class EventType(Enum):
     BACKSPACE = auto()
     DELETE = auto()
     ENTER = auto()
+    TAB = auto()
     CHAR = auto() # Has value
     
     # System/App
@@ -44,7 +45,7 @@ class InputEvent:
     
     @property
     def is_editing(self):
-        return self.type in (EventType.BACKSPACE, EventType.DELETE, EventType.ENTER, EventType.CHAR)
+        return self.type in (EventType.BACKSPACE, EventType.DELETE, EventType.ENTER, EventType.TAB, EventType.CHAR)
 
 class InputDriver:
     """Abstract base class for input drivers."""

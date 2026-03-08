@@ -3,8 +3,8 @@
   "uuid": "7910209a-4ef3-4292-bee0-ceb89f67ca13",
   "category": "Modüller",
   "title": "Math Modülü",
-  "description": "import math",
-  "hint": "import",
+  "description": "'math' modülünü projemize dahil et (import). Ardından bu modülün içindeki pi sayısını (math.pi) ekrana yazdır.",
+  "hint": "Önce 'import math' yaz. Alt satırda 'print(math.pi)' ile pi sayısını yazdırabilirsin.",
   "type": "code",
   "tags": [
     "modüller"

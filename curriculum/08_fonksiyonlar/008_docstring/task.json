@@ -3,8 +3,8 @@
   "uuid": "b6361878-3ece-41f8-92c8-b93f64cc4714",
   "category": "Fonksiyonlar",
   "title": "Docstring (Dokümantasyon)",
-  "description": "'topla' fonksiyonu yaz: iki sayıyı toplasın. Fonksiyona üçlü tırnak ile docstring ekle: 'İki sayıyı toplar ve sonucu döndürür.'",
-  "hint": "Fonksiyon tanımından hemen sonra \\\"\\\"\\\"docstring\\\"\\\"\\\" yaz. Bu, fonksiyonun ne yaptığını açıklar.",
+  "description": "Yazdığımız fonksiyonları başkalarının (veya gelecekteki bizim) anlaması için belgelendirmeliyiz. 'topla' adında iki sayıyı toplayan bir fonksiyon yaz ve hemen içine üçlü tırnak kullanarak şu docstring'i (belge metnini) ekle: 'İki sayıyı toplar ve sonucu döndürür.'",
+  "hint": "Fonksiyonu 'def topla(a, b):' şeklinde tanımladıktan hemen sonraki satıra üç tane tırnak (\"\"\") açıp metni yaz ve üç tırnakla kapat.",
   "type": "code",
   "tags": [
     "fonksiyonlar",

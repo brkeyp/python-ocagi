@@ -3,8 +3,8 @@
   "uuid": "53b62680-374a-489a-a063-0e830fb6b324",
   "category": "Dosya",
   "title": "Dosya Yazma",
-  "description": "'test.txt' adında bir dosya oluştur ve içine bir şeyler yaz.",
-  "hint": "open",
+  "description": "Programımızın ürettiği verileri kaybetmemek için dosyalara yazarız. 'test.txt' adında bir dosya oluştur (yazma 'w' modunda) ve içine 'OK' yaz.",
+  "hint": "with open('test.txt', 'w') as f: kalıbını kullanarak dosyayı açıp, f.write('OK') ile içine yazabilirsin. Bu yöntem dosyayı işin bitince otomatik kapatır.",
   "type": "code",
   "tags": [
     "dosya"
