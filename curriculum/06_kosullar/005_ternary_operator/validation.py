@@ -5,4 +5,4 @@ def validate(scope, output):
     if sayi != 15:
         return False
     
-    return tip == 'tek'
+    return str(tip or "").strip().lower() == "tek"

@@ -6,4 +6,4 @@ def validate(scope, output):
     if sicaklik != 25 or yagmurlu != False:
         return False
     
-    return hava == 'Piknik zamanı!'
+    return str(hava or "").strip().lower() == "piknik zamanı!"

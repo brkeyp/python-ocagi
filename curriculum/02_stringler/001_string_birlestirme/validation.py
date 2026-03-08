@@ -1,2 +1,2 @@
 def validate(scope, output):
-        return scope.get("tam_isim") == "Python Kursu"
+        return str(scope.get("tam_isim") or "").strip().lower() == "python kursu"

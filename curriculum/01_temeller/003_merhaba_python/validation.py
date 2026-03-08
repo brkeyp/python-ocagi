@@ -1,2 +1,2 @@
 def validate(scope, output):
-        return scope.get("mesaj") == "Merhaba Dünya"
+        return str(scope.get("mesaj") or "").strip().lower() == "merhaba dünya"

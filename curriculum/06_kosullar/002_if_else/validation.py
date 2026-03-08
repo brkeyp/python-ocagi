@@ -1,2 +1,2 @@
 def validate(scope, output):
-        return scope.get("sonuc") == "Tek"
+        return str(scope.get("sonuc") or "").strip().lower() == "tek"

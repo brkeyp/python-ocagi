@@ -6,4 +6,4 @@ def validate(scope, output):
     if yas != 25 or ehliyet != True:
         return False
     
-    return sonuc == 'Araba kullanabilir'
+    return str(sonuc or "").strip().lower() == "araba kullanabilir"

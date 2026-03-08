@@ -1,3 +1,3 @@
 def validate(scope, output):
     en_yuksek = scope.get("en_yuksek")
-    return en_yuksek == 'Veli'
+    return str(en_yuksek or "").strip().lower() == "veli"
