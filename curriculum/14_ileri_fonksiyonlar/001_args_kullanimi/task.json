@@ -1,14 +1,14 @@
 {
-  "id": "001_args_kullanimi",
-  "uuid": "293719d9-656e-40ef-934d-f6878a1242ff",
-  "category": "İleri Fonksiyonlar",
-  "title": "*args Kullanımı",
-  "description": "'topla' fonksiyonu yaz: sınırsız sayıda argüman alıp toplamını döndürsün. 'sonuc' değişkenine topla(1, 2, 3, 4, 5) sonucunu ata.",
-  "hint": "*args ile fonksiyona istediğin kadar argüman geçebilirsin. Bunlar tuple olarak gelir.",
-  "type": "code",
-  "tags": [
-    "args",
-    "fonksiyon",
-    "variadic"
-  ]
+    "id": "001_args_kullanimi",
+    "uuid": "293719d9-656e-40ef-934d-f6878a1242ff",
+    "category": "İleri Fonksiyonlar",
+    "title": "*args Kullanımı",
+    "description": "'topla' fonksiyonu yaz: sınırsız sayıda argüman alıp toplamını döndürsün. 'sonuc' değişkenine topla(1, 2, 3, 4, 5) sonucunu ata.",
+    "hint": "Kaç adet parametrenin yollanacağının belirsiz olduğu durumlarda, parametre adının hemen başına tek bir yıldız işareti (*) koyarak sınırsız sayıda değişkeni tuple olarak yakalayabilirsin.",
+    "type": "code",
+    "tags": [
+        "args",
+        "fonksiyon",
+        "variadic"
+    ]
 }

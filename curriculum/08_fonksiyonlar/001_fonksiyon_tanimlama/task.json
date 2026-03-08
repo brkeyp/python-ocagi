@@ -1,12 +1,12 @@
 {
-  "id": "001_fonksiyon_tanimlama",
-  "category": "Fonksiyonlar",
-  "title": "Fonksiyon Tanımlama",
-  "description": "'kare_al' isminde bir fonksiyon tanımla. Bir sayı alsın ve karesini return etsin.",
-  "hint": "def anahtar kelimesini ve return ifadesini kullan.",
-  "type": "code",
-  "tags": [
-    "fonksiyonlar"
-  ],
-  "uuid": "a508cc5e-68eb-4106-948c-0362c31c2b21"
+    "id": "001_fonksiyon_tanimlama",
+    "category": "Fonksiyonlar",
+    "title": "Fonksiyon Tanımlama",
+    "description": "'kare_al' isminde bir fonksiyon tanımla. Bir sayı alsın ve karesini return etsin.",
+    "hint": "Kendine özgü görevler oluşturan komut parçacıkları (fonksiyonlar) İngilizce 'define' kelimesinin kısaltması ile tanımlanırlar. Sonucu programına aktarmak için de 'geri döndür' (return) komutunu kullanmalısın.",
+    "type": "code",
+    "tags": [
+        "fonksiyonlar"
+    ],
+    "uuid": "a508cc5e-68eb-4106-948c-0362c31c2b21"
 }

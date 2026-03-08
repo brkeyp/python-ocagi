@@ -3,7 +3,7 @@
     "category": "Listeler",
     "title": "Eleman Silme (Pop)",
     "description": "liste = [1, 2, 3, 4, 99]. Listenin son elemanını sil (pop kullan).",
-    "hint": ".pop() metodu parametre verilmezse son elemanı siler.",
+    "hint": "Bir listeden nesne çıkartmak (fırlatmak/pop) için kullanılacak metodu çağırdığında indeks belirtmezsen varsayılan olarak sondaki elemanı uçurur.",
     "type": "code",
     "tags": [
         "listeler"

@@ -3,7 +3,7 @@
     "category": "Listeler",
     "title": "Eleman Ekleme (Append)",
     "description": "'renkler' boş bir liste olsun ([]). İçine sırasıyla 'Mavi' ve 'Yesil' ekle.",
-    "hint": ".append() metodunu iki kez kullan.",
+    "hint": "Önceden oluşturduğun boş bir listenin sonuna yeni bir eleman ilave etmek için ekleme (append) fonksiyonunu (metodunu) ilgili listeden çağırmalısın.",
     "type": "code",
     "tags": [
         "listeler"

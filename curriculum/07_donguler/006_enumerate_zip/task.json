@@ -1,14 +1,14 @@
 {
-  "id": "006_enumerate_zip",
-  "uuid": "8db48bd2-5abc-40bf-a2ec-20fef952208a",
-  "category": "Döngüler",
-  "title": "Enumerate ve Zip",
-  "description": "'isimler' = ['Ali', 'Veli', 'Ayşe'] ve 'yaslar' = [20, 25, 22] listeleri olsun. zip() ile birleştir ve 'birlesik' listesine (isim, yas) tuple'larını ekle.",
-  "hint": "zip(liste1, liste2) iki listeyi paralel birleştirir. for isim, yas in zip(isimler, yaslar): şeklinde kullan.",
-  "type": "code",
-  "tags": [
-    "enumerate",
-    "zip",
-    "dongu"
-  ]
+    "id": "006_enumerate_zip",
+    "uuid": "8db48bd2-5abc-40bf-a2ec-20fef952208a",
+    "category": "Döngüler",
+    "title": "Enumerate ve Zip",
+    "description": "'isimler' = ['Ali', 'Veli', 'Ayşe'] ve 'yaslar' = [20, 25, 22] listeleri olsun. zip() ile birleştir ve 'birlesik' listesine (isim, yas) tuple'larını ekle.",
+    "hint": "İki veya daha fazla bağımsız listeyi bir fermuarı çeker gibi (zip) eşzamanlı eşleştirip, iki ayrı döngü değişkeni ile çekmek için uygun fonksiyonu çağırmalısın.",
+    "type": "code",
+    "tags": [
+        "enumerate",
+        "zip",
+        "dongu"
+    ]
 }

@@ -1,12 +1,12 @@
 {
-  "id": "006_boolean",
-  "category": "Temel",
-  "title": "Boolean (Mantıksal)",
-  "description": "'hazir_mi' değişkeni oluştur ve True değerini ata.",
-  "hint": "True ve False kelimelerinin baş harfi büyük olmalıdır.",
-  "type": "code",
-  "tags": [
-    "temel"
-  ],
-  "uuid": "10bb5c09-5284-4c77-b049-7f1259c12826"
+    "id": "006_boolean",
+    "category": "Temel",
+    "title": "Boolean (Mantıksal)",
+    "description": "'hazir_mi' değişkeni oluştur ve True değerini ata.",
+    "hint": "Mantıksal (boolean) değerler Python'a özel adlandırılmış durumlardır. Bu kelimelerin yapıları gereği baş harfleri daima büyük harfle başlamak zorundadır.",
+    "type": "code",
+    "tags": [
+        "temel"
+    ],
+    "uuid": "10bb5c09-5284-4c77-b049-7f1259c12826"
 }

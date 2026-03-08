@@ -1,12 +1,12 @@
 {
-  "id": "001_sozluk_olusturma",
-  "category": "Sözlükler",
-  "title": "Sözlük Oluşturma",
-  "description": "'kimlik' adında bir sözlük oluştur. 'ad': 'Ali', 'yas': 30 anahtar-değer çiftlerini içersin.",
-  "hint": "Sözlükler süslü parantez {} ve key:value yapısı kullanır.",
-  "type": "code",
-  "tags": [
-    "sozlukler"
-  ],
-  "uuid": "33c0cad3-a9d5-485f-a46d-3d0a14c3c750"
+    "id": "001_sozluk_olusturma",
+    "category": "Sözlükler",
+    "title": "Sözlük Oluşturma",
+    "description": "'kimlik' adında bir sözlük oluştur. 'ad': 'Ali', 'yas': 30 anahtar-değer çiftlerini içersin.",
+    "hint": "Gerçek hayattaki sözlükler gibi 'anahtar' kelimeler ve bunlara karşılık gelen 'değerler' şeklinde iki noktayla eşleştirilen yapıları, süslü parantez içine yazmalısın.",
+    "type": "code",
+    "tags": [
+        "sozlukler"
+    ],
+    "uuid": "33c0cad3-a9d5-485f-a46d-3d0a14c3c750"
 }

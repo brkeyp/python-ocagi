@@ -1,12 +1,12 @@
 {
-  "id": "003_elif_kullanimi",
-  "category": "Koşullar",
-  "title": "Elif Kullanımı",
-  "description": "'notu' = 75. 85+ ise 'derece'='A', 70-84 arası 'B', altı 'C' olsun. (If-Elif-Else)",
-  "hint": "elif, 'else if'in kısaltmasıdır.",
-  "type": "code",
-  "tags": [
-    "kosullar"
-  ],
-  "uuid": "b476ba5d-7a6f-4eb6-bb1b-19b351eae105"
+    "id": "003_elif_kullanimi",
+    "category": "Koşullar",
+    "title": "Elif Kullanımı",
+    "description": "'notu' = 75. 85+ ise 'derece'='A', 70-84 arası 'B', altı 'C' olsun. (If-Elif-Else)",
+    "hint": "Zincirleme kurulan koşullarda iki veya daha fazla ihtimali kontrol etmek istiyorsan, if ve else blokları arasında ara koşullar (elif) kullanabilirsin.",
+    "type": "code",
+    "tags": [
+        "kosullar"
+    ],
+    "uuid": "b476ba5d-7a6f-4eb6-bb1b-19b351eae105"
 }

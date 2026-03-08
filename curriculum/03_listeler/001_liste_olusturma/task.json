@@ -1,12 +1,12 @@
 {
-  "id": "001_liste_olusturma",
-  "category": "Listeler",
-  "title": "Liste Oluşturma",
-  "description": "'sayilar' adında bir liste oluştur ve içine 10, 20, 30 değerlerini koy.",
-  "hint": "Listeler köşeli parantez [] ile tanımlanır.",
-  "type": "code",
-  "tags": [
-    "listeler"
-  ],
-  "uuid": "96580da5-c6ed-4b80-aa9c-2f03de567fc8"
+    "id": "001_liste_olusturma",
+    "category": "Listeler",
+    "title": "Liste Oluşturma",
+    "description": "'sayilar' adında bir liste oluştur ve içine 10, 20, 30 değerlerini koy.",
+    "hint": "Birden fazla değeri tek bir değişkende tutmak için köşeli parantez kullanıp içlerine virgülle ayrılmış değerler yazmalısın.",
+    "type": "code",
+    "tags": [
+        "listeler"
+    ],
+    "uuid": "96580da5-c6ed-4b80-aa9c-2f03de567fc8"
 }

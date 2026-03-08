@@ -1,12 +1,12 @@
 {
-  "id": "002_cok_parametreli_fonksiyon",
-  "category": "Fonksiyonlar",
-  "title": "Çok Parametreli Fonksiyon",
-  "description": "'carp' isminde fonksiyon tanımla. a ve b parametrelerini alıp çarpımlarını döndürsün.",
-  "hint": "def carp(a, b): şeklinde başla.",
-  "type": "code",
-  "tags": [
-    "fonksiyonlar"
-  ],
-  "uuid": "e4339008-7162-4493-b271-9c563438d918"
+    "id": "002_cok_parametreli_fonksiyon",
+    "category": "Fonksiyonlar",
+    "title": "Çok Parametreli Fonksiyon",
+    "description": "'carp' isminde fonksiyon tanımla. a ve b parametrelerini alıp çarpımlarını döndürsün.",
+    "hint": "Fonksiyon isminden sonraki parantezlerin arasına parametre (değişken) isimlerini virgülle ayırarak yazarsan birden fazla veriyi içeri almış olursun.",
+    "type": "code",
+    "tags": [
+        "fonksiyonlar"
+    ],
+    "uuid": "e4339008-7162-4493-b271-9c563438d918"
 }

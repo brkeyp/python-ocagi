@@ -1,12 +1,12 @@
 {
-  "id": "003_yeni_kayit_ekleme",
-  "category": "Sözlükler",
-  "title": "Yeni Kayıt Ekleme",
-  "description": "'kimlik' sözlüğüne 'meslek': 'Mühendis' çiftini ekle.",
-  "hint": "sozluk['yeni_anahtar'] = 'deger' şeklinde atama yap.",
-  "type": "code",
-  "tags": [
-    "sozlukler"
-  ],
-  "uuid": "a34910b7-96e6-4509-a57a-8f390a3c058f"
+    "id": "003_yeni_kayit_ekleme",
+    "category": "Sözlükler",
+    "title": "Yeni Kayıt Ekleme",
+    "description": "'kimlik' sözlüğüne 'meslek': 'Mühendis' çiftini ekle.",
+    "hint": "Daha önce oluşturulmuş bir sözlüğe yeni kayıt atamak, mevcut sözlük elemanını listelerdeki gibi köşeli parantezle bulup eşittir ile yeniden atamakla aynı mantıktadır.",
+    "type": "code",
+    "tags": [
+        "sozlukler"
+    ],
+    "uuid": "a34910b7-96e6-4509-a57a-8f390a3c058f"
 }

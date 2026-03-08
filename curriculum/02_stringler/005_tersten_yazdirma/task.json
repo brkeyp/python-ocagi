@@ -1,12 +1,12 @@
 {
-  "id": "005_tersten_yazdirma",
-  "category": "Stringler",
-  "title": "Tersten Yazdırma",
-  "description": "'metin' = 'elma' olsun. 'ters_metin' değişkenine 'amle' değerini (tersini) ata.",
-  "hint": "[::-1] dilimleme yöntemi listeyi veya stringi ters çevirir.",
-  "type": "code",
-  "tags": [
-    "stringler"
-  ],
-  "uuid": "60730682-b61e-4cc6-b441-491f93e6f598"
+    "id": "005_tersten_yazdirma",
+    "category": "Stringler",
+    "title": "Tersten Yazdırma",
+    "description": "'metin' = 'elma' olsun. 'ters_metin' değişkenine 'amle' değerini (tersini) ata.",
+    "hint": "Dilimleme (slicing) işleminde üçüncü parametre olan adım (step) değerine -1 vererek, diziyi veya metni sağdan sola doğru (ters) taramasını sağlayabilirsin.",
+    "type": "code",
+    "tags": [
+        "stringler"
+    ],
+    "uuid": "60730682-b61e-4cc6-b441-491f93e6f598"
 }

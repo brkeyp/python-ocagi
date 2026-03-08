@@ -1,12 +1,12 @@
 {
-  "id": "001_class_tanimlama",
-  "category": "OOP",
-  "title": "Class Tanımlama",
-  "description": "'Araba' adında bir sınıf (class) oluştur. Henüz içi boş olabilir (pass kullan).",
-  "hint": "class Araba: yazıp altına pass ekle.",
-  "type": "code",
-  "tags": [
-    "oop"
-  ],
-  "uuid": "f14209df-0afa-4168-a598-36c9b1c5d00c"
+    "id": "001_class_tanimlama",
+    "category": "OOP",
+    "title": "Class Tanımlama",
+    "description": "'Araba' adında bir sınıf (class) oluştur. Henüz içi boş olabilir (pass kullan).",
+    "hint": "Yeni bir nesne grubu tanımlamak için 'class' anahtarını kullan. Şimdilik içeriği boş tutmak ama hata almamak için blok komut geçişine izin veren terimi (pass) eklemelisin.",
+    "type": "code",
+    "tags": [
+        "oop"
+    ],
+    "uuid": "f14209df-0afa-4168-a598-36c9b1c5d00c"
 }

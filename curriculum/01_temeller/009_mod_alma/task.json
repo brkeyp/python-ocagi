@@ -1,12 +1,12 @@
 {
-  "id": "009_mod_alma",
-  "category": "Matematik",
-  "title": "Mod Alma (Kalan Bulma)",
-  "description": "'kalan' değişkeni oluştur, 10'un 3'e bölümünden kalanı hesapla.",
-  "hint": "Mod almak için yüzde (%) işaretini kullan.",
-  "type": "code",
-  "tags": [
-    "matematik"
-  ],
-  "uuid": "693a37e7-9d4c-49a1-9184-4fac88f9f063"
+    "id": "009_mod_alma",
+    "category": "Matematik",
+    "title": "Mod Alma (Kalan Bulma)",
+    "description": "'kalan' değişkeni oluştur, 10'un 3'e bölümünden kalanı hesapla.",
+    "hint": "Kalan bulma yani mod işlemi yaparken bölme işareti yerine % sembolünü kullanabilirsin.",
+    "type": "code",
+    "tags": [
+        "matematik"
+    ],
+    "uuid": "693a37e7-9d4c-49a1-9184-4fac88f9f063"
 }

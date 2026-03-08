@@ -1,14 +1,14 @@
 {
-  "id": "012_none_degeri",
-  "uuid": "2f0e67b0-b696-4b88-8adb-c0986b8595fe",
-  "category": "Temel",
-  "title": "None Değeri",
-  "description": "'sonuc' adında bir değişken oluştur ve değerini None olarak ata.",
-  "hint": "None, Python'da 'hiçbir şey' veya 'değer yok' anlamına gelir. Büyük N ile yazılır.",
-  "type": "code",
-  "tags": [
-    "temel",
-    "none",
-    "veri_tipleri"
-  ]
+    "id": "012_none_degeri",
+    "uuid": "2f0e67b0-b696-4b88-8adb-c0986b8595fe",
+    "category": "Temel",
+    "title": "None Değeri",
+    "description": "'sonuc' adında bir değişken oluştur ve değerini None olarak ata.",
+    "hint": "Programlama dillerinde 'değersizliği' ya da 'hiçliği' atamak için ayrılmış özel anahtar kelime 'None' kelimesidir. Baş harfinin büyük yazılmasına dikkat etmelisin.",
+    "type": "code",
+    "tags": [
+        "temel",
+        "none",
+        "veri_tipleri"
+    ]
 }

@@ -1,12 +1,12 @@
 {
-  "id": "001_if_blogu",
-  "category": "Koşullar",
-  "title": "If Bloğu",
-  "description": "'puan' = 85 olsun. Eğer puan 50'den büyükse 'durum' değişkenine 'Geçti' ata.",
-  "hint": "if bloğundan sonra girintiye (indentation) dikkat et. Alt satıra geçmek için Enter'a bas.",
-  "type": "code",
-  "tags": [
-    "kosullar"
-  ],
-  "uuid": "427ce2f3-89dd-4f4d-be5f-b7a7f7ec3a36"
+    "id": "001_if_blogu",
+    "category": "Koşullar",
+    "title": "If Bloğu",
+    "description": "'puan' = 85 olsun. Eğer puan 50'den büyükse 'durum' değişkenine 'Geçti' ata.",
+    "hint": "Python'da koşulları ifade ederken eğer ifadenin sonuna iki nokta üst üste (:) eklerseniz, sistem bir alt satırda otomatik olarak doğru boşluk girintisini bırakır.",
+    "type": "code",
+    "tags": [
+        "kosullar"
+    ],
+    "uuid": "427ce2f3-89dd-4f4d-be5f-b7a7f7ec3a36"
 }

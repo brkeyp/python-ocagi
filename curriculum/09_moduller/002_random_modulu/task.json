@@ -1,14 +1,14 @@
 {
-  "id": "002_random_modulu",
-  "uuid": "9e208150-175e-464c-824b-87daa19d7e4c",
-  "category": "Modüller",
-  "title": "Random Modülü",
-  "description": "'random' modülünü içe aktar (import et). Sonra 'zar' değişkenine 1 ile 6 arasında rastgele bir tam sayı ata. Bunun için random.randint(1, 6) fonksiyonunu kullan.",
-  "hint": "Önce 'import random' yaz. Sonra random.randint(baslangic, bitis) fonksiyonu ile rastgele sayı üretebilirsin. Bu fonksiyon baslangic ve bitis dahil değerler üretir.",
-  "type": "code",
-  "tags": [
-    "random",
-    "moduller",
-    "import"
-  ]
+    "id": "002_random_modulu",
+    "uuid": "9e208150-175e-464c-824b-87daa19d7e4c",
+    "category": "Modüller",
+    "title": "Random Modülü",
+    "description": "'random' modülünü içe aktar (import et). Sonra 'zar' değişkenine 1 ile 6 arasında rastgele bir tam sayı ata. Bunun için random.randint(1, 6) fonksiyonunu kullan.",
+    "hint": "Dışarıdan sistemine çekmiş olduğun rastgele sayı üretici kütüphanesini kullanarak, tamsayı rastgelelik (randint) fonksiyonuna arzu ettiğin sınırları vermen gerekir.",
+    "type": "code",
+    "tags": [
+        "random",
+        "moduller",
+        "import"
+    ]
 }

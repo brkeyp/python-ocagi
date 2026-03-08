@@ -1,12 +1,12 @@
 {
-  "id": "003_metot_ekleme",
-  "category": "OOP",
-  "title": "Metot Ekleme",
-  "description": "'Kopek' sınıfı oluştur. 'havla' metodu 'Hav!' stringini return etsin. Bir örnek oluşturup metodu çağır, sonucu 'ses' değişkenine ata.",
-  "hint": "Metotların ilk parametresi her zaman self olmalıdır.",
-  "type": "code",
-  "tags": [
-    "oop"
-  ],
-  "uuid": "91576ddd-6293-4201-adb6-faf7029d35a3"
+    "id": "003_metot_ekleme",
+    "category": "OOP",
+    "title": "Metot Ekleme",
+    "description": "'Kopek' sınıfı oluştur. 'havla' metodu 'Hav!' stringini return etsin. Bir örnek oluşturup metodu çağır, sonucu 'ses' değişkenine ata.",
+    "hint": "Sınıf içi fonksiyonlar (metot) tasarladığında bu özellikleri doğrudan o nesnenin kendi kimliğine aktarabilmen adına ilk veri her zaman ilgili sınıfa (self) referans vermelidir.",
+    "type": "code",
+    "tags": [
+        "oop"
+    ],
+    "uuid": "91576ddd-6293-4201-adb6-faf7029d35a3"
 }

@@ -1,14 +1,14 @@
 {
-  "id": "002_kume_olusturma",
-  "uuid": "dd5face9-ff05-4fc9-9e9b-65ad6e86ac38",
-  "category": "Demetler ve Kümeler",
-  "title": "Küme Oluşturma",
-  "description": "'renkler' adında bir küme (set) oluştur. İçinde 'kirmizi', 'yesil' ve 'mavi' değerleri olsun. Kümeler tekrar eden elemanları kabul etmez ve sırasızdır.",
-  "hint": "Küme oluşturmak için süslü parantez kullan: renkler = {'eleman1', 'eleman2'}. Dikkat: Boş küme için set() kullanılır, {} boş sözlük oluşturur!",
-  "type": "code",
-  "tags": [
-    "set",
-    "kume",
-    "veri yapilari"
-  ]
+    "id": "002_kume_olusturma",
+    "uuid": "dd5face9-ff05-4fc9-9e9b-65ad6e86ac38",
+    "category": "Demetler ve Kümeler",
+    "title": "Küme Oluşturma",
+    "description": "'renkler' adında bir küme (set) oluştur. İçinde 'kirmizi', 'yesil' ve 'mavi' değerleri olsun. Kümeler tekrar eden elemanları kabul etmez ve sırasızdır.",
+    "hint": "Tıpkı matematikteki gibi elemanların tekrar etmediği kümeleri oluşturmak için süslü parantez içine virgüllerle ayrılmış verileri yerleştirmelisin.",
+    "type": "code",
+    "tags": [
+        "set",
+        "kume",
+        "veri yapilari"
+    ]
 }

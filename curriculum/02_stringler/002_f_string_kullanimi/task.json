@@ -1,12 +1,12 @@
 {
-  "id": "002_f_string_kullanimi",
-  "category": "Stringler",
-  "title": "f-String Kullanımı",
-  "description": "'yas' = 25 olsun. f-string kullanarak 'kisi_bilgisi' değişkenine 'Yaşım: 25' yazısını ata.",
-  "hint": "f'...{degisken}...' yapısını kullan.",
-  "type": "code",
-  "tags": [
-    "stringler"
-  ],
-  "uuid": "8d1b95c1-aea1-4f32-92f8-6bb4a66bd806"
+    "id": "002_f_string_kullanimi",
+    "category": "Stringler",
+    "title": "f-String Kullanımı",
+    "description": "'yas' = 25 olsun. f-string kullanarak 'kisi_bilgisi' değişkenine 'Yaşım: 25' yazısını ata.",
+    "hint": "Metinlerin başına 'f' harfi koyduktan sonra, stringin içindeki süslü parantezler {} içerisine değişken isimlerini yazarak formatlı birleştirme yapabilirsin.",
+    "type": "code",
+    "tags": [
+        "stringler"
+    ],
+    "uuid": "8d1b95c1-aea1-4f32-92f8-6bb4a66bd806"
 }

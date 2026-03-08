@@ -1,12 +1,12 @@
 {
-  "id": "001_dosya_yazma",
-  "uuid": "53b62680-374a-489a-a063-0e830fb6b324",
-  "category": "Dosya",
-  "title": "Dosya Yazma",
-  "description": "Programımızın ürettiği verileri kaybetmemek için dosyalara yazarız. 'test.txt' adında bir dosya oluştur (yazma 'w' modunda) ve içine 'OK' yaz.",
-  "hint": "with open('test.txt', 'w') as f: kalıbını kullanarak dosyayı açıp, f.write('OK') ile içine yazabilirsin. Bu yöntem dosyayı işin bitince otomatik kapatır.",
-  "type": "code",
-  "tags": [
-    "dosya"
-  ]
+    "id": "001_dosya_yazma",
+    "uuid": "53b62680-374a-489a-a063-0e830fb6b324",
+    "category": "Dosya",
+    "title": "Dosya Yazma",
+    "description": "Programımızın ürettiği verileri kaybetmemek için dosyalara yazarız. 'test.txt' adında bir dosya oluştur (yazma 'w' modunda) ve içine 'OK' yaz.",
+    "hint": "Dosyayı yazma ('w') yetkisiyle güvenle açıp içine veri göndermek için 'with open' yapısından faydalanmalısın, böylece işlem tamamlandığında dosya kendiliğinden kapanır.",
+    "type": "code",
+    "tags": [
+        "dosya"
+    ]
 }

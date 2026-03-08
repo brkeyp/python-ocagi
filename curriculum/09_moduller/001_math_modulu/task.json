@@ -1,12 +1,12 @@
 {
-  "id": "001_math_modulu",
-  "uuid": "7910209a-4ef3-4292-bee0-ceb89f67ca13",
-  "category": "Modüller",
-  "title": "Math Modülü",
-  "description": "'math' modülünü projemize dahil et (import). Ardından bu modülün içindeki pi sayısını (math.pi) ekrana yazdır.",
-  "hint": "Önce 'import math' yaz. Alt satırda 'print(math.pi)' ile pi sayısını yazdırabilirsin.",
-  "type": "code",
-  "tags": [
-    "modüller"
-  ]
+    "id": "001_math_modulu",
+    "uuid": "7910209a-4ef3-4292-bee0-ceb89f67ca13",
+    "category": "Modüller",
+    "title": "Math Modülü",
+    "description": "'math' modülünü projemize dahil et (import). Ardından bu modülün içindeki pi sayısını (math.pi) ekrana yazdır.",
+    "hint": "Matematiksel fonksiyonlara ait kütüphaneleri programa dahil etmek için o modülü İngilizce'de içeri aktar kelimesi (import) ile eklemeli ve bu uzantı ismini çağırıp ilerlemelisin.",
+    "type": "code",
+    "tags": [
+        "modüller"
+    ]
 }

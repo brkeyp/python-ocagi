@@ -3,7 +3,7 @@
     "category": "Stringler",
     "title": "String Dilimleme (Slicing)",
     "description": "'alfabe' = 'ABCDEF' olsun. 'ilk_uc' değişkenine sadece 'ABC' kısmını alarak ata.",
-    "hint": "Köşeli parantez kullan: degisken[baslangic:bitis]. Baştan başlamak için ilk kısmı boş bırak.",
+    "hint": "Köşeli parantezler içinde iki nokta (:) kullanarak belirli bir aralığı alabilirsin. Başlangıcı boş bırakmak en baştan (0'dan) itibaren demektir.",
     "type": "code",
     "tags": [
         "stringler"

@@ -1,14 +1,14 @@
 {
-  "id": "008_docstring",
-  "uuid": "b6361878-3ece-41f8-92c8-b93f64cc4714",
-  "category": "Fonksiyonlar",
-  "title": "Docstring (Dokümantasyon)",
-  "description": "Yazdığımız fonksiyonları başkalarının (veya gelecekteki bizim) anlaması için belgelendirmeliyiz. 'topla' adında iki sayıyı toplayan bir fonksiyon yaz ve hemen içine üçlü tırnak kullanarak şu docstring'i (belge metnini) ekle: 'İki sayıyı toplar ve sonucu döndürür.'",
-  "hint": "Fonksiyonu 'def topla(a, b):' şeklinde tanımladıktan hemen sonraki satıra üç tane tırnak (\"\"\") açıp metni yaz ve üç tırnakla kapat.",
-  "type": "code",
-  "tags": [
-    "fonksiyonlar",
-    "docstring",
-    "dokumantasyon"
-  ]
+    "id": "008_docstring",
+    "uuid": "b6361878-3ece-41f8-92c8-b93f64cc4714",
+    "category": "Fonksiyonlar",
+    "title": "Docstring (Dokümantasyon)",
+    "description": "Yazdığımız fonksiyonları başkalarının (veya gelecekteki bizim) anlaması için belgelendirmeliyiz. 'topla' adında iki sayıyı toplayan bir fonksiyon yaz ve hemen içine üçlü tırnak kullanarak şu docstring'i (belge metnini) ekle: 'İki sayıyı toplar ve sonucu döndürür.'",
+    "hint": "Programcılar tarafından anlaşılmayı kolaylaştırmak adına, fonksiyon bloklarının hemen altına yazdıkları belgeleyici üçlü çift (\"\"\") tırnaklar ile açıklamaları bırakman okunabilirliği artıracaktır.",
+    "type": "code",
+    "tags": [
+        "fonksiyonlar",
+        "docstring",
+        "dokumantasyon"
+    ]
 }

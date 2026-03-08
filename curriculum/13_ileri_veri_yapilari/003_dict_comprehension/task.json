@@ -1,14 +1,14 @@
 {
-  "id": "003_dict_comprehension",
-  "uuid": "0cc16d0c-2ae7-40c1-82a9-6de888ee1032",
-  "category": "İleri Veri Yapıları",
-  "title": "Dict Comprehension",
-  "description": "'kare_sozluk' sözlüğünü tek satırda oluştur: anahtarlar 1-5, değerler kareleri olsun. Sonuç: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}",
-  "hint": "Sözlük comprehension: {anahtar: deger for eleman in kaynak}",
-  "type": "code",
-  "tags": [
-    "comprehension",
-    "dict",
-    "sozluk"
-  ]
+    "id": "003_dict_comprehension",
+    "uuid": "0cc16d0c-2ae7-40c1-82a9-6de888ee1032",
+    "category": "İleri Veri Yapıları",
+    "title": "Dict Comprehension",
+    "description": "'kare_sozluk' sözlüğünü tek satırda oluştur: anahtarlar 1-5, değerler kareleri olsun. Sonuç: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}",
+    "hint": "Özel filtrelemelerdeki listelere benzediği gibi anahtar kelimelere ayrılmış eşleştirmeler yaratırken süslü parantez içine araya iki nokta koyarak işlem döngülerini dizmelisin.",
+    "type": "code",
+    "tags": [
+        "comprehension",
+        "dict",
+        "sozluk"
+    ]
 }

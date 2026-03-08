@@ -1,12 +1,12 @@
 {
-  "id": "003_buyuk_harfe_cevirme",
-  "category": "Stringler",
-  "title": "Büyük Harfe Çevirme",
-  "description": "'sehir' = 'istanbul' değişkenini oluştur. 'sehir_buyuk' değişkenine bu stringin tamamen büyük harfli halini ata.",
-  "hint": ".upper() metodunu kullan.",
-  "type": "code",
-  "tags": [
-    "stringler"
-  ],
-  "uuid": "cc69e5d4-417c-44b9-9801-bfb12db9467b"
+    "id": "003_buyuk_harfe_cevirme",
+    "category": "Stringler",
+    "title": "Büyük Harfe Çevirme",
+    "description": "'sehir' = 'istanbul' değişkenini oluştur. 'sehir_buyuk' değişkenine bu stringin tamamen büyük harfli halini ata.",
+    "hint": "Bir metnin tamamını büyük harfe çevirmek için, ilgili değişkenin sonuna nokta (.) koyup İngilizce üst manasına gelen büyük harf dönüştürme fonksiyonunu çağırmalısın.",
+    "type": "code",
+    "tags": [
+        "stringler"
+    ],
+    "uuid": "cc69e5d4-417c-44b9-9801-bfb12db9467b"
 }

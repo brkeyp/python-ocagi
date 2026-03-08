@@ -1,12 +1,12 @@
 {
-  "id": "003_varsayilan_parametre_default_args",
-  "category": "Fonksiyonlar",
-  "title": "Varsayılan Parametre (Default Args)",
-  "description": "'selamla' fonksiyonu tanımla. 'isim' alsın, varsayılanı 'Misafir' olsun. 'Merhaba {isim}' döndürsün.",
-  "hint": "def selamla(isim='Misafir'):",
-  "type": "code",
-  "tags": [
-    "fonksiyonlar"
-  ],
-  "uuid": "3c14caad-f466-4ae9-ac7c-cd876d2f065e"
+    "id": "003_varsayilan_parametre_default_args",
+    "category": "Fonksiyonlar",
+    "title": "Varsayılan Parametre (Default Args)",
+    "description": "'selamla' fonksiyonu tanımla. 'isim' alsın, varsayılanı 'Misafir' olsun. 'Merhaba {isim}' döndürsün.",
+    "hint": "Parametrelere boş geçilmesi durumunda kullanılacak varsayılan bir değer atamak için, fonksiyon tanımında eşittir (=) işaretiyle bu varsayılan değeri bağlamalısın.",
+    "type": "code",
+    "tags": [
+        "fonksiyonlar"
+    ],
+    "uuid": "3c14caad-f466-4ae9-ac7c-cd876d2f065e"
 }
