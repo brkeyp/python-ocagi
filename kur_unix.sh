@@ -201,7 +201,7 @@ show_welcome() {
     echo -e "Hoş geldin! Python Ocağı, terminal tabanlı"
     echo -e "interaktif bir Python öğrenme platformudur."
     echo ""
-    echo -e "${C_CYAN}📚${C_RESET}  96 interaktif ders (16 bölüm)"
+    echo -e "${C_CYAN}📚${C_RESET}  98 interaktif ders (16 bölüm)"
     echo -e "${C_GREEN}🔒${C_RESET}  Kodun güvenli sandbox ortamında çalışır"
     echo -e "${C_YELLOW}🎨${C_RESET}  Gerçek zamanlı syntax highlighting"
     echo -e "${C_MAGENTA}📊${C_RESET}  İlerleme otomatik kaydedilir"

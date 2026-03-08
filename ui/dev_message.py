@@ -199,12 +199,15 @@ class DeveloperMessageScreen:
         # Girdi döngüsü
         self.stdscr.nodelay(False)
         
-        # Mouse dinlemeyi aktif et (Windows Fare Tekerleği Desteği)
-        try:
-            print("\033[?1003h\033[?1015h\033[?1006h", end="")
-            curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
-        except curses.error:
-            pass
+        # Mouse dinlemeyi aktif et (Sadece Windows/PDCurses için gereklidir)
+        # MacOS/Linux terminalleri mouse reporting kapalıyken scroll'u otomatik olarak 
+        # Ok tuşlarına (UP/DOWN) çevirir. Eğer açarsak, eski ncurses sürümleri (Mac) bunu anlayamaz.
+        if os.name == 'nt':
+            try:
+                print("\033[?1003h\033[?1015h\033[?1006h", end="")
+                curses.mousemask(curses.ALL_MOUSE_EVENTS | curses.REPORT_MOUSE_POSITION)
+            except curses.error:
+                pass
             
         try:
             while True:
@@ -224,7 +227,7 @@ class DeveloperMessageScreen:
                 if key in (27, ord('q'), ord('Q'), 10, 13):
                     break
                 
-                elif key == curses.KEY_UP:
+                if key == curses.KEY_UP:
                     if self.scroll_offset > 0:
                         self.scroll_offset -= 1
                         self.draw_screen(lines, box_y, box_x, box_height, box_width,
@@ -261,11 +264,12 @@ class DeveloperMessageScreen:
 
         finally:
             # Fare dinlemeyi kapat (Diğer ekranlarda sorun yaratmaması için)
-            try:
-                curses.mousemask(0)
-                print("\033[?1003l\033[?1015l\033[?1006l", end="") # Gelişmiş fare raporlamasını kapat
-            except curses.error:
-                pass
+            if os.name == 'nt':
+                try:
+                    curses.mousemask(0)
+                    print("\033[?1003l\033[?1015l\033[?1006l", end="") # Gelişmiş fare raporlamasını kapat
+                except curses.error:
+                    pass
 
 
 def show_developer_message(stdscr):

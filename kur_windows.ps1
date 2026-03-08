@@ -269,7 +269,7 @@ function Show-Welcome {
     Write-Host "Hos geldin! Python Ocagi, terminal tabanli"
     Write-Host "interaktif bir Python ogrenme platformudur."
     Write-Host ""
-    Write-Host "  96 interaktif ders (16 bolum)" -ForegroundColor Cyan
+    Write-Host "  98 interaktif ders (16 bolum)" -ForegroundColor Cyan
     Write-Host "  Kodun guvenli sandbox ortaminda calisir" -ForegroundColor Green
     Write-Host "  Gercek zamanli syntax highlighting" -ForegroundColor Yellow
     Write-Host "  Ilerleme otomatik kaydedilir" -ForegroundColor Magenta

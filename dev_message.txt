@@ -16,6 +16,6 @@ Git geçmişinden (commit açıklamalarından) bu uygulamanın en başından iti
 
 Eğer sen de benim gibi sıfır kod bilgisiyle bir fikri projeyle uğraşıyorsan, sürecini paylaşmaktan ve birlikte çalışmaktan mutluluk duyarım. Aynı yoldan geçen birinin tecrübesi bazen en iyi rehberdir.
 
-Sonuçta "Olur mu beyaa?" diye düşünüyordum.
+Sonuçta "Gerçekten olabilir mi?" diye düşünüyordum.
 
 Oldu. ☾☆

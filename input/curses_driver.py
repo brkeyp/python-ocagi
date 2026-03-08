@@ -59,8 +59,15 @@ class CursesInputDriver(InputDriver):
 
         # 2. Check collector
         # Convert ms to seconds, handling negative (blocking)
-        block = (timeout_ms < 0)
-        timeout = (timeout_ms / 1000.0) if not block else None
+        if timeout_ms < 0:
+            block = True
+            timeout = None
+        elif timeout_ms == 0:
+            block = False
+            timeout = None
+        else:
+            block = True
+            timeout = timeout_ms / 1000.0
         
         return self.collector.get_input(block=block, timeout=timeout)
 
