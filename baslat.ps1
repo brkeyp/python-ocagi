@@ -239,30 +239,16 @@ Write-Host "Python Ocagi Guncelleniyor..."            -ForegroundColor Cyan
 Write-Host "Lutfen bekleyin... (Internet baglantisina gore degisir)" -ForegroundColor Cyan
 Write-Host "=========================================" -ForegroundColor Cyan
 
-$updateSuccess = $false
+$TempKur = Join-Path $env:TEMP "kur_windows_update.ps1"
+$KurUrl = "https://raw.githubusercontent.com/$REPO_OWNER/$REPO_NAME/$BRANCH/kur_windows.ps1"
+
 try {
     $ProgressPreference = 'SilentlyContinue'
-    Invoke-WebRequest -Uri $ZIP_URL -OutFile $TempZip -UseBasicParsing
-
-    if (Test-Path $TempExtract) {
-        Remove-Item -Path $TempExtract -Recurse -Force
-    }
-
-    Expand-Archive -Path $TempZip -DestinationPath $TempExtract -Force
-
-    # baslat.ps1 DAHIL tum dosyalari guncelle.
-    # PowerShell .ps1 dosyalarini calisma sirasinda kilitlemez (AST bellege yuklenir).
-    # Nadir durumlarda (antiviruks taramasi vb.) hata olusabilir — SilentlyContinue ile devam edilir.
-    Copy-Item -Path (Join-Path $TempExtract "$REPO_NAME-$BRANCH\*") -Destination $AppFolder -Recurse -Force -ErrorAction SilentlyContinue | Out-Null
-
-    # Temizlik
-    Remove-Item -Path $TempZip -Force -ErrorAction SilentlyContinue
-    Remove-Item -Path $TempExtract -Recurse -Force -ErrorAction SilentlyContinue
-
-    Write-Host ""
-    Write-Host "Guncelleme tamamlandi. Uygulama baslatiliyor!" -ForegroundColor Green
-    Write-Host ""
-    $updateSuccess = $true
+    Invoke-WebRequest -Uri $KurUrl -OutFile $TempKur -UseBasicParsing
+    
+    # Eger basariliysa, auto-update modunda scripti asenkron baslat ve KENDINI KAPAT
+    Start-Process powershell.exe -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$TempKur`" -AutoUpdate"
+    exit 0
 }
 catch {
     Write-Host ""
@@ -284,26 +270,24 @@ catch {
 
 if (-not (Test-PythonAvailable)) {
     # Internet yoksa ve Python da yoksa: cikis mesaji goster
-    if (-not $updateSuccess) {
-        Write-Host ""
-        Write-Host "=========================================" -ForegroundColor Red
-        Write-Host "Python bulunamadi ve internet baglantisi yok." -ForegroundColor Red
-        Write-Host "=========================================" -ForegroundColor Red
-        Write-Host ""
-        Write-Host "Uygulama baslatilabilmesi icin Python 3.13 gereklidir." -ForegroundColor White
-        Write-Host "Internet baglantinizi saglayip tekrar deneyin veya" -ForegroundColor White
-        Write-Host "python.org/downloads adresinden Python 3.13 indirin." -ForegroundColor White
-        Write-Host ""
-        pause
-        exit 1
-    }
+    Write-Host ""
+    Write-Host "=========================================" -ForegroundColor Red
+    Write-Host "Python bulunamadi ve internet baglantisi yok." -ForegroundColor Red
+    Write-Host "=========================================" -ForegroundColor Red
+    Write-Host ""
+    Write-Host "Uygulama baslatilabilmesi icin Python 3.13 gereklidir." -ForegroundColor White
+    Write-Host "Internet baglantinizi saglayip tekrar deneyin veya" -ForegroundColor White
+    Write-Host "python.org/downloads adresinden Python 3.13 indirin." -ForegroundColor White
+    Write-Host ""
+    pause
+    exit 1
 
-    # Internet var ama Python yok: kurulum teklif et
-    Install-PythonWithPermission
+    # Normalde internet var ama Python yoksa: kurulum teklif etmesi baslat.ps1 de gerekli degil
+    # cunku o isleri de kur_windows.ps1 yapecek. Sadece cevrimdisi kaldiysa baslatmaya calismali.
 }
 
 #=======================================================
-# UYGULAMA BASLAT
+# UYGULAMA BASLAT (CEVRIMDISI MOD)
 #=======================================================
 
 Set-Location $AppFolder

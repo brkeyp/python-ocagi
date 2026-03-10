@@ -2,6 +2,9 @@
 # Python Ocağı - Windows Kurulum ve Başlatma Betiği
 # İnteraktif menü ile kurulum, direkt kullanım ve kaldırma
 #=======================================================
+param (
+    [switch]$AutoUpdate
+)
 
 # TLS 1.2 Zorunlulugu (Geriye Donuk Uyumluluk)
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
@@ -463,13 +466,83 @@ function Invoke-Uninstall {
 }
 
 function Invoke-UpdateAndLaunch {
-    Download-AppTo -TargetDir $AppFolder
+    Write-Host ""
+    Write-Host "=========================================" -ForegroundColor Cyan
+    Write-Host "Guncelleme indiriliyor..." -ForegroundColor Cyan
+    Write-Host "=========================================" -ForegroundColor Cyan
+
+    # 1. Zip'i indir - internet baglantisini test et
+    $TempZipAuto = Join-Path $env:TEMP "python_ocagi_update.zip"
+    $TempExtractAuto = Join-Path $env:TEMP "python_ocagi_extracted"
+    
+    try {
+        $ProgressPreference = 'SilentlyContinue'
+        Invoke-WebRequest -Uri $ZIP_URL -OutFile $TempZipAuto -UseBasicParsing
+        if (Test-Path $TempExtractAuto) { Remove-Item -Path $TempExtractAuto -Recurse -Force -ErrorAction SilentlyContinue }
+        Expand-Archive -Path $TempZipAuto -DestinationPath $TempExtractAuto -Force
+    } catch {
+        Write-Host "Baglanti hatasi. Guncelleme yapilamadi." -ForegroundColor Red
+        pause
+        exit 1
+    }
+
+    # 2. Bekle (eger baslat.ps1 tarafindan cagirildiysa klasor kilidi cozulsun)
+    Start-Sleep -Seconds 2
+
+    # 3. Klasoru ve kisayolu TAMAMEN SIL
+    Remove-Item -Path $AppFolder -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path $ShortcutPath -Force -ErrorAction SilentlyContinue
+    
+    # 4. Yeniden olustur
+    New-Item -ItemType Directory -Force -Path $AppFolder | Out-Null
+    
+    $BaslatUrl = "https://raw.githubusercontent.com/$REPO_OWNER/$REPO_NAME/$BRANCH/baslat.ps1"
+    $BaslatPath = Join-Path $AppFolder "baslat.ps1"
+    Invoke-WebRequest -Uri $BaslatUrl -OutFile $BaslatPath -UseBasicParsing -ErrorAction SilentlyContinue
+
+    # Kisa Yol Olustur (Masaustu .lnk)
+    $WScriptShell = New-Object -ComObject WScript.Shell
+    $Shortcut = $WScriptShell.CreateShortcut($ShortcutPath)
+    $Shortcut.TargetPath = "powershell.exe"
+    $Shortcut.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$AppFolder\baslat.ps1`""
+    $Shortcut.WorkingDirectory = $AppFolder
+    $Shortcut.Description = "Python Ocagi - Yazarak Ogrenme"
+    $Shortcut.Save()
+
+    # Kaldirma Dosyasi Olustur
+    $LnkName = "PYTHON OCAGINA GIR.lnk"
+    $UninstallScript = @"
+@echo off
+title Python Ocagi - Kaldirma
+color 4F
+echo =======================================================
+echo DIKKAT: Python Ocagi sisteminizden kaldirilacaktir.
+echo.
+set /p DEL_PROG="Ilerlemenizi (cozdugunuz sorular ve puanlar) silmek istiyor musunuz? (E/H): "
+echo =======================================================
+echo Kaldirma islemi baslatildi...
+
+:: Klasor kilidini kirmak icin dizini ev dizinine (USERPROFILE) degistir
+cd /d "%USERPROFILE%"
+
+start "" powershell -NoProfile -ExecutionPolicy Bypass -Command "`$del_prog='%DEL_PROG%'; Start-Sleep -Seconds 2; Write-Host 'Uygulama dosyalari siliniyor...' -ForegroundColor Red; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) 'Python Ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path ([Environment]::GetFolderPath('Desktop')) '$LnkName') -Force -ErrorAction SilentlyContinue; if (`$del_prog -match '^[EeYy]') { Write-Host 'Ilerleme verileri siliniyor...' -ForegroundColor Red; Remove-Item -Path (Join-Path `$env:APPDATA 'python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Remove-Item -Path (Join-Path `$HOME '.python_ocagi') -Recurse -Force -ErrorAction SilentlyContinue; Write-Host 'Her sey silindi.' -ForegroundColor DarkGray } else { Write-Host 'Ilerleme verileri SAKLANDI.' -ForegroundColor Green }; Write-Host ''; Write-Host 'Kaldirma tamamlandi! Bu pencere kapanacak.' -ForegroundColor Green; Start-Sleep -Seconds 3"
+exit
+"@
+    [System.IO.File]::WriteAllText($UninstallPath, $UninstallScript, [System.Text.UTF8Encoding]::new($false))
+    
+    # 5. Indirilenleri iceri tasi
+    Copy-Item -Path (Join-Path $TempExtractAuto "$REPO_NAME-$BRANCH\*") -Destination $AppFolder -Recurse -Force | Out-Null
+    
+    # Temizlik
+    Remove-Item -Path $TempZipAuto -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path $TempExtractAuto -Recurse -Force -ErrorAction SilentlyContinue
 
     Write-Host ""
-    Write-Host "Baslatiliyor..." -ForegroundColor Green
+    Write-Host "Guncelleme tamamlandi. Baslatiliyor..." -ForegroundColor Green
     Start-Sleep -Seconds 1
     Clear-Host
 
+    # 6. Uygulamayi Ac
     Set-Location $AppFolder
 
     $launched = $false
@@ -509,6 +582,12 @@ function Invoke-UpdateAndLaunch {
 #=======================================================
 # ANA PROGRAM
 #=======================================================
+
+if ($AutoUpdate) {
+    if (-not (Test-PythonAvailable)) { Install-PythonWithPermission }
+    Invoke-UpdateAndLaunch
+    exit 0
+}
 
 # 1. Python kontrolu
 if (-not (Test-PythonAvailable)) {

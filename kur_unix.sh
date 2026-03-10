@@ -272,13 +272,7 @@ direkt_kullan() {
     $PYTHON_CMD main.py < /dev/tty
 }
 
-kur() {
-    echo ""
-    echo -e "${C_CYAN}═══════════════════════════════════════════${C_RESET}"
-    echo -e "${C_CYAN}Kurulum başlıyor...${C_RESET}"
-    echo -e "${C_CYAN}═══════════════════════════════════════════${C_RESET}"
-    echo ""
-
+create_app_files() {
     # 1. Klasörü Oluştur
     mkdir -p "$APP_DIR"
 
@@ -290,30 +284,29 @@ echo -e "\033[0;36mPython Ocağı Güncelleniyor...\033[0m"
 echo -e "\033[0;36mLütfen bekleyin (İnternet hızınıza göre değişir)\033[0m"
 echo -e "\033[0;36m=========================================\033[0m"
 
-ZIP_URL="PLACEHOLDER_ZIP"
-REPO_DIR="PLACEHOLDER_DIR"
-
-curl -sL -o /tmp/app_update.zip "$ZIP_URL"
-rm -rf /tmp/app_extracted
-unzip -qo /tmp/app_update.zip -d /tmp/app_extracted
-cp -R "/tmp/app_extracted/$REPO_DIR/"* "$HOME/Desktop/Python Ocağı/"
-
-echo -e "\033[0;32mGüncelleme tamamlandı. Başlatılıyor...\033[0m"
-sleep 1
-clear
-cd "$HOME/Desktop/Python Ocağı"
-python3 main.py || python main.py
-
-# Mac'te iş bitince pencereyi otomatik kapat (kullanıcı çıkış yaptığında)
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    osascript -e 'tell application "Terminal" to close front window' & exit
+if curl -sL -m 5 "https://raw.githubusercontent.com/PLACEHOLDER_OWNER/PLACEHOLDER_REPO/PLACEHOLDER_BRANCH/kur_unix.sh" -o /tmp/auto_update.sh; then
+    bash /tmp/auto_update.sh --update
+    exit 0
+else
+    echo -e "\033[0;33mİnternet bağlantısı kurulamadı. Çevrimdışı başlatılıyor...\033[0m"
+    cd "$HOME/Desktop/Python Ocağı"
+    if command -v python3 &>/dev/null; then
+        python3 main.py < /dev/tty
+    else
+        python main.py < /dev/tty
+    fi
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        osascript -e 'tell application "Terminal" to close front window' & exit
+    fi
 fi
 EOF
 
     # Placeholder'ları değiştir
-    sed -i.bak "s|PLACEHOLDER_ZIP|$ZIP_URL|g" "$SHORTCUT_FILE"
+    sed -i.bak "s|PLACEHOLDER_OWNER|$REPO_OWNER|g" "$SHORTCUT_FILE"
     rm -f "$SHORTCUT_FILE.bak"
-    sed -i.bak "s|PLACEHOLDER_DIR|$REPO_NAME-$BRANCH|g" "$SHORTCUT_FILE"
+    sed -i.bak "s|PLACEHOLDER_REPO|$REPO_NAME|g" "$SHORTCUT_FILE"
+    rm -f "$SHORTCUT_FILE.bak"
+    sed -i.bak "s|PLACEHOLDER_BRANCH|$BRANCH|g" "$SHORTCUT_FILE"
     rm -f "$SHORTCUT_FILE.bak"
 
     chmod +x "$SHORTCUT_FILE"
@@ -350,6 +343,16 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 EOF
     chmod +x "$UNINSTALL_FILE"
+}
+
+kur() {
+    echo ""
+    echo -e "${C_CYAN}═══════════════════════════════════════════${C_RESET}"
+    echo -e "${C_CYAN}Kurulum başlıyor...${C_RESET}"
+    echo -e "${C_CYAN}═══════════════════════════════════════════${C_RESET}"
+    echo ""
+
+    create_app_files
 
     echo ""
     echo -e "${C_GREEN}═══════════════════════════════════════════${C_RESET}"
@@ -396,7 +399,12 @@ kaldir() {
 
 guncelle_ve_baslat() {
     echo ""
-    download_app "$APP_DIR"
+    echo -e "${C_CYAN}Destrüktif Güncelleme başlatılıyor...${C_RESET}"
+    
+    rm -rf "$APP_DIR"
+    rm -f "$SHORTCUT_FILE"
+    
+    create_app_files
 
     echo -e "${C_GREEN}Başlatılıyor...${C_RESET}"
     sleep 1
@@ -410,6 +418,31 @@ guncelle_ve_baslat() {
 #=======================================================
 # ANA PROGRAM
 #=======================================================
+
+# 0. Otomatik Güncelleme (Auto-Update)
+if [[ "$1" == "--update" ]]; then
+    check_python
+    echo ""
+    echo -e "${C_CYAN}Otomatik Güncelleme (Auto-Update) başlatılıyor...${C_RESET}"
+    
+    rm -rf "$APP_DIR"
+    rm -f "$SHORTCUT_FILE"
+    
+    create_app_files
+    download_app "$APP_DIR"
+
+    echo -e "${C_GREEN}Başlatılıyor...${C_RESET}"
+    sleep 1
+    clear
+    cd "$APP_DIR"
+
+    $PYTHON_CMD main.py < /dev/tty
+    
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        osascript -e 'tell application "Terminal" to close front window' & exit
+    fi
+    exit 0
+fi
 
 # 1. Python kontrolü
 check_python
