@@ -1,21 +1,24 @@
-Merhaba. 👋
+Merhaba,
 
 Bu ekrana ulaştığına göre, sadece görünenle yetinmeyen ve sistemin arkasındaki mekanizmayı merak eden birisin. Doğru yerdesin.
 
 Bu uygulamayı ben yaptım. Ama şunu bilmelisin ki; "ben yaptım" derken satırlarca kod ezberleyen bir yazılımcı tarafından değil, modern yapay zeka araçlarının orkestrasyonu ile inşa edildi. Ben kod yazmayı bilmiyorum. Bildiğim tek şey Python'ın çalışma mantığının en genel hatlarıydı, o da çok az. Geri kalan her şey? Yapay zekâ.
 
-Yapay zekâyı bir araç olarak kullanmak, ona doğru soruları sormak, kendimize soru sordurmak :) ve süreci artısı eksisiyle yönetmek gerekiyordu ve gerçekleştirdim. Bu uygulama o sürecin ürünü. Yüzlerce deneme-yanılma, yüzlerce prompt, saatlerce "bu sefer olacak" diye tekrarlanan döngüler. Her commit mesajında o sürecin bir parçası gizli, bakabilirsin.
+Yapay zekâyı bir araç olarak kullanmak, ona doğru soruları sormak, kendimize soru sordurmak :) ve süreci artısı eksisiyle yönetmek gerekiyordu ve gerçekleştirdim. Bu uygulama o sürecin ürünü. Yüzlerce deneme-yanılma, yüzlerce prompt, saatlerce "bu sefer olacak" diye tekrarlanan döngüler. Her commit mesajında o sürecin bir parçası gizli, bakabilirsin. Üstelik bu uygulamanın yapımında kullanılan yapay zeka enstrümanları için her hangi bir ödeme yapılmadı.
 
 Ben Veri Analizi Okulu (VAO) öğrencisiyim. YÖK öncülüğünde Orta Doğu Teknik Üniversitesi, İstanbul Teknik Üniversitesi, Boğaziçi Üniversitesi ve Marmara Üniversitesi'nin ortak kurduğu, tamamen ücretsiz bir program. 7 farklı modülü var. Ben Yapay Zekâ ve Makine Öğrenmesi ana dalında, Yapay Zekâ ve Kolaylaştırıcı Araçlar yan dalında eğitim alıyorum.
 
 Sebebi neydi ki? :) İnsanlara VAO aşaması olan Python öğrenme sürecinde yardım etmek ve sürece bir değer katmak istedim. Benden sonra gelecek olan sen, ister VAO öğrencisi ol ister başka bir yerden bu uygulamaya ulaşmış ol, bil ki bu uygulama senin için yapıldı.
 
-Yazılım dünyası bitemez ancak kartların yeniden dağıtıldığı çok açık bir gerçek. İşler her zaman olduğu gibi yine çok zor olacak. Ama artık bir fikri hayata geçirmek için yıllarca kod öğrenmek zorunda kalmak yada yazılımcılara ihtiyaç yok. Gerekli olan şey vizyon, sebat ve yapay zekâyı ustaca kullanabilmek. Her an, hiçbir zaman geç değil.
+Yazılım dünyası bitemez ancak kartların yeniden dağıtıldığı çok açık bir gerçek. İşler her zaman olduğu gibi yine çok zor olacak. Ama artık bir fikri hayata geçirmek için yıllarca kod öğrenmek zorunda kalmak yada yazılımcılara ihtiyaç yok. Gerekli olan şey vizyon, sebat ve yapay zekâyı ustaca kullanabilmek. Her an, hiç bir zaman geç değil.
 
 Git geçmişinden (commit açıklamalarından) bu uygulamanın en başından itibaren nasıl evrildiğini görebilirsin. Ama hangi yapay zekâ araçları ve modelleri kullanıldı, nasıl spesifik promptlar yazıldı, süreç nasıl yönetildi gibi daha derin şeyleri merak ediyorsan bana Telegram'dan yazabilirsin: @brkeyp
 
-Eğer sen de benim gibi sıfır kod bilgisiyle bir fikri projeyle uğraşıyorsan, sürecini paylaşmaktan ve birlikte çalışmaktan mutluluk duyarım. Aynı yoldan geçen birinin tecrübesi bazen en iyi rehberdir.
+Eğer sen de benim gibi sıfır kod bilgisiyle bir fikri projeyle uğraşıyorsan, sürecini paylaşmaktan ve hatta birlikte çalışmaktan mutluluk duyarım. Aynı yoldan geçen birinin tecrübesi bazen en iyi rehberdir.
 
 Sonuçta "Gerçekten olabilir mi?" diye düşünüyordum.
 
 Oldu. ☾☆
+
+Başlangıç: 26 Ocak 2026
+Yayınlama: 10 Mart 2026
